@@ -1,0 +1,30 @@
+.PageContainer   {
+  margin-top: 20px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  width: 80%;
+  padding: 32px;
+  margin: auto;
+}
+
+.Page {
+    width: 600px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;  
+}
+  
+.PageTitle {
+  color: #a94c40;
+  font-size: 1.5em; 
+}
+
+.PageSubtitle {
+  font-size: 1.2em;
+  font-style: italic;
+}
+
+.PageBody {
+    text-align: left;  
+}

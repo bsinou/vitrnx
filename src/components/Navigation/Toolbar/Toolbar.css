@@ -1,9 +1,6 @@
 .Toolbar {
     height: 56px;
     width:100%;
-    /*position: fixed;
-    top: 0;
-    left: 0;*/
     background-color: #573c56;
     display: flex;
     justify-content: space-between;
@@ -17,12 +14,20 @@
     height: 100%;
 }
 
-.Logo { 
-    height: 80%;
-}
-
 @media (max-width: 499px){
     .DesktopOnly{
         display: none;
     }
 }
+
+/* @media (min-width: 500px){
+    .Toolbar {
+        height: 112px;
+    }
+} */
+
+/* @media (min-width: 800px){
+    .Toolbar {
+        height: 56px;
+    }
+} */
