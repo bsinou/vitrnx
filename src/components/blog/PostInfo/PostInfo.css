@@ -1,0 +1,20 @@
+.PostInfo {
+    display: flex;
+    flex-flow: row wrap; 
+    padding: 8px 32px 8px 0px;
+    text-align: left;
+    cursor: pointer;
+    color: #ccc;
+}
+
+.PostInfo a {
+    margin-left: 3px;
+    text-decoration: none;
+    color: #ccc;
+}
+
+.PostInfo a:hover, .PostInfo a:active {
+    text-decoration:underline;
+    color: #a94c40;
+}
+

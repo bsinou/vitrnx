@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
 import Aux from '../Aux/Aux';
-import Toolbar from '../../components/Navigation/Toolbar/Toolbar'
-import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer'
-import Header from '../../components/Header/Header'
-import Footer from '../../components/Footer/Footer'
+import Toolbar from '../../components/navigation/Toolbar/Toolbar'
+import SideDrawer from '../../components/navigation/SideDrawer/SideDrawer'
+import Header from '../../components/ui/Header/Header'
+import Footer from '../../components/ui/Footer/Footer'
 
 import classes from './Layout.css';
 
