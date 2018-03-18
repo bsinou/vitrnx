@@ -14,38 +14,6 @@ For colors see : http://www.color-hex.com/color-palette/56806 : the Ratatouille 
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background: linear-gradient(to top right,#d1d8f4,#d9cfd0,#d6b8a5, #d87e79, #a94c40);
-
-  height: 140px;
-  padding-top: 10px;
-  padding-left: 30px;
-  text-align: left;
-}
-
-.App-footer {
-  background: linear-gradient(to bottom right,/*#7f8a68, */#bbc3bb, #d1beb0,#d6b8a5);
-  margin-top: 32px; 
-  height: 26px;
-  padding: 13px 40px 10px 16px;
-  text-align: right;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: right;
-  color: #573c56;
-  font-size: 0.8em;
-}
-
-.App-footer a {
-  color: #573c56;
-}
-
-
 .App-title {
   margin-top: 16px;  
   padding: 2px;
@@ -59,49 +27,6 @@ For colors see : http://www.color-hex.com/color-palette/56806 : the Ratatouille 
   font-size: 1.5em;
 }
 
-.Intro {
-  width: 600px;
-  display: flex;
-  flex-flow: column;
-  justify-content: center;  
-}
-
-.Intro-body {
-  text-align: left;  
-}
-
-/** BLOG STYLING */
-
-.Posts {
-  /*border-top: 1px solid  #d87e79;*/
-  margin-top: 40px;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  width: 80%;
-  padding: 32px;
-  margin: auto;
-}
-
-.Post {
-  width: 600px;
-  padding: 4px 8px 8px 20px;
-  border: 1px solid  #d87e79;
-  box-shadow: 0 2px 3px #a94c40;
-  margin: 10px;
-  box-sizing: border-box;
-  cursor: pointer;
-  text-align: left;
-} 
-
-.Post-title, .Intro-title {
-  color: #a94c40;
-  font-size: 1.5em; 
-}
-
-.Post-body{
-
-}         
 
 /* OLD STOCK 
 

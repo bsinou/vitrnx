@@ -2,12 +2,14 @@ import React from 'react';
 
 import Aux from '../../hoc/Aux/Aux'
 
+import classes from './Home.css'
+
 const home = () => (
     <Aux>
-        <div className="Posts">
-            <div className="Intro">
-                <p className="Intro-title">Docteur Marie-Madeleine SINOU </p>
-                <div className="Intro-body">
+        <div className={classes.Posts}>
+            <div className={classes.Intro}>
+                <p className={classes.IntroTitle}>Docteur Marie-Madeleine SINOU </p>
+                <div className={classes.IntroBody}>
                     <p>Médecin généraliste et homéopathe, Maître Praticienne en PNL j'ai exercé en cabinet libéral pendant 30 ans.</p>
                     <p>La santé est un bien précieux...
                         <ul>
@@ -21,10 +23,10 @@ const home = () => (
                 </div>
             </div>
         </div>
-        <div className="Posts">
-            <div className="Post">
-                <p className="Post-title">Vivement le printemps...</p>
-                <div className="Post-body">
+        <div className={classes.Posts}>
+            <div className={classes.Post}>
+                <p className={classes.PostTitle}>Vivement le printemps...</p>
+                <div className={classes.PostBody}>
                     <p>Nous avons profité de ces longs mois d'hiver pour nous repencher sur notre fenêtre sur le monde (virtuel),
                 et avons décidé de faire peau neuve. </p>
                     <p>Cette page est la première étape de cette transformation et nous vous demandons un peu de patience;</p>

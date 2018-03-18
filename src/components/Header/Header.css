@@ -1,0 +1,21 @@
+.Header {
+    background: linear-gradient(to top right,#d1d8f4,#d9cfd0,#d6b8a5, #d87e79, #a94c40);  
+    height: 140px;
+    padding-top: 10px;
+    padding-left: 30px;
+    text-align: left;
+  }
+  
+  .HeaderTitle {
+    margin-top: 16px;  
+    padding: 2px;
+    color: #a94c40;
+    font-weight: bolder;
+    font-size: 2em;
+  }
+  
+  .HeaderSubtitle {
+    padding: 2px;
+    font-size: 1.5em;
+  }
+  

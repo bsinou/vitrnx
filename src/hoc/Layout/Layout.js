@@ -11,8 +11,9 @@ import classes from './Layout.css';
 
 class Layout extends Component {
 
+    // The side drawer is hidden after init
     state = {
-        showSideDrawer: true
+        showSideDrawer: false 
     }
 
     sideDrawerClosedHandler = () => {
