@@ -1,6 +1,4 @@
-/*
-
-For colors see : http://www.color-hex.com/color-palette/56806 : the Ratatouille palette :)
+/* For colors see : http://www.color-hex.com/color-palette/56806 : the Ratatouille palette :)
 
   light pink        #d87e79 	
   darker pink 	    #a94c40 	
@@ -12,6 +10,15 @@ For colors see : http://www.color-hex.com/color-palette/56806 : the Ratatouille 
 
 .App {
   text-align: center;
+  flex-direction: column;
+  /* Below 2 lines solve the below lines on-stocky footer issue
+  Don't forget to also add below lines to direct child component:  
+  .Content {
+    flex: 1;
+    min-height: 100%; // Really necessary?
+  */
+  display: flex;
+  min-height: 100vh;
 }
 
 .App-title {
