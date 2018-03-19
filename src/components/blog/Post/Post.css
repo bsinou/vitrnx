@@ -1,5 +1,5 @@
 .Post {
-    width: 250px;
+    width: 96%;
     padding: 16px;
     text-align: center;
     border: 1px solid #eee;
@@ -34,4 +34,10 @@
 .Desc {
     font-size: 1.2em;
     font-style: italic;
+}
+
+@media (min-width: 800px){
+    .Post {
+        width: 600px;
+    }
 }

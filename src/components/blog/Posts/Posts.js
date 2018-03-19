@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router';
-import { Route } from 'react-router-dom';
+// import { Redirect } from 'react-router';
+// import { Route } from 'react-router-dom'; 
+
+import classes from './Posts.css';
 
 import axios from 'axios';
-
 import Post from '../Post/Post';
 // import FullPost from '../../components/blog/FullPost/FullPost';
 // import NewPost from '../../components/blog/NewPost/NewPost';
 import './Posts.css';
 
-class Blog extends Component {
+class Posts extends Component {
 
     state = {
         posts: [],
@@ -69,11 +70,11 @@ class Blog extends Component {
                 });
         }
         return (
-            <div>
+            <div className={classes.Posts}>
                 <section>{posts}</section>
             </div>
         );
     }
 }
 
-export default Blog;
+export default Posts;
