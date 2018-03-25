@@ -42,7 +42,7 @@ class FullPost extends Component {
             post = (
                 <div className={classes.FullPost}>
                     <div className={classes.PageTitle}>{this.state.loadedPost.title}</div>
-                    <PostInfo tags={this.state.loadedPost.tags} author={this.state.loadedPost.author} />
+                    <PostInfo tags={this.state.loadedPost.tags} date={this.state.loadedPost.date} author={this.state.loadedPost.author} />
                     <div className={classes.PageSubtitle}>{this.state.loadedPost.desc}</div>
                     {/* Render the body as a markdown component */}
                     <Markdown className={classes.PageBody} escapeHtml={true} source={this.state.loadedPost.body} />

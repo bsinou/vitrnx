@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Lightbox from 'react-images'
 
 import Aux from '../../hoc/Aux/Aux'
 
@@ -6,6 +7,12 @@ import classes from './Home.css'
 
 
 class Home extends Component {
+
+    gotoPrevious() { }
+
+    gotoNext() { }
+
+    closeLightbox() { }
 
     render() {
 
@@ -24,7 +31,7 @@ class Home extends Component {
                             <p>Médecin généraliste et homéopathe, Maître Praticienne en PNL j'ai exercé en cabinet libéral pendant 30 ans.</p>
                             <p>La santé est un bien précieux...</p>
                             <ul>
-                                <li>Comment  l'entretenir ?</li>
+                                <li>Comment l'entretenir ?</li>
                                 <li>Comment la préserver ?</li>
                                 <li>Comment y tendre à nouveau quand survient la maladie ?</li>
                             </ul>
@@ -45,6 +52,23 @@ class Home extends Component {
                         </div>
                     </div>
                 </div>
+                {/* <div 
+                    style={{ height: '900px', width: '1600px', backgroundImage: 'url("https://cdn-7.nikon-cdn.com/Images/Learn-Explore/Photography-Techniques/2017/Deb-Sandidge-sunrises-sunsets/Media/Deb-Sandidge-13_Sunset-Melbourne-Beach.jpg")' }}
+		        />
+                
+                <Lightbox
+                    images={[
+                        { src: '../../assets/images/test1.jpg' },
+                        { src: '../../assets/images/test2.jpg' },
+                        { src: '../../assets/images/test3.jpg' },
+                        { src: '../../assets/images/test4.jpg' },
+                        { src: '../../assets/images/test0.jpg' },
+                    ]}
+                    isOpen={false}
+                    onClickPrev={this.gotoPrevious}
+                    onClickNext={this.gotoNext}
+                    onClose={this.closeLightbox}
+                /> */}
             </Aux>
         );
     }

@@ -1,4 +1,5 @@
 import React from 'react';
+import Time from 'react-time';
 
 import classes from './PostInfo.css';
 
@@ -19,7 +20,14 @@ const postInfo = (props) => {
 
     return (
         <div className={classes.PostInfo}>
-            <div className={classes.Author}>Par {props.author}, le 24 février 2018. </div>
+            <div className={classes.Author}>
+                Par {props.author}, le&nbsp;
+                <Time 
+                    value={props.date} 
+                    format="DD MMMM YYYY" 
+                    locale="fr"
+                />. 
+            </div>
             <div> &nbsp;&nbsp;&nbsp;Catégories: {tags} </div>
         </div>
     );
