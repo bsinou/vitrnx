@@ -15,6 +15,7 @@ const navigationItems = () => (
         <NavigationItem link="/s/workshops" >Travail en atelier</NavigationItem>
         <NavigationItem link="/s/the-book" >Le&nbsp;livre</NavigationItem>
         <NavigationItem link="/s/contact" >Contact</NavigationItem>
+        <NavigationItem link="/login" >S'identifier</NavigationItem>
     </ul>
 );
 
