@@ -2,8 +2,8 @@ import axios from 'axios';
 
 import * as actionTypes from './actionTypes';
 
-
-var myKey='A valid firebase API key'
+const apiPrefix = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/';
+//  var myKey='A valid firebase API key'
 
 export const authStart = () => {
     return {
@@ -11,10 +11,11 @@ export const authStart = () => {
     };
 };
 
-export const authSuccess = (token, userId) => {
+export const authSuccess = (email, token, userId) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
-        idToken: token,
+        email: email,
+        token: token,
         userId: userId
     };
 };
@@ -43,6 +44,7 @@ export const checkAuthTimeout = (expirationTime) => {
     };
 };
 
+
 export const auth = (email, password, isSignup) => {
     return dispatch => {
         dispatch(authStart());
@@ -51,9 +53,9 @@ export const auth = (email, password, isSignup) => {
             password: password,
             returnSecureToken: true
         };
-        let url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key='+myKey;
+        let url = apiPrefix + 'signupNewUser?key=' + myKey;
         if (!isSignup) {
-            url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key='+myKey;
+            url = apiPrefix + 'verifyPassword?key=' + myKey;
         }
         axios.post(url, authData)
             .then(response => {
@@ -62,7 +64,7 @@ export const auth = (email, password, isSignup) => {
                 localStorage.setItem('token', response.data.idToken);
                 localStorage.setItem('expirationDate', expirationDate);
                 localStorage.setItem('userId', response.data.localId);
-                dispatch(authSuccess(response.data.idToken, response.data.localId));
+                dispatch(authSuccess(email, response.data.idToken, response.data.localId));
                 dispatch(checkAuthTimeout(response.data.expiresIn));
             })
             .catch(err => {
@@ -91,8 +93,8 @@ export const authCheckState = () => {
             } else {
                 const userId = localStorage.getItem('userId');
                 dispatch(authSuccess(token, userId));
-                dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000 ));
-            }   
+                dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
+            }
         }
     };
 };
