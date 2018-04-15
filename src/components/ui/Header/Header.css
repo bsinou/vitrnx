@@ -1,21 +1,45 @@
 .Header {
-    background: linear-gradient(to top right,#d1d8f4,#d9cfd0,#d6b8a5, #d87e79, #a94c40);  
+    background: linear-gradient(to top right,#333399,#40268c,#4d1a80, #490d73, #410066);  
     height: 140px;
-    padding-top: 10px;
-    padding-left: 30px;
+    padding-top: 0px;
+    padding-left: 20px;
     text-align: left;
-  }
+}
   
-  .HeaderTitle {
+.Logo {
+    padding: 8px;
+    height: 100%;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.Logo img {
+    height: 100%;
+}
+
+.HeaderTitle {
     margin-top: 16px;  
     padding: 2px;
-    color: #a94c40;
+    color: #f1d923;
     font-weight: bolder;
     font-size: 2em;
-  }
+}
   
   .HeaderSubtitle {
     padding: 2px;
     font-size: 1.5em;
+    color: #f1d923;
   }
+
+  /* @media (min-width: 500px){
+    .NavigationItems {
+        flex-flow: row wrap; 
+    }
+}
+
+@media (min-width: 800px){
+    .NavigationItems {
+        flex-flow: row; 
+    }
+} */
   

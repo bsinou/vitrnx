@@ -5,23 +5,21 @@ import NavigationItem from './NavigationItem/NavigationItem';
 import classes from './NavigationItems.css';
 
 const baseItems = [
-    // {url: '/about', label:'Présentation'}, 
-    { url: '/q/Réflexions', label: 'Réflexions' },
-    { url: '/q/Actualités', label: 'Actualités' },
-    { url: '/s/interview', label: 'Entretien individuel' },
-    { url: '/s/workshops', label: 'Travail en atelier' },
-    { url: '/s/the-book', label: 'Le livre' },
-    { url: '/s/contact', label: 'Contact' },
+    { url: '/', label: 'Home' },
+    { url: '/teaser', label: 'Teaser' },
+    { url: '/info', label: 'Info' },
+    // { url: '/pics', label: 'Images' },
+    { url: '/faq', label: 'FAQ' },
 ]
 
-const anonItems = [
-    ...baseItems,
-    { url: '/login', label: 'S\'identifier' }
-]
+// const anonItems = [
+//     ...baseItems,
+//     { url: '/login', label: 'S\'identifier' }
+// ]
 
 const authItems = [
     ...baseItems,
-    { url: '/logout', label: 'Se déconnecter' }
+    { url: '/logout', label: 'Ciao!' }
 ]
 
 // const adminExtraItems  = [
@@ -31,7 +29,8 @@ const authItems = [
 
 const navigationItems = (props) => {
 
-    const items = props.isAuth ? authItems : anonItems;
+    // const items = props.isAuth ? authItems : anonItems;
+    const items = authItems;
 
     var links = items.map(
         item => (<NavigationItem key={item.url} link={item.url}>{item.label}</NavigationItem>)

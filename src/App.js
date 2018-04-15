@@ -8,9 +8,11 @@ import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import Layout from './hoc/Layout/Layout'
 
 import Home from './static/Home/Home'
+import Teaser from './static/Teaser/Teaser'
 import StaticPages from './static/Pages/Pages'
 
 import Blog from './containers/Blog/Blog'
+import AnonAuth from './hoc/AnonAuth/AnonAuth'
 import Auth from './containers/Auth/Auth'
 import Logout from './containers/Auth/Logout/Logout'
 
@@ -26,16 +28,11 @@ class App extends Component {
 
     let routes = (
       <Switch>
-        <Route path="/s/" component={StaticPages} />
-        <Route path="/p/" component={Blog} />
-        <Route path="/q/" component={Blog} />
+        <Route path="/anonHome" component={AnonAuth} />
         <Route path="/login" component={Auth} />
-        <Route path="/logout" component={Logout} />
-        <Route path="/" exact component={Home} />
-        <Redirect to="/" />
+        <Redirect to="/anonHome" />
       </Switch>
     );
-
 
     if ( this.props.isAuthenticated ) {
       routes = (
@@ -43,6 +40,7 @@ class App extends Component {
           <Route path="/s/" component={StaticPages} />
           <Route path="/p/" component={Blog} />
           <Route path="/q/" component={Blog} />
+          <Route path="/teaser" component={Teaser} />
           <Route path="/admin" component={Auth} />
           <Route path="/login" component={Auth} />
           <Route path="/logout" component={Logout} />
@@ -51,20 +49,7 @@ class App extends Component {
         </Switch>)
     }
 
-
-    // if ( this.props.isAuthenticated ) {
-    //   routes = (
-    //     <Switch>
-    //       <Route path="/checkout" component={Checkout} />
-    //       <Route path="/orders" component={Orders} />
-    //       <Route path="/logout" component={Logout} />
-    //       <Route path="/" exact component={BurgerBuilder} />
-    //       <Redirect to="/" />
-    //     </Switch>
-    //   );
-    // }
-
-    return (
+   return (
       <div className={classes.App}>
         <Layout>
           {routes}

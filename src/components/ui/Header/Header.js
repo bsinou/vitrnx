@@ -1,11 +1,18 @@
 import React from 'react';
 
 import classes  from './Header.css'
+import logo from '../../../assets/images/logo-color.png';
 
-const header = () => (
+//  style={{height: props.height}}
+
+const header = (props) => (
     <header className={classes.Header}>
-        <div className={classes.HeaderTitle}>Un pas après l'autre</div>
-        <div className={classes.Subtitle}>Coaching en santé<br />Marie-Madeleine SINOU</div>
+        <div className={classes.Logo} >
+            <img src={logo} alt="Festival 4.0" />
+        </div>
+        {/* <div className={classes.HeaderTitle}>Festival 4.0</div>         <div className={classes.HeaderSubtitle}>Kinda big party for my friends and their family</div>
+    */}
+
     </header>
 );
 

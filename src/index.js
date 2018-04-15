@@ -1,27 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-
-import { createStore, applyMiddleware, compose, combineReducers} from 'redux'; 
-
 import thunk from 'redux-thunk';
-
 import axios from 'axios';
 
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 
+// VitrnX internal dependencies
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import authReducer from './store/reducers/auth';
-
-
-
-// axios.defaults.baseURL = 'https://mm.sinou.org/api';
-// axios.defaults.baseURL = 'https://montchenu40.firebaseio.com';
-// axios.defaults.headers.common['Authorization'] = 'AUTH TOKEN';
-// axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 axios.interceptors.request.use(
     requestConfig => {
@@ -37,7 +28,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     response => {
         console.log(response);
-        // Edit request config
+        // Here we can edit response config
         return response;
     }, error => {
         console.log(error);
@@ -45,16 +36,15 @@ axios.interceptors.response.use(
     }
 );
 
-
 const rootReducer = combineReducers({
     auth: authReducer
 });
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// Enable Redux devtool in chrome only in dev mode
+const composeEnhancers = (process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null ) || compose ;
 
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
-
 
 const app = (
     <Provider store={store}>

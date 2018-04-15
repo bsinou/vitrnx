@@ -1,12 +1,31 @@
-/* For colors see : http://www.color-hex.com/color-palette/56806 : the Ratatouille palette :)
-
-  light pink        #d87e79 	
-  darker pink 	    #a94c40 	
-	black             #12141c 	
-	blue-ish purple   #3c3f63 	
-	pink-ish purple   #573c56
+/* For colors see : 
+    http://www.color-hex.com/color-palette/
+      - 37498 : you are blue as a night in Cub
+  dark blue #1   #410066 	
+  blue #2     	 #490d73 	
+	blue #3        #4d1a80 	
+	blue #4        #40268c 	
+  blue #5        #333399
+  
+  Additionnal colors
+  - yellow #f1d923
+  - dark red #f0150a
 
   */
+
+.UnusedStyleToShowColors {
+  /* Simple trick so that we can directly have an overview of the various 
+     colors we use in the IDE */
+     background: linear-gradient(to top right,
+        #333399,
+        #40268c,
+        #4d1a80, 
+        #490d73, 
+        #410066,
+        #f1d923,
+        #f0150a      
+        );  
+}
 
 .App {
   text-align: center;
