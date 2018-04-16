@@ -1,0 +1,19 @@
+.IntroTitle {
+    color: black;
+    font-size: 1.5em; 
+}
+  
+
+.VCenteredOuterBox{
+    /* border: 2px solid salmon; */
+    display: table;
+    height: 94%;
+    width: 100%;
+}
+
+.VCenteredInnerBox{
+    /* border: 2px solid blue; */
+    display: table-cell;
+    vertical-align: middle;
+}
+  

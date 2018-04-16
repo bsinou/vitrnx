@@ -25,7 +25,7 @@ class Faq extends Component {
                             <h2>Where is it?</h2>
                             <p>In Montchenu, in the so called <i>Drôme des collines</i>, within the <i>Pays de l'herbassse (the grass land)</i>...
                             </p>
-                            <p> But you might find <a href={gmLink}> this link </a> a little bit more usefull than a poetic description.</p>
+                            <p> But you might find <a href={gmLink} target="_blank"> this link </a> a little bit more usefull than a poetic description.</p>
                             <h2>When is it?</h2>
                             <p>You might already be there on thursday night for the vorspiel and helping with getting the place clean agfain on monday, but the party begins Friday,
                                 the 13th of July at 12.40 and stops on Sunday, the 15th at 12.40 (always short after midday, not midnight for those wondering) </p>

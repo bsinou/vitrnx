@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import Lightbox from 'react-images'
+import {NavLink} from 'react-router-dom';
+
 
 import Aux from '../../hoc/Aux/Aux'
 
 import classes from './Home.css'
+
 
 
 class Home extends Component {
@@ -41,7 +43,11 @@ class Home extends Component {
                     <div className={classes.Post}>
                         <p className={classes.PostTitle}>Here we go!</p>
                         <div className={classes.PostBody}>
-                            <p>More than words... <a href="http://localhost:3000/teaser">A small introducing video</a></p>
+                            <p>More than words... &nbsp;&nbsp;&nbsp;&nbsp;       
+                                <NavLink to="/teaser" className="TextLink">
+                                    A small introducing video
+                                </NavLink>
+                            </p>
                         </div>
                     </div>
                 </div>

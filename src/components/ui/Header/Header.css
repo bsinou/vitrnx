@@ -31,15 +31,31 @@
     color: #f1d923;
   }
 
-  /* @media (min-width: 500px){
-    .NavigationItems {
-        flex-flow: row wrap; 
+@media (max-width: 399px){
+    .Header {
+        height: auto;
+        padding: 8px;
     }
+
+    .Logo {
+        padding: 8px;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
+    
+    .Logo img {
+        width: 100%;
+    }
+    
 }
 
-@media (min-width: 800px){
-    .NavigationItems {
-        flex-flow: row; 
+@media (max-width: 849px){
+    .Header {
+        height: 80px;
     }
-} */
+}
   
+
+  
+

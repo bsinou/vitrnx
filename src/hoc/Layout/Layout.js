@@ -41,7 +41,9 @@ class Layout extends Component {
                     <main className={classes.Content}>
                         {this.props.children}
                     </main>
-                    <Footer />
+                    <Footer
+                        isAuth={this.props.isAuthenticated}
+                    />
                 </Aux>
             );
         } else {

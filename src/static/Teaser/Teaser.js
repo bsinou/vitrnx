@@ -35,8 +35,8 @@ class Teaser extends Component {
     }
 
     onClickFullscreen = () => {
-        this.setState({ playing: true })
         screenfull.request(findDOMNode(this.player))
+        this.setState({ playing: true })
     }
 
     renderLoadButton = (url, label) => {

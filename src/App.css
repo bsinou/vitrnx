@@ -53,6 +53,17 @@
   font-size: 1.5em;
 }
 
+:global .TextLink {
+  color: black;
+}
+
+:global .TextLink a:hover,
+:global .TextLink a:active {
+  color: red;
+  text-decoration: underline;
+}
+
+
 
 /* OLD STOCK 
 
