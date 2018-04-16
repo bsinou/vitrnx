@@ -8,6 +8,7 @@ import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import Layout from './hoc/Layout/Layout'
 
 import Home from './static/Home/Home'
+import Faq from './static/Faq/Faq'
 import Teaser from './static/Teaser/Teaser'
 import StaticPages from './static/Pages/Pages'
 
@@ -41,7 +42,8 @@ class App extends Component {
           <Route path="/p/" component={Blog} />
           <Route path="/q/" component={Blog} />
           <Route path="/teaser" component={Teaser} />
-          <Route path="/admin" component={Auth} />
+          <Route path="/faq" exact component={Faq} />
+           <Route path="/admin" component={Auth} />
           <Route path="/login" component={Auth} />
           <Route path="/logout" component={Logout} />
           <Route path="/" exact component={Home} />

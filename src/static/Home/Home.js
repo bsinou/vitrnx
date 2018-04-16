@@ -41,7 +41,7 @@ class Home extends Component {
                     <div className={classes.Post}>
                         <p className={classes.PostTitle}>Here we go!</p>
                         <div className={classes.PostBody}>
-                            <p>More than words... A small introducing video</p>
+                            <p>More than words... <a href="http://localhost:3000/teaser">A small introducing video</a></p>
                         </div>
                     </div>
                 </div>

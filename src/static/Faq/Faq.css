@@ -1,0 +1,48 @@
+/** BLOG STYLING */
+  
+  .Posts {
+    /*border-top: 1px solid  #d87e79;*/
+    margin-top: 20px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    width: 80%;
+    padding: 16px;
+    margin: auto;
+  }
+  
+  .Post {
+    width: 80%;
+    padding: 4px 8px 8px 20px;
+    border: 1px solid  #f1d923;
+    box-shadow: 0 2px 3px #619015;
+    margin: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+    text-align: left;
+  } 
+  
+  .PostTitle, .IntroTitle {
+    color: black;
+    font-size: 1.5em; 
+  }
+
+@media (max-width: 800px){
+    .Post {
+      width: 90%;
+    }
+  
+    .Posts {
+      width: 90%;
+    }
+}
+
+@media (max-width: 500px){
+  .Post {
+    width: 100%;
+  }
+
+  .Posts {
+    width: 90%;
+  }
+}

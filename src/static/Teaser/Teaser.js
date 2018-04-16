@@ -4,6 +4,10 @@ import { findDOMNode } from 'react-dom'
 import screenfull from 'screenfull'
 import ReactPlayer from 'react-player'
 
+import Button from '../../components/ui/Button/Button';
+
+import classes from './Teaser.css';
+
 
 class Teaser extends Component {
     state = {
@@ -23,7 +27,6 @@ class Teaser extends Component {
     }
 
     onPlay = () => {
-        console.log('onPlay')
         this.setState({ playing: true })
     }
     onPause = () => {
@@ -32,6 +35,7 @@ class Teaser extends Component {
     }
 
     onClickFullscreen = () => {
+        this.setState({ playing: true })
         screenfull.request(findDOMNode(this.player))
     }
 
@@ -50,33 +54,38 @@ class Teaser extends Component {
     render() {
 
         const { url, playing, volume, muted, loop, playbackRate } = this.state
-        
+
         return (
             <div>
-                <ReactPlayer
-                    ref={this.ref}
-                    className='react-player'
-                    url={url}
-                    playing={playing}
-                    loop={loop}
-                    playbackRate={playbackRate}
-                    volume={volume}
-                    muted={muted}
-                    onReady={() => console.log('onReady')}
-                    onStart={() => console.log('onStart')}
-                    onPlay={this.onPlay}
-                    onPause={this.onPause}
-                    onBuffer={() => console.log('onBuffer')}
-                    onSeek={e => console.log('onSeek', e)}
-                    onEnded={this.onEnded}
-                    onError={e => console.log('onError', e)}
-                    onProgress={this.onProgress}
-                    onDuration={this.onDuration}
-                />
-                <button onClick={this.stop}>Stop</button>
-                <button onClick={this.playPause}>{playing ? 'Pause' : 'Play'}</button>
-                <button onClick={this.onClickFullscreen}>Fullscreen</button>
-                {/* <ReactPlayer url='https://40.sinou.org/EcceHomo4.mp4' playing /> */}
+                <div  className={classes.InColumn}>
+                    <ReactPlayer
+                        ref={this.ref}
+                        className='react-player'
+                        url={url}
+                        playing={playing}
+                        loop={loop}
+                        playbackRate={playbackRate}
+                        volume={volume}
+                        muted={muted}
+                        onReady={() => console.log('onReady')}
+                        onStart={() => console.log('onStart')}
+                        onPlay={this.onPlay}
+                        onPause={this.onPause}
+                        onBuffer={() => console.log('onBuffer')}
+                        onSeek={e => console.log('onSeek', e)}
+                        onEnded={this.onEnded}
+                        onError={e => console.log('onError', e)}
+                        onProgress={this.onProgress}
+                        onDuration={this.onDuration}
+                    />
+                </div>
+                <br />
+                <div className={classes.InColumn} >
+                    <Button clicked={this.playPause} btnType="Success">{playing ? 'PAUSE' : 'PLAY'}</Button>
+                    <Button clicked={this.onClickFullscreen} btnType="Danger">FULLSCREEN</Button>
+                    {/* <button onClick={this.playPause}>{playing ? 'Pause' : 'Play'}</button>
+                    <button onClick={}>Fullscreen</button> */}
+                </div>
             </div>
         );
     }

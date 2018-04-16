@@ -91,13 +91,13 @@ class Auth extends Component {
                 touched: true
             }
         };
-        console.log("coucou handler: ",controlName ," - ",  event.target.value);
+        // console.log("coucou handler: ",controlName ," - ",  event.target.value);
 
         this.setState( { controls: updatedControls } );
     }
 
     submitHandler = ( event ) => {
-        console.log("Here", this.state.controls.email.value);
+        // console.log("Here", this.state.controls.email.value);
         event.preventDefault();
         this.props.onAuth( this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup );
     }

@@ -3,7 +3,7 @@ import axios from 'axios';
 import * as actionTypes from './actionTypes';
 
 const apiPrefix = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/';
-// var myKey='A valid firebase API key'
+var myKey='A valid firebase API key'
 
 export const authStart = () => {
     return {

@@ -1,5 +1,5 @@
 import React from 'react';
-// import Time from 'react-time';
+import Time from 'react-time';
 
 import classes from './Post.css';
 
@@ -10,11 +10,11 @@ const post = (props) => (
         <div className={classes.Info}>
             <div className={classes.Author}>
                 {props.author},&nbsp; 
-                {/* <Time 
+                <Time 
                     value={props.date} 
                     format="DD MMMM YYYY" 
                     locale="fr"
-                /> */}
+                />
             </div>
         </div>
     </article>
