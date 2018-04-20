@@ -34,10 +34,10 @@ class App extends Component {
 
     let routes = (
       <Switch>
-        <Route path="/anonHome" component={AnonAuth} />
+        <Route path="/" component={AnonAuth} />
         <Route path="/login" component={Auth} />
         {/* <Route path="/teaser" component={Teaser} /> */}
-        <Redirect to="/anonHome" />
+        <Redirect to="/" />
       </Switch>
     );
 
