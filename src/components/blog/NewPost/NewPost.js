@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import apiServer from '../../../apiServer';
 
-import './NewPost.css';
+import classes from  './NewPost.css';
 
 class NewPost extends Component {
     state = {
         title: '',
         content: '',
-        author: 'Bruno'
+        author: ''
     }
 
     postDataHandler = () => {
@@ -17,12 +17,14 @@ class NewPost extends Component {
             author: this.state.author,
         };
 
-        axios.post('/posts', data).then(response => {console.log(response)});
+        apiServer.post('/posts', data).then(response => {
+            console.log(response)
+        });
     }
 
     render() {
         return (
-            <div className="NewPost">
+            <div className={classes.NewPost}>
                 <h1>Add a Post</h1>
                 <label>Title</label>
                 <input type="text" value={this.state.title} onChange={(event) => this.setState({ title: event.target.value })} />

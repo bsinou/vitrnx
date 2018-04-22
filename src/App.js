@@ -13,9 +13,14 @@ import Teaser from './static/Teaser/Teaser'
 import StaticPages from './static/Pages/Pages'
 
 import Blog from './containers/Blog/Blog'
-import AnonAuth from './hoc/AnonAuth/AnonAuth'
 import Auth from './containers/Auth/Auth'
 import Logout from './containers/Auth/Logout/Logout'
+
+import Posts from './components/blog/Posts/Posts';
+import NewPost from './components/blog/NewPost/NewPost';
+
+
+import AnonAuth from './hoc/AnonAuth/AnonAuth'
 
 import * as actions from './store/actions/index';
 
@@ -45,9 +50,11 @@ class App extends Component {
       routes = (
         <Switch>
           <Route path="/s/" component={StaticPages} />
+          <Route path="/p/new" exact component={NewPost} />
           <Route path="/p/" component={Blog} />
           <Route path="/q/" component={Blog} />
           <Route path="/teaser" component={Teaser} />
+          <Route path="/news" component={Posts} />
           <Route path="/faq" exact component={Faq} />
           <Route path="/admin" component={Auth} />
           <Route path="/login" component={Auth} />

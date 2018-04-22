@@ -8,10 +8,10 @@ class AnonAuth extends Component {
 
     render() {
         return (
-            <div class={classes.VCenteredOuterBox}>
-                <div class={classes.VCenteredInnerBox}>
-                    <div class={classes.IntroTitle}>You must be logged in to access this page</div>
-                    <Auth props={this.props} />
+            <div className={classes.VCenteredOuterBox}>
+                <div className={classes.VCenteredInnerBox}>
+                    <div className={classes.IntroTitle}>You must be logged in to access this page</div>
+                    <Auth className={this.props} />
                 </div>
             </div>
         );

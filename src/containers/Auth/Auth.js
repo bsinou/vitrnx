@@ -68,7 +68,7 @@ class Auth extends Component {
         }
 
         if ( rules.isEmail ) {
-            console.log("Here", this.state.controls.email.value);
+            // console.log("Here", this.state.controls.email.value);
             const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
             isValid = pattern.test( value ) && isValid
         }

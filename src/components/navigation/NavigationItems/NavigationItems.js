@@ -7,6 +7,7 @@ import classes from './NavigationItems.css';
 const baseItems = [
     { url: '/', label: 'Home' },
     { url: '/teaser', label: 'Teaser' },
+    { url: '/q/news', label: 'News' },
     // { url: '/info', label: 'Info' },
     // { url: '/pics', label: 'Images' },
     { url: '/faq', label: 'FAQ' },

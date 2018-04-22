@@ -4,11 +4,13 @@ import React, { Component } from 'react';
 
 import classes from './Posts.css';
 
-import axios from 'axios';
+// import axios from 'axios';
+import apiServer from '../../../apiServer';
 import Post from '../Post/Post';
 // import FullPost from '../../components/blog/FullPost/FullPost';
 // import NewPost from '../../components/blog/NewPost/NewPost';
 import './Posts.css';
+import { isNull } from 'util';
 
 class Posts extends Component {
 
@@ -18,7 +20,7 @@ class Posts extends Component {
         error: false
     }
 
-    componentDidMount () {
+    componentDidMount() {
         console.log(this.props);
         this.loadData();
     }
@@ -27,14 +29,26 @@ class Posts extends Component {
         this.loadData();
     }
 
-    loadData () {
-        if ( this.props.match.params.id ) {
-            if ( !this.state.loadedCategory || this.state.loadedCategory !== this.props.match.params.id)  {
-                axios.get( '/by-tag/' + this.props.match.params.id )
-                    .then( response => {
+    loadData() {
+        if (this.props.match.params.id) {
+            if (!this.state.loadedCategory || this.state.loadedCategory !== this.props.match.params.id) {
+                // axios.get( '/by-tag/' + this.props.match.params.id )
+                // var authOptions = {
+                //     method: 'GET',
+                //     url: 'http://localhost:8888/api/posts',
+                //     headers: {
+                //         'Authorization': 'AUTH TOKEN',
+                //         'Content-Type': 'application/json'
+                //     },
+                //     json: true
+                // };
+                apiServer.get( '/posts?tag=' + this.props.match.params.id )
+                    // apiServer.post('/posts/')
+                    .then(response => {
                         const posts = response.data.slice(0, 10);
                         const updatedPosts = posts.map(
                             post => {
+                                console.log('Got a post')
                                 return {
                                     ...post
                                 }
@@ -49,8 +63,8 @@ class Posts extends Component {
         }
     }
 
-    postSelectedHandler = (id) => {
-        this.props.history.push('/p/' + id);
+    postSelectedHandler = (path) => {
+        this.props.history.push('/p/' + path);
     };
 
     render() {
@@ -60,12 +74,13 @@ class Posts extends Component {
                 post => {
                     return (
                         <Post
-                            key={post.id}
+                            key={post.path}
+                            path={post.path}
                             title={post.title}
                             author={post.author}
                             desc={post.desc}
-                            date={post.date}
-                            clicked={() => this.postSelectedHandler(post.id)}
+                            date={post.createdOn}
+                            clicked={() => this.postSelectedHandler(post.path)}
                         />
                     );
                 });
