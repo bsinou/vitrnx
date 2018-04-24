@@ -43,6 +43,7 @@
     "react-player": "^1.4.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
+    "react-swipeable-views": "^0.12.13",
     "react-time": "^4.3.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",

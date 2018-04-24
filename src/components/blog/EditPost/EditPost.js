@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { Tabs, Tab } from 'material-ui/Tabs';
+// From https://github.com/oliviertassinari/react-swipeable-views
+import SwipeableViews from 'react-swipeable-views';
+
 
 import { connect } from 'react-redux';
 import axios from '../../../apiServer';
@@ -7,6 +11,19 @@ import axios from '../../../apiServer';
 import TextField from 'material-ui/TextField';
 
 import classes from './EditPost.css';
+
+
+const styles = {
+    headline: {
+        fontSize: 24,
+        paddingTop: 16,
+        marginBottom: 12,
+        fontWeight: 400,
+    },
+    slide: {
+        padding: 10,
+    },
+};
 
 class EditPost extends Component {
     state = {
@@ -23,6 +40,20 @@ class EditPost extends Component {
         lastUpdatedBy: ''
     }
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            slideIndex: 0,
+        };
+    }
+
+    handleChange = (value) => {
+        this.setState({
+            slideIndex: value,
+        });
+    };
+
+
     componentDidMount() {
         console.log(this.props);
         this.loadData();
@@ -37,7 +68,7 @@ class EditPost extends Component {
         if (cId) {
             if (!this.state.loadedPost || this.state.loadedPost.path !== cId) {
                 var options = { headers: { 'Authorization': this.props.token } };
-                axios.get('/posts/'+cId, options).then(response => {
+                axios.get('/posts/' + cId, options).then(response => {
                     console.log(response.data)
                     this.setState({ ...response.data.post });
                 });
@@ -72,7 +103,7 @@ class EditPost extends Component {
         // retrieve token from redux and pass it to axios
         var options = { headers: { 'Authorization': this.props.token } };
 
-        console.log('### About to send post\n',data, options)
+        console.log('### About to send post\n', data, options)
 
         axios.post('/posts', data, options).then(response => {
             console.log(response); // TODO Give feedback to the user 
@@ -85,18 +116,33 @@ class EditPost extends Component {
     render() {
         return (
             <div className={classes.EditPost}>
-                <h1>Add a Post</h1>
-                <TextField hintText="A title for your post" value={this.state.title} onChange={(event) => this.setState({ title: event.target.value })} /><br />
-                <TextField hintText="A path for your post" value={this.state.path} onChange={(event) => this.setState({ path: event.target.value })} /><br />
-                <TextField hintText="Some tags for your post" value={this.state.tags} onChange={(event) => this.setState({ tags: event.target.value })} /><br />
-                <TextField hintText="A short desc of your post" value={this.state.desc} onChange={(event) => this.setState({ desc: event.target.value })} /><br />
-                {/* <label>Title</label>
-                <input type="text"  />
+                <Tabs
+                    onChange={this.handleChange}
+                    value={this.state.slideIndex} >
+                    <Tab label="Meta" value={0} />
+                    <Tab label="Body" value={1} />
+                </Tabs>
 
-                <label>Content</label>
-                <textarea rows="4" value={this.state.content} onChange={(event) => this.setState({ content: event.target.value })} />
-
-            */}
+                <SwipeableViews
+                    index={this.state.slideIndex}
+                    onChangeIndex={this.handleChange}>
+                    <div>
+                        <TextField hintText="A title for your post" value={this.state.title} onChange={(event) => this.setState({ title: event.target.value })} /><br />
+                        <TextField hintText="A path for your post" value={this.state.path} onChange={(event) => this.setState({ path: event.target.value })} /><br />
+                        <TextField hintText="Some tags for your post" value={this.state.tags} onChange={(event) => this.setState({ tags: event.target.value })} /><br />
+                        <TextField
+                            hintText="A short desc of your post"
+                            multiLine={true}
+                            rows={2}
+                            rowsMax={5}
+                            value={this.state.desc}
+                            onChange={(event) => this.setState({ desc: event.target.value })}
+                        />
+                    </div>
+                    <div style={styles.slide}>
+                        TODO : EDIT BODY
+                    </div>
+                </SwipeableViews>
                 <button onClick={this.postDataHandler}>Add Post</button>
             </div>
         );
