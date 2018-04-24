@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
-// import { Redirect } from 'react-router';
-// import { Route } from 'react-router-dom'; 
 
 import classes from './Posts.css';
 
-// import axios from 'axios';
 import apiServer from '../../../apiServer';
-import Post from '../Post/Post';
-// import FullPost from '../../components/blog/FullPost/FullPost';
-// import NewPost from '../../components/blog/NewPost/NewPost';
+import PostCard from '../PostCard/PostCard';
+
 import './Posts.css';
-import { isNull } from 'util';
 
 class Posts extends Component {
 
@@ -21,7 +16,9 @@ class Posts extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props);
+        console.log('In Posts.componentDidMount(), props: ', this.props);
+        // console.log('In Posts.componentDidMount(), route token: ', this.props.route.token);
+
         this.loadData();
     }
 
@@ -30,6 +27,8 @@ class Posts extends Component {
     }
 
     loadData() {
+        if (!this.props.token) {return;}
+        
         if (this.props.match.params.id) {
             if (!this.state.loadedCategory || this.state.loadedCategory !== this.props.match.params.id) {
                 // axios.get( '/by-tag/' + this.props.match.params.id )
@@ -42,7 +41,11 @@ class Posts extends Component {
                 //     },
                 //     json: true
                 // };
-                apiServer.get( '/posts?tag=' + this.props.match.params.id )
+                
+                // retrieve token from redux and pass it to axios
+                var options = { headers: { 'Authorization': this.props.token } };
+
+                apiServer.get( '/posts?tag=' + this.props.match.params.id, options )
                     // apiServer.post('/posts/')
                     .then(response => {
                         const posts = response.data.slice(0, 10);
@@ -73,13 +76,13 @@ class Posts extends Component {
             posts = this.state.posts.map(
                 post => {
                     return (
-                        <Post
+                        <PostCard
                             key={post.path}
                             path={post.path}
                             title={post.title}
                             author={post.author}
                             desc={post.desc}
-                            date={post.createdOn}
+                            date={post.date}
                             clicked={() => this.postSelectedHandler(post.path)}
                         />
                     );

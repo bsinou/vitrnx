@@ -1,4 +1,4 @@
-.NewPost {
+.EditPost {
     width: 80%;
     margin: 20px auto;
     border: 1px solid #eee;
@@ -6,16 +6,16 @@
     text-align: center;
 }
 
-.NewPost label {
+.EditPost label {
     display: block;
     margin: 10px auto;
     text-align: center;
     font-weight: bold;
 }
 
-.NewPost input,
-.NewPost textarea,
-.NewPost select {
+.EditPost input,
+.EditPost textarea,
+.EditPost select {
     display: block;
     width: 80%;
     box-sizing: border-box;
@@ -25,7 +25,7 @@
     margin: auto;
 }
 
-.NewPost button {
+.EditPost button {
     margin: 5px 0;
     padding: 10px;
     font: inherit;
@@ -35,8 +35,8 @@
     cursor: pointer;
 }
 
-.NewPost button:hover,
-.NewPost button:active {
+.EditPost button:hover,
+.EditPost button:active {
     color: white;
     background-color: #fa923f;
 }

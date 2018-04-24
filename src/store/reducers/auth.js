@@ -2,25 +2,26 @@ import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../utility';
 
 const initialState = {
-    email: 'anonymous',
     token: null,
     userId: null,
-    error: null,
+    email: 'anonymous',
+
+    authRedirectPath: '/',
     loading: false,
-    authRedirectPath: '/'
+    error: null
 };
 
 const authStart = ( state, action ) => {
-    return updateObject( state, { error: null, loading: true } );
+    return updateObject( state, { loading: true, error: null } );
 };
 
 const authSuccess = (state, action) => {
     return updateObject( state, { 
-        email: action.email,
         token: action.token,
         userId: action.userId,
-        error: null,
-        loading: false
+        email: action.email,
+        loading: false,
+        error: null   
      } );
 };
 

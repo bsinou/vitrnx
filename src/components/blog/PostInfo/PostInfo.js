@@ -1,36 +1,35 @@
 import React from 'react';
-import Time from 'react-time';
+import moment from 'moment';
+
+import { NavLink } from 'react-router-dom';
 
 import classes from './PostInfo.css';
-
-// const tagL = (props) => {
-//     console.log('Handling tag, value: ' + props.tvalue)
-//     return (
-//         <a href="/"> #{props.tvalue}</a>
-//     );
-// }
 
 const postInfo = (props) => {
     let tags;
     if (props.tags) {
         tags = props.tags.split(' ').map(tag => {
-            return (<a key={tag} href={'/q/'+tag}>#{tag} </a>);
-        }); 
+            return (<NavLink key={tag} to={'/q/' + tag} className="TextLink">#{tag}</NavLink>);
+        });
     }
 
     return (
         <div className={classes.PostInfo}>
             <div className={classes.Author}>
-                Par {props.author}, le&nbsp;
-                <Time 
-                    value={props.date} 
-                    format="DD MMMM YYYY" 
-                    locale="fr"
-                />. 
+                {props.author}, on {moment(props.date).format('MMMM Do YYYY')} | {tags}
             </div>
-            <div> &nbsp;&nbsp;&nbsp;Catégories: {tags} </div>
         </div>
     );
 }
 
 export default postInfo;
+
+// Stock
+/* With: 
+// import Time from 'react-time';
+
+<Time 
+        value={props.date} 
+        format="DD MMMM YYYY" 
+        locale="fr"
+/>.  */

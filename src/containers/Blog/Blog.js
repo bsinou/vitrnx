@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-// import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-// import axios from 'axios';
-import apiServer from '../../apiServer';
+import axios from '../../apiServer';
 
 import Posts from '../../components/blog/Posts/Posts';
-import FullPost from '../../components/blog/FullPost/FullPost';
-
-import {NavLink} from 'react-router-dom';
+import Post from '../../components/blog/Post/Post';
 
 import './Blog.css';
+
 
 class Blog extends Component {
 
@@ -22,19 +21,10 @@ class Blog extends Component {
 
     componentDidMount() {
         console.log('componentDidMount, url:' + this.props.match.params)
+        // retrieve token from redux and pass it to axios
+        var options = { headers: { 'Authorization': this.props.token } };
 
-        // var authOptions = {
-        //     method: 'GET',
-        //     url: '/posts',
-        //     headers: {
-        //         'Authorization': 'AUTH TOKEN',
-        //         'Content-Type': 'application/json'
-        //     },
-        //     json: true
-        // };
-
-        apiServer.get('/posts').then(response => {
-
+        axios.get('/posts', options).then(response => {
             const posts = response.data.slice(0, 4);
             const updatedPosts = posts.map(
                 post => {
@@ -57,7 +47,6 @@ class Blog extends Component {
     };
 
     render() {
-
         // TODO implement admin only addition 
         let canAdd = true;
 
@@ -71,8 +60,12 @@ class Blog extends Component {
             <div>
                 {canAdd ? newBtn : null}
 
-                <Route path={'/p/:id'} exact component={FullPost} />
-                <Route path={'/q/:id'} exact component={Posts} />
+                <Route path={'/p/:id'} exact component={(props) => (
+                    <Post  {...props} token={this.props.token} />
+                )} />
+                <Route path={'/q/:id'} exact render={(props) => (
+                    <Posts  {...props} token={this.props.token} />
+                )} />
 
                 {/* TODO: remove below line*/}
                 <Route path={'/q'} component={Posts} />
@@ -111,4 +104,11 @@ class Blog extends Component {
     // }
 }
 
-export default Blog;
+
+const mapStateToProps = state => {
+    return {
+        token: state.auth.token
+    };
+};
+
+export default connect(mapStateToProps)(Blog);

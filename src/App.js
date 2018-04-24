@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import classes from './App.css';
 
+// Routing
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 
+// Redux
+import { connect } from 'react-redux';
+import * as actions from './store/actions/index';
 
+// Vitrnx specific components
+import AnonAuth from './hoc/AnonAuth/AnonAuth'
 import Layout from './hoc/Layout/Layout'
 
 import Home from './static/Home/Home'
@@ -17,16 +21,18 @@ import Auth from './containers/Auth/Auth'
 import Logout from './containers/Auth/Logout/Logout'
 
 import Posts from './components/blog/Posts/Posts';
-import NewPost from './components/blog/NewPost/NewPost';
+import EditPost from './components/blog/EditPost/EditPost';
+
+// Styling
+import classes from './App.css';
+// Provides default material UI css props to children components0
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 
-import AnonAuth from './hoc/AnonAuth/AnonAuth'
-
-import * as actions from './store/actions/index';
 
 class App extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.props.onTryAutoSignup();
   }
@@ -46,15 +52,15 @@ class App extends Component {
       </Switch>
     );
 
-    if ( this.props.isAuthenticated ) {
+    if (this.props.isAuthenticated) {
       routes = (
         <Switch>
           <Route path="/s/" component={StaticPages} />
-          <Route path="/p/new" exact component={NewPost} />
+          <Route path="/p/new" exact component={EditPost} />
           <Route path="/p/" component={Blog} />
           <Route path="/q/" component={Blog} />
-          <Route path="/teaser" component={Teaser} />
           <Route path="/news" component={Posts} />
+          <Route path="/teaser" component={Teaser} />
           <Route path="/faq" exact component={Faq} />
           <Route path="/admin" component={Auth} />
           <Route path="/login" component={Auth} />
@@ -64,12 +70,14 @@ class App extends Component {
         </Switch>)
     }
 
-   return (
-      <div className={classes.App}>
-        <Layout>
-          {routes}
-        </Layout>
-      </div>
+    return (
+      <MuiThemeProvider>
+        <div className={classes.App}>
+          <Layout>
+            {routes}
+          </Layout>
+        </div>
+      </MuiThemeProvider>
     );
   }
 }

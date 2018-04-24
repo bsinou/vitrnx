@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import {NavLink} from 'react-router-dom';
 
-
 import Aux from '../../hoc/Aux/Aux'
 
 import classes from './Home.css'
-
 
 
 class Home extends Component {

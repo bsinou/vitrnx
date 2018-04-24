@@ -3,7 +3,8 @@ import axios from 'axios';
 import * as actionTypes from './actionTypes';
 
 const apiPrefix = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/';
-var myKey='A valid firebase API key'
+var myKey='AIzaSyBTPRFJmUcdrezg4goOtBSVBt5JEJINm1Y'
+// var myKey='A valid firebase API key'
 
 export const authStart = () => {
     return {
@@ -11,12 +12,12 @@ export const authStart = () => {
     };
 };
 
-export const authSuccess = (email, token, userId) => {
+export const authSuccess = (token, userId, email) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
-        email: email,
         token: token,
-        userId: userId
+        userId: userId,
+        email: email
     };
 };
 
@@ -57,14 +58,16 @@ export const auth = (email, password, isSignup) => {
         if (!isSignup) {
             url = apiPrefix + 'verifyPassword?key=' + myKey;
         }
+
+        // console.log('About to send auth request', url);
+         
         axios.post(url, authData)
             .then(response => {
-                console.log(response);
                 const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
                 localStorage.setItem('token', response.data.idToken);
                 localStorage.setItem('expirationDate', expirationDate);
                 localStorage.setItem('userId', response.data.localId);
-                dispatch(authSuccess(email, response.data.idToken, response.data.localId));
+                dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
                 dispatch(checkAuthTimeout(response.data.expiresIn));
             })
             .catch(err => {
