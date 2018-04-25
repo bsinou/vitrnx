@@ -1,8 +1,9 @@
 import React from 'react';
 import Markdown from 'react-markdown';
-import Editor from './editor';
-import CodeBlock from './code-block';
-import MarkdownControls from './markdown-controls';
+import Textarea from 'react-expanding-textarea';
+// import TextField from 'material-ui/TextField';
+
+import classes from './MdEditor'
 
 const initialSource = `
 # Live demo
@@ -63,29 +64,30 @@ class Demo extends React.PureComponent {
   }
 
   handleMarkdownChange(evt) {
-    this.setState({markdownSrc: evt.target.value})
+    this.setState({ markdownSrc: evt.target.value })
   }
 
   handleControlsChange(mode) {
-    this.setState({htmlMode: mode})
+    this.setState({ htmlMode: mode })
   }
 
   render() {
     return (
-      <div className="demo">
-        <div className="editor-pane">
-          <MarkdownControls onChange={this.handleControlsChange} mode={this.state.htmlMode} />
-
-          <Editor value={this.state.markdownSrc} onChange={this.handleMarkdownChange} />
+      <div className="classes.MdEditor">
+        <div className="classes.Editor">
+          <Textarea
+            hintText="A short desc of your post"
+            multiLine={true}
+            rows={10}
+            value={this.state.markdownSrc}
+            onChange={this.handleMarkdownChange}
+          />
         </div>
 
-        <div className="result-pane">
+        <div className="classes.Preview">
           <Markdown
             className="result"
             source={this.state.markdownSrc}
-            skipHtml={this.state.htmlMode === 'skip'}
-            escapeHtml={this.state.htmlMode === 'escape'}
-            renderers={{code: CodeBlock}}
           />
         </div>
       </div>
@@ -97,4 +99,4 @@ class Demo extends React.PureComponent {
 //   ReactDOM.render(<Demo />, document.getElementById('main'))
 // }
 
-export default  Demo;
+export default Demo;

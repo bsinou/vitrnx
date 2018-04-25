@@ -4,7 +4,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
 
 import ReactMarkdown from 'react-markdown';
-import MdEditor from './MdEditor';
+import MdEditor from '../../ui/MdEditor/MdEditor';
 
 import { connect } from 'react-redux';
 import axios from '../../../apiServer';
