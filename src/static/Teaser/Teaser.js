@@ -56,7 +56,7 @@ class Teaser extends Component {
         const { url, playing, volume, muted, loop, playbackRate } = this.state
 
         return (
-            <div>
+            <div className={classes.Box}>
                 <div  className={classes.InColumn}>
                     <ReactPlayer
                         ref={this.ref}

@@ -27,8 +27,27 @@ import EditPost from './components/blog/EditPost/EditPost';
 import classes from './App.css';
 // Provides default material UI css props to children components0
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { cyan500 } from 'material-ui/styles/colors';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 
+// This replaces the textColor value on the palette
+// and then update the keys for each component that depends on it.
+// More on Colors: http://www.material-ui.com/#/customization/colors
+const muiTheme = getMuiTheme({
+  // palette: {
+  //   textColor: cyan500,
+  // },
+  // appBar: {
+  //   height: 50,
+  // },
+  tabs: {
+    backgroundColor: '#333399'
+  },
+  inkBar: {
+    backgroundColor: '#f1d923'
+  },
+});
 
 class App extends Component {
 
@@ -71,7 +90,7 @@ class App extends Component {
     }
 
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={muiTheme}>
         <div className={classes.App}>
           <Layout>
             {routes}

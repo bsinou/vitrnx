@@ -8,15 +8,9 @@ const baseItems = [
     { url: '/', label: 'Home' },
     { url: '/teaser', label: 'Teaser' },
     { url: '/q/news', label: 'News' },
-    // { url: '/info', label: 'Info' },
-    // { url: '/pics', label: 'Images' },
     { url: '/faq', label: 'FAQ' },
 ]
 
-// const anonItems = [
-//     ...baseItems,
-//     { url: '/login', label: 'S\'identifier' }
-// ]
 
 const authItems = [
     ...baseItems,
@@ -25,8 +19,8 @@ const authItems = [
 
 // const adminExtraItems  = [
 //     ...baseItems, 
-//     {url: '/logout', label:'Se deconnecter'} 
 // ]
+
 
 const navigationItems = (props) => {
 

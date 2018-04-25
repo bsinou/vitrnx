@@ -3,6 +3,8 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 // From https://github.com/oliviertassinari/react-swipeable-views
 import SwipeableViews from 'react-swipeable-views';
 
+import ReactMarkdown from 'react-markdown';
+import MdEditor from './MdEditor';
 
 import { connect } from 'react-redux';
 import axios from '../../../apiServer';
@@ -24,6 +26,8 @@ const styles = {
         padding: 10,
     },
 };
+
+const input = '# This is a header\n\nAnd this is a paragraph'
 
 class EditPost extends Component {
     state = {
@@ -117,9 +121,10 @@ class EditPost extends Component {
         return (
             <div className={classes.EditPost}>
                 <Tabs
+                    // inkBarStyle={{background: 'pink'}}
                     onChange={this.handleChange}
                     value={this.state.slideIndex} >
-                    <Tab label="Meta" value={0} />
+                    <Tab label="Summary" value={0} />
                     <Tab label="Body" value={1} />
                 </Tabs>
 
@@ -140,7 +145,7 @@ class EditPost extends Component {
                         />
                     </div>
                     <div style={styles.slide}>
-                        TODO : EDIT BODY
+                        <MdEditor />
                     </div>
                 </SwipeableViews>
                 <button onClick={this.postDataHandler}>Add Post</button>

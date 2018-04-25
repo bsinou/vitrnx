@@ -30,8 +30,13 @@ class Layout extends Component {
         if (this.props.isAuthenticated) {
             return (
                 <Aux>
-                    <Header />
+
+
+                    background-color: #000000;
+
+                    <Header className={classes.Header} />
                     <Toolbar
+                        className={classes.Toolbar}
                         isAuth={this.props.isAuthenticated}
                         drawerToggleClicked={this.sideDrawerToggleHandler} />
                     <SideDrawer
@@ -42,6 +47,7 @@ class Layout extends Component {
                         {this.props.children}
                     </main>
                     <Footer
+                        className={classes.Footer}
                         isAuth={this.props.isAuthenticated}
                     />
                 </Aux>

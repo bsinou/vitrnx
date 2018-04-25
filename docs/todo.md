@@ -2,6 +2,8 @@
 
 ## Material UI Cards
 
+- First, check the [doc](https://material.io/guidelines/components/cards.html#cards-behavior)
+
 
 ## Hover buttons 
 
@@ -9,5 +11,8 @@
 
 ## MD Editor
 
+## Dev Ops 
+
+Downgrad react version.
 
 
