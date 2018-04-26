@@ -7,11 +7,11 @@
 }
 
   
-.PageTitle, h1 {
+.Title, h1 {
     color: #a94c40;
     font-size: 1.5em;
     font-weight: normal; 
- }
+}
 
 h2 {
     font-size: 1.2em;
@@ -19,13 +19,13 @@ h2 {
     color: black;
 }
 
-.PageSubtitle, h3 {
+.Desc, h3 {
     font-size: 1.0em;
     font-style: italic;
     margin-bottom: 16px;
 }
   
-.PageBody {
+.Body {
       text-align: left;  
 }  
 

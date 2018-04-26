@@ -3,12 +3,23 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
+
 import axios from '../../apiServer';
 
 import Posts from '../../components/blog/Posts/Posts';
 import Post from '../../components/blog/Post/Post';
 
-import './Blog.css';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import ContentEdit from 'material-ui/svg-icons/editor/mode-edit';
+import ContentDelete from 'material-ui/svg-icons/content/clear';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+
+import classes from './Blog.css';
+
+const style = {
+    marginRight: 14,
+    marginTop: 10,
+};
 
 
 class Blog extends Component {
@@ -46,14 +57,46 @@ class Blog extends Component {
         this.props.history.push('/p/' + id);
     };
 
+    newPostHandler = () => {
+        console.log('Here')
+        this.props.history.push('/p/new');
+    };
+
     render() {
         // TODO implement admin only addition 
         let canAdd = true;
 
         let newBtn = (
-            <NavLink to="/p/new" className="TextLink">
-                Create a new post
-            </NavLink>
+            <div>
+                <ul className={classes.SideButtons} >
+                    <li>
+                        <FloatingActionButton
+                            onClick={this.newPostHandler}
+                            mini={true}
+                            secondary={true}
+                            style={style}>
+                            <ContentAdd />
+                        </FloatingActionButton>
+                    </li>
+                    <li>
+                        <FloatingActionButton
+                            onClick={this.newPostHandler}
+                            mini={true}
+                            style={style}>
+                            <ContentEdit />
+                        </FloatingActionButton>
+                    </li>
+                    <li>
+                        <FloatingActionButton
+                            onClick={this.newPostHandler}
+                            mini={true}
+                            secondary={true}
+                            style={style}>
+                            <ContentDelete />
+                        </FloatingActionButton>
+                    </li>
+                </ul>
+            </div>
         );
 
         return (

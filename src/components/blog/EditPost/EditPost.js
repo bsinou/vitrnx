@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
-import { Tabs, Tab } from 'material-ui/Tabs';
-// From https://github.com/oliviertassinari/react-swipeable-views
-import SwipeableViews from 'react-swipeable-views';
-
-import ReactMarkdown from 'react-markdown';
-import MdEditor from '../../ui/MdEditor/MdEditor';
-
 import { connect } from 'react-redux';
 import axios from '../../../apiServer';
 
-// Inputs from Material UI
+import MdEditor from '../../ui/MdEditor/MdEditor';
+// From https://github.com/oliviertassinari/react-swipeable-views
+import SwipeableViews from 'react-swipeable-views';
+// Material UI
 import TextField from 'material-ui/TextField';
+import { Tabs, Tab } from 'material-ui/Tabs';
 
 import classes from './EditPost.css';
-
 
 const styles = {
     headline: {
@@ -26,8 +22,6 @@ const styles = {
         padding: 10,
     },
 };
-
-const input = '# This is a header\n\nAnd this is a paragraph'
 
 class EditPost extends Component {
     state = {
@@ -80,7 +74,6 @@ class EditPost extends Component {
         }
     }
 
-
     postDataHandler = () => {
         const data = {
 
@@ -95,8 +88,9 @@ class EditPost extends Component {
             path: this.state.path,
             tags: this.state.tags,
             desc: this.state.desc,
-
-            // MD rendering
+            thumb: this.state.thumb,
+            hero: this.state.hero,
+            // MD rendering 
             body: this.state.body,
 
             // TODO rather inject here current user and date time
@@ -120,6 +114,7 @@ class EditPost extends Component {
     render() {
         return (
             <div className={classes.EditPost}>
+                <button onClick={this.postDataHandler}>Save Post</button>
                 <Tabs
                     // inkBarStyle={{background: 'pink'}}
                     onChange={this.handleChange}
@@ -127,13 +122,14 @@ class EditPost extends Component {
                     <Tab label="Summary" value={0} />
                     <Tab label="Body" value={1} />
                 </Tabs>
-
                 <SwipeableViews
                     index={this.state.slideIndex}
                     onChangeIndex={this.handleChange}>
                     <div>
                         <TextField hintText="A title for your post" value={this.state.title} onChange={(event) => this.setState({ title: event.target.value })} /><br />
-                        <TextField hintText="A path for your post" value={this.state.path} onChange={(event) => this.setState({ path: event.target.value })} /><br />
+                        <TextField hintText="a-nice-name-without-fantasy" value={this.state.path} onChange={(event) => this.setState({ path: event.target.value })} /><br />
+                        <TextField hintText="Thumbnail image name" value={this.state.thumb} onChange={(event) => this.setState({ thumb: event.target.value })} /><br />
+                        <TextField hintText="Hero image name" value={this.state.hero} onChange={(event) => this.setState({ hero: event.target.value })} /><br />
                         <TextField hintText="Some tags for your post" value={this.state.tags} onChange={(event) => this.setState({ tags: event.target.value })} /><br />
                         <TextField
                             hintText="A short desc of your post"
@@ -145,10 +141,9 @@ class EditPost extends Component {
                         />
                     </div>
                     <div style={styles.slide}>
-                        <MdEditor />
+                        <MdEditor changed={(event) => this.setState({ body: event.target.value })}/>
                     </div>
                 </SwipeableViews>
-                <button onClick={this.postDataHandler}>Add Post</button>
             </div>
         );
     }

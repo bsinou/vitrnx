@@ -1,24 +1,20 @@
 .MdEditor {
-    color: #fff;
-    background: #191818;
-    margin: 0;
-    padding: 10px 20px;
+  display: flex;
+    color: #191818;
+    margin: 2;
+    padding: 8px 8px;
   }
   
   .Editor {
-    position: fixed;
-    top: 57px;
     left: 0;
     bottom: 0;
     width: 50%;
     height: auto;
     overflow: auto;
-    box-shadow: -10px 2px 6px 10px rgba(0, 0, 0, 0.4);
   }
   
   .Preview > div {
-    position: fixed;
-    top: 57px;
+    text-align: left;
     right: 0;
     left: 50%;
     bottom: 0;
@@ -32,7 +28,7 @@
   }
   
   .Editor textarea {
-    padding: 20px;
+    padding: 8px;
   }
   
   .Editor textarea {

@@ -30,10 +30,6 @@ class Layout extends Component {
         if (this.props.isAuthenticated) {
             return (
                 <Aux>
-
-
-                    background-color: #000000;
-
                     <Header className={classes.Header} />
                     <Toolbar
                         className={classes.Toolbar}

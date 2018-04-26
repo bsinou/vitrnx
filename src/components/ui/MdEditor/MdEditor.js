@@ -3,7 +3,7 @@ import Markdown from 'react-markdown';
 import Textarea from 'react-expanding-textarea';
 // import TextField from 'material-ui/TextField';
 
-import classes from './MdEditor'
+import classes from './MdEditor.css'
 
 const initialSource = `
 # Live demo
@@ -64,6 +64,7 @@ class Demo extends React.PureComponent {
   }
 
   handleMarkdownChange(evt) {
+    this.props.changed(evt)
     this.setState({ markdownSrc: evt.target.value })
   }
 
@@ -73,20 +74,18 @@ class Demo extends React.PureComponent {
 
   render() {
     return (
-      <div className="classes.MdEditor">
-        <div className="classes.Editor">
+      <div className={classes.MdEditor}>
+        <div className={classes.Editor}>
           <Textarea
-            hintText="A short desc of your post"
-            multiLine={true}
             rows={10}
             value={this.state.markdownSrc}
             onChange={this.handleMarkdownChange}
           />
         </div>
 
-        <div className="classes.Preview">
+        <div className={classes.Preview}>
           <Markdown
-            className="result"
+            className={classes.Result}
             source={this.state.markdownSrc}
           />
         </div>
@@ -94,9 +93,5 @@ class Demo extends React.PureComponent {
     )
   }
 }
-
-// if (typeof window !== 'undefined') {
-//   ReactDOM.render(<Demo />, document.getElementById('main'))
-// }
 
 export default Demo;
