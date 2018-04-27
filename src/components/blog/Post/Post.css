@@ -22,40 +22,33 @@ h2 {
 .Desc, h3 {
     font-size: 1.0em;
     font-style: italic;
-    margin-bottom: 16px;
+    margin-top: 24px;
+    margin-bottom: 8px;
 }
   
 .Body {
       text-align: left;  
 }  
 
-.Edit {
-
+/* Side Buttons */
+.SideButtons {
+	position: fixed;
+    display: flex;
+    flex-direction: column;
+	top: 240px;
+    right: 0;
+    list-style: none;
+    z-index: 99;
 }
 
-.Edit label {
-    display: block;
-    color: grey;
+/* .SideButtons li a { background: rgba(0, 0, 0, .2); } */
+
+.SideButtons li a img {
+	max-width:40px;
+    -webkit-transition:  background .2s ease-in-out;
+    -moz-transition:  background .2s ease-in-out;
+    -o-transition:  background .2s ease-in-out;
+    transition:  background .2s ease-in-out;
 }
 
-.Edit button {
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    outline: none;
-    color: #fa923f;
-}
-
-.Edit button:hover,
-.Edit button:active {
-    color: #521751;
-}
-
-.Edit button.Delete {
-    color: red;
-}
-
-.Edit button.Delete:hover,
-.Edit button.Delete:active {
-    color: darkred;
-}
+.SideButtons li a:hover img {background: rgba(0, 0, 0, 0);}

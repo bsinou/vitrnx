@@ -1,5 +1,5 @@
 .DrawerToggle {
-    width: 40px;
+    width: 26px;
     height: 100%;
     display: flex;
     flex-flow: column;
@@ -12,7 +12,7 @@
 
 .DrawerToggle div {
     width: 90%;
-    height: 3px;
+    height: 2px;
     background-color: white;
 }
 

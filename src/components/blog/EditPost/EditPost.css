@@ -2,21 +2,32 @@
     width: 100%;
     height: 94%;
     margin: 0px auto;
-    text-align: center;
+    text-align: left;
 }
 
-.EditPost label {
-    display: block;
-    margin: 10px auto;
-    text-align: center;
-    font-weight: bold;
+.TabContent {
+    display: flex;
+    margin: 0;
+    padding: 0px 0px;
 }
+
+.TabInnerCol {
+    left: 0;
+    bottom: 0;
+    width: 50%;
+    overflow: auto;
+}
+
+ TextField {
+    width: 100%;
+} 
+
 
 .EditPost input,
 .EditPost textarea,
 .EditPost select {
     display: block;
-    width: 80%;
+    width: 100%;
     box-sizing: border-box;
     border: 1px solid black;
     outline: none;
@@ -24,18 +35,59 @@
     margin: auto;
 }
 
-.EditPost button {
-    margin: 5px 0;
+/* MARKDOWN EDITOR */
+
+.Preview > div {
+    text-align: left;
+    right: 0;
+    left: 50%;
+    bottom: 0;
+    overflow: auto;
     padding: 10px;
-    font: inherit;
-    border: 1px solid #fa923f;
-    background-color: transparent;
-    color: #fa923f;
-    cursor: pointer;
+    padding-left: 20px;
+    color: #444;
+    font-family: Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+    font-size: 16px;
+    line-height: 1.2em;
 }
 
-.EditPost button:hover,
-.EditPost button:active {
-    color: white;
-    background-color: #fa923f;
+.TabInnerCol textarea {
+    padding: 0px;
+    min-height: 500px;
 }
+
+.CodeMirror {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    font-size: 14px;
+}
+
+
+/* SIDE BUTTONS */
+
+.SideButtons {
+	position: fixed;
+    display: flex;
+    flex-direction: column;
+	top: 240px;
+    right: 0;
+    list-style: none;
+    z-index: 99;
+}
+
+/* .SideButtons li a { background: rgba(0, 0, 0, .2); } */
+
+.SideButtons li a img {
+	max-width:40px;
+    -webkit-transition:  background .2s ease-in-out;
+    -moz-transition:  background .2s ease-in-out;
+    -o-transition:  background .2s ease-in-out;
+    transition:  background .2s ease-in-out;
+}
+
+.SideButtons li a:hover img {background: rgba(0, 0, 0, 0);}

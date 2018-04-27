@@ -21,14 +21,14 @@ import Auth from './containers/Auth/Auth'
 import Logout from './containers/Auth/Logout/Logout'
 
 import Posts from './components/blog/Posts/Posts';
-import EditPost from './components/blog/EditPost/EditPost';
 
 // Styling
 import classes from './App.css';
-// Provides default material UI css props to children components0
+// Provides default material UI css props to children components
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { cyan500 } from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+// TODO change a few base color
+// import { cyan500 } from 'material-ui/styles/colors';
 
 
 // This replaces the textColor value on the palette
@@ -75,10 +75,10 @@ class App extends Component {
       routes = (
         <Switch>
           <Route path="/s/" component={StaticPages} />
-          <Route path="/p/new" exact component={EditPost} />
+          {/* TODO rather use Blog component with tag id news */}
+          <Route path="/news" component={Posts} />
           <Route path="/p/" component={Blog} />
           <Route path="/q/" component={Blog} />
-          <Route path="/news" component={Posts} />
           <Route path="/teaser" component={Teaser} />
           <Route path="/faq" exact component={Faq} />
           <Route path="/admin" component={Auth} />
