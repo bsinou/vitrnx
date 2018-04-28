@@ -104,6 +104,7 @@ class EditPost extends Component {
     postDataHandler = () => {
         const data = {
             // Edited by user
+            id: this.state.id,
             path: this.state.path,
             title: this.state.title,
             tags: this.state.tags,

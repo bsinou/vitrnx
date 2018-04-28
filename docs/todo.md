@@ -5,6 +5,8 @@
 - comment
 - chat 
 - todos
+- images
+- video
 
 ## Layout 
 
@@ -16,22 +18,28 @@
 
 ## Bugs
 
-- finalise post dao -> ID issue
-- implement corresponding tests
-- update, delete, list, tags 
+- ~~finalise post dao -> ID issue~~
+- ~~implement corresponding tests~~
+- ~~update, delete, list,~~ tags 
 
 ## Cards
 
-- First, check the [doc](https://material.io/guidelines/components/cards.html#cards-behavior)
+- enhance list and single post page layout
 - First, check the [doc](https://material.io/guidelines/components/cards.html#cards-behavior)
 
 ## Hover buttons 
 
-- Save / cancel in card edit
+- Cancel in card edit
+- auto save
 - claims, display or not 
 - check claims on post & delete
 
-## MD Editor
+## Edition
+
+- bind CTRL-S
+- display error msg and save feedback
+
+Markdown editor
 
 - maximize usable space, 
 - stable layout 
@@ -45,9 +53,9 @@
 
 ## Users
 
-- enhance labels in auth page (use resgister rather than sign up)
-- add fields in register form 
-- claims
-- settings update 
-- user management
+- Enhance labels in auth page (use register rather than sign up)
+- Add fields in register form 
+- Claims
+- Settings update 
+- User management
 
