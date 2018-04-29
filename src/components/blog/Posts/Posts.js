@@ -22,7 +22,7 @@ class Posts extends Component {
     state = {
         posts: [],
         loadedCategory: null,
-        canEdit: true,
+        canEdit: false,
         error: false
     }
 
@@ -41,21 +41,21 @@ class Posts extends Component {
 
         if (this.props.match.params.id) {
             if (!this.state.loadedCategory || this.state.loadedCategory !== this.props.match.params.id) {
-              
+
                 // retrieve token from redux and pass it to axios
                 var options = { headers: { 'Authorization': this.props.token } };
                 var url = '/posts?tag=' + this.props.match.params.id;
-                console.log('### About to call: '+url);
-      
+                // console.log('### About to call: '+url);
+
                 apiServer.get(url, options)
                     // apiServer.post('/posts/')
                     .then(response => {
-                        const posts = response.data.slice(0, 10);
+                        console.log(response.data);
+                        const posts = response.data.posts.slice(0, 10);
                         const updatedPosts = posts.map(
                             post => { return { ...post }; }
                         );
-                        console.log('### Retrieved '+updatedPosts.length+' posts.');
-                        this.setState({ posts: updatedPosts, error: false, loadedCategory: this.props.match.params.id });
+                        this.setState({ posts: updatedPosts, canEdit:response.data.claims.canEdit, loadedCategory: this.props.match.params.id });
                     }).catch(error => {
                         console.log(error);
                         this.setState({ error: true, loadedCategory: this.props.match.params.id })
@@ -69,14 +69,16 @@ class Posts extends Component {
     };
 
     newPostHandler = () => {
+        console.log(this.props.history);
         this.props.history.push('/p/edit');
     };
 
 
     getAddBtn = (canEdit) => {
-        return (
-            <div>{
-                canEdit ?
+        let btns = null;
+        if (canEdit === "true") {
+            btns = (
+                <div>
                     <ul className={classes.SideButtons} >
                         <li>
                             <FloatingActionButton
@@ -88,9 +90,10 @@ class Posts extends Component {
                             </FloatingActionButton>
                         </li>
                     </ul>
-                    : null
-            }</div>
-        );
+                </div>
+            );
+        }
+        return btns;
     }
 
     render() {

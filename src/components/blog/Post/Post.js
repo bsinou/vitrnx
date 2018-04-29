@@ -24,8 +24,8 @@ const style = {
 
 class Post extends Component {
     state = {
-        loadedPost: null, 
-        canEdit: true
+        loadedPost: null,
+        claims: null
     }
 
     componentDidMount() {
@@ -44,7 +44,7 @@ class Post extends Component {
                 var options = { headers: { 'Authorization': this.props.token } };
                 apiServer.get('/posts/' + cId, options).then(response => {
                     console.log(response.data)
-                    this.setState({ loadedPost: response.data.post });
+                    this.setState({ loadedPost: response.data.post, claims: response.data.claims });
                 });
             }
         }
@@ -55,18 +55,24 @@ class Post extends Component {
     };
 
     editPostHandler = (id) => {
-        console.log('Edit #' + id);
         this.props.history.push('/p/edit/' + id);
     };
 
     deletePostHandler = (id) => {
-        console.log('Delete #' + id);
+        if (window.confirm('Are you sure you want to completely remove this post?')){
+            var options = { headers: { 'Authorization': this.props.token } };
+            apiServer.delete('/posts/' + id, options).then(response => {
+                console.log(response.data)
+                this.props.history.push('/q/news');
+            });
+        }
     };
 
-    getEditBtns = (id, canEdit) => {
-        return (
-            <div>{
-                canEdit ?
+    getEditBtns = (id, canEdit, canManage) => {
+        let btns = null;
+        if (canEdit) {
+            btns = (
+                <div>
                     <ul className={classes.SideButtons} >
                         <li key="add" >
                             <FloatingActionButton
@@ -85,19 +91,22 @@ class Post extends Component {
                                 <ContentEdit />
                             </FloatingActionButton>
                         </li>
-                        <li key="delete" >
-                            <FloatingActionButton
-                                onClick={() => this.deletePostHandler(id)}
-                                mini={true}
-                                secondary={true}
-                                style={style}>
-                                <ContentDelete />
-                            </FloatingActionButton>
-                        </li>
+                        {canManage ? (
+                            <li key="delete" >
+                                <FloatingActionButton
+                                    onClick={() => this.deletePostHandler(id)}
+                                    mini={true}
+                                    secondary={true}
+                                    style={style}>
+                                    <ContentDelete />
+                                </FloatingActionButton>
+                            </li>
+                        ) : null}
                     </ul>
-                    : null
-            }</div>
-        );
+                </div>
+            );
+        }
+        return btns;
     }
 
 
@@ -108,18 +117,18 @@ class Post extends Component {
         }
         if (this.state.loadedPost) {
             post = (
-                <Aux>                        
-                {this.getEditBtns(this.state.loadedPost.path, this.state.canEdit)}
-                <div className={classes.Post}>
-                    <Card>
-                        <CardMedia overlay={<CardTitle title={this.state.loadedPost.title} />}>
-                            <img src={"../imgRepo/" + this.state.loadedPost.hero} alt="" />
-                        </CardMedia>
-                    </Card>
-                    <div className={classes.Desc}>{this.state.loadedPost.desc}</div>
-                    <PostInfo tags={this.state.loadedPost.tags} date={this.state.loadedPost.date} author={this.state.loadedPost.author} />
-                    <Markdown className={classes.Body} escapeHtml={true} source={this.state.loadedPost.body} />
-                </div>
+                <Aux>
+                    {this.getEditBtns(this.state.loadedPost.path, this.state.claims.canEdit==="true", this.state.claims.canManage==="true")}
+                    <div className={classes.Post}>
+                        <Card>
+                            <CardMedia overlay={<CardTitle title={this.state.loadedPost.title} />}>
+                                <img src={"../imgRepo/" + this.state.loadedPost.hero} alt="" />
+                            </CardMedia>
+                        </Card>
+                        <div className={classes.Desc}>{this.state.loadedPost.desc}</div>
+                        <PostInfo tags={this.state.loadedPost.tags} date={this.state.loadedPost.date} author={this.state.loadedPost.author} />
+                        <Markdown className={classes.Body} escapeHtml={true} source={this.state.loadedPost.body} />
+                    </div>
                 </Aux>
             );
         }

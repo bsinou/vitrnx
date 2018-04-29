@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import axios from '../../../apiServer';
+
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 
 import Markdown from 'react-markdown';
 import Textarea from 'react-expanding-textarea';
@@ -10,6 +13,8 @@ import SwipeableViews from 'react-swipeable-views';
 // Material UI
 import TextField from 'material-ui/TextField';
 import { Tabs, Tab } from 'material-ui/Tabs';
+// import { MuiTooltip } from 'material-ui';
+import Tooltip from 'material-ui/internal/Tooltip';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ActionSave from 'material-ui/svg-icons/content/save';
 import ActionCancel from 'material-ui/svg-icons/navigation/cancel';
@@ -46,20 +51,21 @@ class EditPost extends Component {
         this.handleMarkdownChange = this.handleMarkdownChange.bind(this)
 
         this.state = {
+            id: '',
             path: '',
             date: '',
             title: '',
             author: '',
             tags: '',
-            thumb:'',
-            hero:'',
+            thumb: '',
+            hero: '',
             desc: '',
             body: '',
             createdOn: '',
             lastUpdatedOn: '',
             lastUpdatedBy: '',
 
-            canEdit: false,
+            canManage: false,
 
             slideIndex: 0,
             htmlMode: 'raw'
@@ -89,10 +95,11 @@ class EditPost extends Component {
         if (currId) {
             if (!this.state.path || this.state.path !== currId) {
                 var options = { headers: { 'Authorization': this.props.token } };
-                axios.get('/posts/' + currId, options).then(response => {
-                    console.log(response.data)
-                    this.setState({ ...response.data.post });
-                })
+                axios
+                    .get('/posts/' + currId, options)
+                    .then(response => {
+                        this.setState({ ...response.data.post, claims: response.data.claims  });
+                    })
                     .catch(error => {
                         console.log('# could not load ' + currId, error)
                         this.setState({ path: currId });
@@ -119,19 +126,30 @@ class EditPost extends Component {
         var options = { headers: { 'Authorization': this.props.token } };
         axios.post('/posts', data, options).then(response => {
             console.log(response); // TODO Give feedback to the user, TODO also implement regular auto-save 
-            this.setState({ ...response.data.post });
+            this.setState({ ...response.data.post, claims: response.data.claims  });
         }).catch(err => {
             console.log(err); // TODO handle error?
         });
     }
 
-    cancelHandler() {
-        // TODO
-        console.log('Go back');
-        // this.props.context.router.history.goBack();
-    }
+    deletePostHandler = (path, id) => {
+        if (window.confirm('Are you sure you want to completely remove this post?')) {
+            if (!id || id === "") {// No ID <=> new post, simply forward to cancel
+                this.cancelHandler()
+            }
+            var options = { headers: { 'Authorization': this.props.token } };
+            axios.delete('/posts/' + path, options).then(response => {
+                this.props.history.push('/q/news');
+            });
+        }
 
-    getEditBtns = (id, canEdit) => {
+    };
+
+    cancelHandler = () => {
+        this.props.history.goBack();
+    };
+
+    getEditBtns = (path, id, canManage) => {
         return (
             <div>
                 <ul className={classes.SideButtons} >
@@ -145,19 +163,22 @@ class EditPost extends Component {
                     </li>
 
                     {/* 
-                        FIXME: 
-                            + cancel does not work (should go back one page) 
-                            + Icon is not appropriated (look like delete)
+                        TODO : add tooltip
+                        see: http://bluedesk.blogspot.de/2017/10/react-material-ui-fab-with-optional_18.html
+                        or mui v1.00 => FAB have no tooltip before v1 (we're currently using v0.20) 
+                    */}
                     <li>
                         <FloatingActionButton
                             onClick={this.cancelHandler}
                             mini={true}
                             secondary={true}
-                            style={btnStyle}>
+                            style={btnStyle}
+                            tooltip="Say something" >
                             <ActionCancel />
                         </FloatingActionButton>
-                    </li> */}
-                    {canEdit ?
+
+                    </li>
+                    {canManage ?
                         <li>
                             <FloatingActionButton
                                 onClick={() => this.deletePostHandler(id)}
@@ -177,7 +198,7 @@ class EditPost extends Component {
     render() {
         return (
             <div className={classes.EditPost}>
-                {this.getEditBtns(this.state.path, this.state.canEdit)}
+                {this.getEditBtns(this.state.path, this.state.id, (this.state.claims && this.state.claims.canManage==="true"))}
                 <Tabs
                     onChange={this.handleChange}
                     value={this.state.slideIndex} >
@@ -267,4 +288,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(EditPost);
+export default withErrorHandler(connect(mapStateToProps)(EditPost), axios);

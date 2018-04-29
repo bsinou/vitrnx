@@ -1,5 +1,23 @@
 # TODOs
 
+## Blockers
+
+- enhance list and single post page layout
+
+User 
+
+- Enhance labels in auth page (use register rather than sign up)
+- Add fields in register form 
+- ~~Claims~~
+
+
+## Bugs
+
+- ~~finalise post dao -> ID issue~~
+- ~~implement corresponding tests~~
+- ~~update, delete, list,~~ tags 
+
+
 ## Features
 
 - comment
@@ -7,6 +25,7 @@
 - todos
 - images
 - video
+- add search, emhance filtering
 
 ## Layout 
 
@@ -16,11 +35,6 @@
 - media queries
 - video
 
-## Bugs
-
-- ~~finalise post dao -> ID issue~~
-- ~~implement corresponding tests~~
-- ~~update, delete, list,~~ tags 
 
 ## Cards
 
@@ -31,8 +45,8 @@
 
 - Cancel in card edit
 - auto save
-- claims, display or not 
-- check claims on post & delete
+- tooltips
+
 
 ## Edition
 
@@ -53,9 +67,8 @@ Markdown editor
 
 ## Users
 
-- Enhance labels in auth page (use register rather than sign up)
-- Add fields in register form 
-- Claims
 - Settings update 
 - User management
+- ~~claims, display or not~~ 
+- Add tests to check claims on post & delete
 

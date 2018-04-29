@@ -19,22 +19,18 @@ const withErrorHandler = (WrappedComponent, axios) => {
             // this.reqInterceptor = ... : This syntax enables addition of a global variable lazily.
             this.reqInterceptor = axios.interceptors.request.use(
                 requestConfig => {
-                    console.log('## SENT CONFIG: ', requestConfig);
                     this.setState({ error: null });
                     return requestConfig;
                 }, error => {
-                    console.log(error);
                     return Promise.reject(error);
                 }
             );
 
             this.resInterceptor = axios.interceptors.response.use(
                 response => {
-                    console.log(response);
                     // Here we can edit response config
                     return response;
                 }, error => {
-                    console.log(error);
                     this.setState({ error: error });
                     return Promise.reject(error);
                 }
