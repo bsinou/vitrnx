@@ -8,6 +8,72 @@
     box-sizing: border-box;
 }
 
+/*     background:linear-gradient(#888, #ccc, #8bb38e), url("/imgRepo/tract-4.2.jpg") no-repeat;
+*/
+.FullAnonBody {
+    background: url("/imgRepo/tract-4.6.jpg");
+    background-size:  cover;
+    min-height: 100%;
+    flex: 1;
+}
+
+
+.OuterBox {
+    display: table;
+    margin: 6em auto;
+}
+
+.LeftCol {
+    display: table-cell;
+    width: 50%;
+}
+.RightCol {
+    display: table-cell;
+    width: 50%;
+    align-content: center;
+}
+
+.RegisterForm {
+    height: auto;
+    width: 100%;
+	margin: auto;
+	background: #F1F8E9;
+    border: 1px solid #FFCDD2;
+    box-shadow: 0 2px 3px #EF9A9A;
+}
+
+.AuthForm {
+    height: auto;
+    width: 380px;
+	margin: 4em auto;
+	background: #F1F8E9;
+    border: 1px solid #FFCDD2;
+    box-shadow: 0 2px 3px #EF9A9A;
+}
+
+.InnerBox {
+    padding: 1em 2em 2em 2em;
+}
+
+@media (min-height: 500px) {
+    .OuterBox {
+        padding: 2em 2em 0em 0em;
+    }
+}
+
+@media (min-height: 600px) {
+    .OuterBox {
+        padding: 3em 2em 0em 0em;
+    }
+}
+
+
+@media (max-width: 475px) {
+    .AuthForm {
+        width: 80%;
+    }
+}
+
 @media (min-width: 600px) {
     .Auth {
         width: 500px;

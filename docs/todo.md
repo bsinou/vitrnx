@@ -6,8 +6,8 @@
 
 User 
 
-- Enhance labels in auth page (use register rather than sign up)
-- Add fields in register form 
+- ~~Enhance labels in auth page (use register rather than sign up)~~
+- ~~Add fields in register form~~ 
 - ~~Claims~~
 
 
@@ -25,7 +25,7 @@ User
 - todos
 - images
 - video
-- add search, emhance filtering
+- add search, enhance filtering
 
 ## Layout 
 
@@ -43,15 +43,19 @@ User
 
 ## Hover buttons 
 
-- Cancel in card edit
+- ~~Cancel in card edit~~
 - auto save
 - tooltips
-
+- ~~snackbars for error and save feedback to user~~
+- Enhance snack bar:
+   - differenciate errors and OK
+   - retrieve relevant message
+   - queue multiple message 
 
 ## Edition
 
 - bind CTRL-S
-- display error msg and save feedback
+- Enhance error msg and save feedback
 
 Markdown editor
 
@@ -64,6 +68,7 @@ Markdown editor
 - Downgrad react version.
 - Stabilise distribution 
 - define deployment 
+- make CLI command for start, backup and import posts
 
 ## Users
 

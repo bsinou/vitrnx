@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 
 import Aux from '../Aux/Aux'
-import Modal from '../../components/ui/Modal/Modal'
+// import Modal from '../../components/ui/Modal/Modal'
+
+import Snackbar from 'material-ui/Snackbar';
 
 const withErrorHandler = (WrappedComponent, axios) => {
     return class extends Component {
 
         state = { // enable display and disposal of the popup.
-            error: null
+            message: null,
+            isError: false,
+            showSnack: false
         }
 
         /* We rather use component*WILL*Mount:
@@ -19,7 +23,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
             // this.reqInterceptor = ... : This syntax enables addition of a global variable lazily.
             this.reqInterceptor = axios.interceptors.request.use(
                 requestConfig => {
-                    this.setState({ error: null });
+                    // this.setState({ error: null });
                     return requestConfig;
                 }, error => {
                     return Promise.reject(error);
@@ -29,9 +33,20 @@ const withErrorHandler = (WrappedComponent, axios) => {
             this.resInterceptor = axios.interceptors.response.use(
                 response => {
                     // Here we can edit response config
+                    // console.log("######## the response: ", response)
+                    this.setState({
+                        message: 'OK',
+                        isError: false,
+                        showSnack: true,
+                    });
                     return response;
                 }, error => {
-                    this.setState({ error: error });
+                    // console.log("######## the response: ", error)
+                    this.setState({
+                        message: 'Got An error',
+                        isError: true,
+                        showSnack: true,
+                    });
                     return Promise.reject(error);
                 }
             );
@@ -47,15 +62,29 @@ const withErrorHandler = (WrappedComponent, axios) => {
             this.setState({ error: null });
         }
 
+        handleRequestClose = () => {
+            this.setState({
+                message: null,
+                isError: false,
+                showSnack: false,
+            });
+        };
+
         render() {
             return (
                 <Aux>
-                    <Modal
+                    {/* <Modal
                         show={this.state.error}
                         modalClosed={this.disposeModal}>
                         {this.state.error ? this.state.error.message : null}
-                    </Modal>
+                    </Modal> */}
                     <WrappedComponent {...this.props} />
+                    <Snackbar
+                        open={this.state.showSnack}
+                        message={this.state.message}
+                        autoHideDuration={8000}
+                        onRequestClose={this.handleRequestClose}
+                    />
                 </Aux>
             );
         }

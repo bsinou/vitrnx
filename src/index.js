@@ -13,13 +13,15 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import authReducer from './store/reducers/auth';
+import userReducer from './store/reducers/user';
 
 // This can be a place to define axios defaults globally 
 // (below is line is useless: that's the default anyway)
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 const rootReducer = combineReducers({
-    auth: authReducer
+    auth: authReducer,
+    user: userReducer,    
 });
 
 // Enable Redux devtool in chrome only in dev mode

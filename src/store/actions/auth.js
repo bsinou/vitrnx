@@ -1,9 +1,10 @@
 import axios from 'axios';
 
 import * as actionTypes from './actionTypes';
+import { userCreate } from '.';
 
 const apiPrefix = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/';
-var myKey='AIzaSyBTPRFJmUcdrezg4goOtBSVBt5JEJINm1Y'
+var myKey = 'AIzaSyBTPRFJmUcdrezg4goOtBSVBt5JEJINm1Y'
 // var myKey='A valid firebase API key'
 
 export const authStart = () => {
@@ -46,7 +47,38 @@ export const checkAuthTimeout = (expirationTime) => {
 };
 
 
-export const auth = (email, password, isSignup) => {
+export const register = (name, email, password, address) => {
+    return dispatch => {
+        dispatch(authStart());
+        const authData = {
+            displayName: name,
+            email: email,
+            password: password,
+            returnSecureToken: true
+        };
+        let url = apiPrefix + 'signupNewUser?key=' + myKey;
+
+        // console.log('About to send auth request', url);
+        
+        axios.post(url, authData)
+            .then(response => {
+                const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
+                localStorage.setItem('token', response.data.idToken);
+                localStorage.setItem('expirationDate', expirationDate);
+                localStorage.setItem('userId', response.data.localId);
+                dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
+                dispatch(checkAuthTimeout(response.data.expiresIn));
+                dispatch(userCreate(response.data.idToken, response.data.localId, name, email, address));
+
+            })
+            .catch(err => {
+                console.log(err);
+                dispatch(authFail(err.response.data.error));
+            });
+    };
+};
+
+export const auth = (email, password) => {
     return dispatch => {
         dispatch(authStart());
         const authData = {
@@ -54,13 +86,9 @@ export const auth = (email, password, isSignup) => {
             password: password,
             returnSecureToken: true
         };
-        let url = apiPrefix + 'signupNewUser?key=' + myKey;
-        if (!isSignup) {
-            url = apiPrefix + 'verifyPassword?key=' + myKey;
-        }
 
-        // console.log('About to send auth request', url);
-         
+        let url = apiPrefix + 'verifyPassword?key=' + myKey;
+
         axios.post(url, authData)
             .then(response => {
                 const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
