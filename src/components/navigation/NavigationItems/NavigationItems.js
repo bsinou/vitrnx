@@ -8,7 +8,7 @@ const baseItems = [
     { url: '/', label: 'Home' },
     { url: '/teaser', label: 'Teaser' },
     { url: '/q/news', label: 'News' },
-    { url: '/faq', label: 'FAQ' },
+    { url: '/q/FAQ', label: 'FAQ' },
 ]
 
 

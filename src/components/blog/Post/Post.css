@@ -1,9 +1,6 @@
 .Post {
-    width: 80%;
-    margin: 20px auto;
-    /* border: 1px solid #eee;
-    box-shadow: 0 2px 3px #ccc; */
-    text-align: left;
+    width: 100%;
+    margin: 0px auto;
 }
 
   
@@ -15,8 +12,13 @@
 
 h2 {
     font-size: 1.2em;
-    font-weight: normal; 
+    font-weight: bold; 
     color: black;
+}
+
+.SubCard {
+    font-size: 1.0em;
+    margin : 16px;
 }
 
 .Desc, h3 {

@@ -13,6 +13,7 @@ User
 
 ## Bugs
 
+- ~~main date is broken on post~~ 
 - ~~finalise post dao -> ID issue~~
 - ~~implement corresponding tests~~
 - ~~update, delete, list,~~ tags 
@@ -34,12 +35,15 @@ User
    - become small on scrolling
 - media queries
 - video
-
+- prevent breaking the layout when images are not there
 
 ## Cards
 
 - enhance list and single post page layout
 - First, check the [doc](https://material.io/guidelines/components/cards.html#cards-behavior)
+- manage images
+- add comments 
+- limit desc size
 
 ## Hover buttons 
 
@@ -56,6 +60,17 @@ User
 
 - bind CTRL-S
 - Enhance error msg and save feedback
+- bind submit button with enter keystroke on login page
+- full text & images are selected when navigating using double click
+- rather store name than display name in author field
+- export mongoDB content as JSON
+
+## Auth
+
+- longer session
+- renew
+- add gmail, facebook, mail validity check?
+- log API requests in a separate mongodb bucket
 
 Markdown editor
 

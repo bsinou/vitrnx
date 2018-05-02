@@ -13,8 +13,6 @@ import SwipeableViews from 'react-swipeable-views';
 // Material UI
 import TextField from 'material-ui/TextField';
 import { Tabs, Tab } from 'material-ui/Tabs';
-// import { MuiTooltip } from 'material-ui';
-import Tooltip from 'material-ui/internal/Tooltip';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ActionSave from 'material-ui/svg-icons/content/save';
 import ActionCancel from 'material-ui/svg-icons/navigation/cancel';
@@ -236,7 +234,7 @@ class EditPost extends Component {
                             /><br />
                             <TextField
                                 floatingLabelText="Tags"
-                                fullWidth hintText="Some tags for your post, for intance: News Music Program"
+                                fullWidth hintText="For instance: news music program"
                                 value={this.state.tags}
                                 onChange={(event) => this.setState({ tags: event.target.value })}
                             /><br />

@@ -6,7 +6,6 @@ import Posts from '../../components/blog/Posts/Posts';
 import Post from '../../components/blog/Post/Post';
 import EditPost from '../../components/blog/EditPost/EditPost';
 
-
 // The Blog component manages routes and explicitely forwards the JWT token retrieved from the Redux store
 class Blog extends Component {
 

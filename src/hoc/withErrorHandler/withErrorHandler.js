@@ -9,7 +9,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
     return class extends Component {
 
         state = { // enable display and disposal of the popup.
-            message: null,
+            message: '',
             isError: false,
             showSnack: false
         }
@@ -59,12 +59,12 @@ const withErrorHandler = (WrappedComponent, axios) => {
         }
 
         disposeModal = () => {
-            this.setState({ error: null });
+            // this.setState({ error: null });
         }
 
         handleRequestClose = () => {
             this.setState({
-                message: null,
+                message: '',
                 isError: false,
                 showSnack: false,
             });
@@ -82,7 +82,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
                     <Snackbar
                         open={this.state.showSnack}
                         message={this.state.message}
-                        autoHideDuration={8000}
+                        autoHideDuration={4000}
                         onRequestClose={this.handleRequestClose}
                     />
                 </Aux>

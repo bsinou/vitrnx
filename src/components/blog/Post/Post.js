@@ -59,7 +59,7 @@ class Post extends Component {
     };
 
     deletePostHandler = (id) => {
-        if (window.confirm('Are you sure you want to completely remove this post?')){
+        if (window.confirm('Are you sure you want to completely remove this post?')) {
             var options = { headers: { 'Authorization': this.props.token } };
             apiServer.delete('/posts/' + id, options).then(response => {
                 console.log(response.data)
@@ -118,16 +118,18 @@ class Post extends Component {
         if (this.state.loadedPost) {
             post = (
                 <Aux>
-                    {this.getEditBtns(this.state.loadedPost.path, this.state.claims.canEdit==="true", this.state.claims.canManage==="true")}
+                    {this.getEditBtns(this.state.loadedPost.path, this.state.claims.canEdit === "true", this.state.claims.canManage === "true")}
                     <div className={classes.Post}>
                         <Card>
                             <CardMedia overlay={<CardTitle title={this.state.loadedPost.title} />}>
                                 <img src={"../imgRepo/" + this.state.loadedPost.hero} alt="" />
                             </CardMedia>
                         </Card>
-                        <div className={classes.Desc}>{this.state.loadedPost.desc}</div>
-                        <PostInfo tags={this.state.loadedPost.tags} date={this.state.loadedPost.date} author={this.state.loadedPost.author} />
-                        <Markdown className={classes.Body} escapeHtml={true} source={this.state.loadedPost.body} />
+                        <div className={classes.SubCard}>
+                            <div className={classes.Desc}>{this.state.loadedPost.desc}</div>
+                            <PostInfo tags={this.state.loadedPost.tags} date={this.state.loadedPost.date} author={this.state.loadedPost.author} />
+                            <Markdown className={classes.Body} escapeHtml={true} source={this.state.loadedPost.body} />
+                        </div>
                     </div>
                 </Aux>
             );
