@@ -13,8 +13,10 @@
 ## Material UI
 
 - The [one and only way](https://github.com/mui-org/material-ui) to make a valid UI... until next, also the library to integrate [Material UI]() with React.
+- the [guidelines](https://material.io/guidelines) from google.
 - [Customise theme](http://www.material-ui.com/#/customization/themes)
 - [The color palette tool](https://material.io/color/#!/?view.left=0&view.right=0&primary.color=2E7D32&secondary.color=0D47A1)
+
 
 ### About cards
 
