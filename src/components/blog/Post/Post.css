@@ -19,6 +19,8 @@ h2 {
 .SubCard {
     font-size: 1.0em;
     margin : 16px;
+    width: 90%;
+ 
 }
 
 .Desc, h3 {
@@ -54,3 +56,11 @@ h2 {
 }
 
 .SideButtons li a:hover img {background: rgba(0, 0, 0, 0);}
+
+@media (min-width: 889px) {
+    .SubCard {
+        width: 800px;
+        margin: auto;
+
+    }
+}

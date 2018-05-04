@@ -222,13 +222,13 @@ class EditPost extends Component {
                             /><br />
                             <TextField
                                 floatingLabelText="Thumbnail image path"
-                                fullWidth hintText="Path of a 400x300px thumbnail image"
+                                fullWidth hintText="Path of a 320x240px thumbnail image"
                                 value={this.state.thumb}
                                 onChange={(event) => this.setState({ thumb: event.target.value })}
                             /><br />
                             <TextField
                                 floatingLabelText="Hero image path"
-                                fullWidth hintText="Path of a 1200x300px hero image"
+                                fullWidth hintText="Path of a 800x200px hero image"
                                 value={this.state.hero}
                                 onChange={(event) => this.setState({ hero: event.target.value })}
                             /><br />

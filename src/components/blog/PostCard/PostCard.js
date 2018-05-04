@@ -25,11 +25,11 @@ function subtitle(props) {
 
 const PostCard = (props) => (
   <Card style={cardStyle} onClick={props.clicked}>
-    <CardMedia style={{ height: '300px' }} overlay={<CardTitle title={props.title} subtitle={subtitle(props)} />} >
-      <img style={{ height: '300px', width: '400px' }} src={props.thumb} alt={props.title + ' - image is not available'} />
+    <CardMedia style={{ height: '240px' }} overlay={<CardTitle title={props.title} subtitle={subtitle(props)} />} >
+      <img style={{ height: '240px', width: '320px' }} src={props.thumb} alt={props.title + ' - image is not available'} />
     </CardMedia>
     {/* <CardTitle subtitle={props.author+', on '+ moment(props.date).format('MMMM Do')} />  */}
-    <CardText style={{ textAlign: 'left', height: '80px', width: '400px' }}> {props.desc} </CardText>
+    <CardText style={{ textAlign: 'left', height: '60px', width: '320px' }}> {props.desc} </CardText>
   </Card>
 );
 
