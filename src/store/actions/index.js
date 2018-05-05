@@ -1,6 +1,6 @@
 export {
-    register,
-    auth,
+    fbRegister,
+    fbAuth,
     logout,
     setAuthRedirectPath,
     authCheckState

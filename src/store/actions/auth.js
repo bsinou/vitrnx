@@ -1,11 +1,15 @@
-import axios from 'axios';
 
 import * as actionTypes from './actionTypes';
 import { userCreate } from '.';
 
+import fbaxios from 'axios';
+import axios from '../../apiServer';
+
+
+
 const apiPrefix = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/';
-var myKey = 'AIzaSyBTPRFJmUcdrezg4goOtBSVBt5JEJINm1Y'
-// var myKey='A valid firebase API key'
+var apiKey = 'AIzaSyBTPRFJmUcdrezg4goOtBSVBt5JEJINm1Y'
+// var apiKey='A valid firebase API key'
 
 export const authStart = () => {
     return {
@@ -13,12 +17,14 @@ export const authStart = () => {
     };
 };
 
-export const authSuccess = (token, userId, email) => {
+export const authSuccess = (token, userId, email, displayName, roles) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         token: token,
         userId: userId,
-        email: email
+        email: email,
+        displayName: displayName,
+        roles: roles
     };
 };
 
@@ -38,7 +44,7 @@ export const logout = () => {
     };
 };
 
-export const checkAuthTimeout = (expirationTime) => {
+export const registerAuthTimeout = (expirationTime) => {
     return dispatch => {
         setTimeout(() => {
             dispatch(logout());
@@ -46,30 +52,24 @@ export const checkAuthTimeout = (expirationTime) => {
     };
 };
 
-
-export const register = (name, email, password, address) => {
+export const fbRegister = (name, email, password, address) => {
     return dispatch => {
         dispatch(authStart());
         const authData = {
-            displayName: name,
             email: email,
             password: password,
             returnSecureToken: true
         };
-        let url = apiPrefix + 'signupNewUser?key=' + myKey;
 
         // console.log('About to send auth request', url);
-        
-        axios.post(url, authData)
+        let url = apiPrefix + 'signupNewUser?key=' + apiKey;
+        fbaxios.post(url, authData)
             .then(response => {
-                const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-                localStorage.setItem('token', response.data.idToken);
-                localStorage.setItem('expirationDate', expirationDate);
-                localStorage.setItem('userId', response.data.localId);
-                dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
-                dispatch(checkAuthTimeout(response.data.expiresIn));
-                dispatch(userCreate(response.data.idToken, response.data.localId, name, email, address));
+                dispatch(updateLocalStorage(response.data.idToken, response.data.localId, response.data.expiresIn))
+                dispatch(registerAuthTimeout(response.data.expiresIn));
 
+                dispatch(userCreate(response.data.idToken, response.data.localId, name, email, address));
+                dispatch(authSuccess(response.data.idToken, response.data.localId, email, name, ["GUEST"]));
             })
             .catch(err => {
                 console.log(err);
@@ -78,7 +78,8 @@ export const register = (name, email, password, address) => {
     };
 };
 
-export const auth = (email, password) => {
+// Try to login via Firebase. TODO directly to this from the Go Backend
+export const fbAuth = (email, password) => {
     return dispatch => {
         dispatch(authStart());
         const authData = {
@@ -87,28 +88,18 @@ export const auth = (email, password) => {
             returnSecureToken: true
         };
 
-        let url = apiPrefix + 'verifyPassword?key=' + myKey;
-
-        axios.post(url, authData)
+        let url = apiPrefix + 'verifyPassword?key=' + apiKey;
+        fbaxios.post(url, authData)
             .then(response => {
-                const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-                localStorage.setItem('token', response.data.idToken);
-                localStorage.setItem('expirationDate', expirationDate);
-                localStorage.setItem('userId', response.data.localId);
-                dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
-                dispatch(checkAuthTimeout(response.data.expiresIn));
+                dispatch(updateLocalStorage(response.data.idToken, response.data.localId, response.data.expiresIn))
+                dispatch(registerAuthTimeout(response.data.expiresIn));
+
+                dispatch(userMeta(response.data.idToken, response.data.localId, email));
             })
             .catch(err => {
                 console.log(err);
                 dispatch(authFail(err.response.data.error));
             });
-    };
-};
-
-export const setAuthRedirectPath = (path) => {
-    return {
-        type: actionTypes.SET_AUTH_REDIRECT_PATH,
-        path: path
     };
 };
 
@@ -123,9 +114,43 @@ export const authCheckState = () => {
                 dispatch(logout());
             } else {
                 const userId = localStorage.getItem('userId');
-                dispatch(authSuccess(token, userId));
-                dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
+                dispatch(userMeta(token, userId));
             }
         }
     };
 };
+
+export const userMeta = (idToken, localId) => {
+    return dispatch => {
+        const authData = {
+        };
+
+        let url = 'auth/login';
+        var options = { headers: { 'Authorization': idToken } };
+        axios.post(url, authData, options)
+            .then(response => {
+                dispatch(authSuccess(idToken, localId, response.data.userMeta.email, response.data.userMeta.displayName, response.data.userMeta.roles));
+            })
+            .catch(err => {
+                console.log(err);
+                dispatch(authFail('could not get vitrnx specific infos'));
+            });
+    };
+};
+
+export const setAuthRedirectPath = (path) => {
+    return {
+        type: actionTypes.SET_AUTH_REDIRECT_PATH,
+        path: path
+    };
+};
+
+export const updateLocalStorage = (token, userId, expiresIn) => {
+    return dispatch => {
+        localStorage.setItem('token', token);
+        localStorage.setItem('userId', userId);
+        const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+        localStorage.setItem('expirationDate', expirationDate);
+    };
+};
+

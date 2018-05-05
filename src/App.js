@@ -8,19 +8,15 @@ import { connect } from 'react-redux';
 import * as actions from './store/actions/index';
 
 // Vitrnx specific components
+import Layout from './hoc/Layout/Layout'
+import Blog from './containers/Blog/Blog'
+// Static pages
+import Home from './static/Home/Home'
+import Teaser from './static/Teaser/Teaser'
 import Register from './containers/Auth/Register'
 import Login from './containers/Auth/Login'
 import Logout from './containers/Auth/Logout/Logout'
 
-import Layout from './hoc/Layout/Layout'
-import Home from './static/Home/Home'
-import Faq from './static/Faq/Faq'
-import Teaser from './static/Teaser/Teaser'
-import StaticPages from './static/Pages/Pages'
-
-import Blog from './containers/Blog/Blog'
-
-import Posts from './components/blog/Posts/Posts';
 
 // Styling
 import classes from './App.css';
@@ -28,7 +24,6 @@ import classes from './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 // TODO change a few base color
-// import { cyan500 } from 'material-ui/styles/colors';
 
 
 // This replaces the textColor value on the palette
@@ -71,24 +66,34 @@ class App extends Component {
     );
 
     if (this.props.isAuthenticated) {
-      routes = (
-        <Layout>
-          <Switch>
-            <Route path="/s/" component={StaticPages} />
-            {/* TODO rather use Blog component with tag id news */}
-            <Route path="/news" component={Posts} />
-            <Route path="/p/" component={Blog} />
-            <Route path="/q/" component={Blog} />
-            <Route path="/teaser" component={Teaser} />
-            <Route path="/faq" exact component={Faq} />
-            {/* <Route path="/admin" component={Auth} />
-            <Route path="/login" component={Auth} /> */}
-            <Route path="/logout" component={Logout} />
-            <Route path="/" exact component={Home} />
-            <Redirect to="/" />
-          </Switch>
-        </Layout>
-      )
+      if (this.props.roles && this.props.roles.includes("EDITOR")) {
+        routes = (
+          <Layout>
+            <Switch>
+              <Route path="/teaser" component={Teaser} />
+              <Route path="/logout" component={Logout} />
+              <Route path="/p/" component={Blog} />
+              <Route path="/q/" component={Blog} />
+              <Route path="/all/" component={Blog} />
+              <Route path="/" exact component={Home} />
+              <Redirect to="/" />
+            </Switch>
+          </Layout>
+        );
+      } else {
+        routes = (
+          <Layout>
+            <Switch>
+              <Route path="/teaser" component={Teaser} />
+              <Route path="/logout" component={Logout} />
+              <Route path="/p/" component={Blog} />
+              <Route path="/q/" component={Blog} />
+              <Route path="/" exact component={Home} />
+              <Redirect to="/" />
+            </Switch>
+          </Layout>
+        );
+      }
     }
 
     return (
@@ -103,7 +108,9 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.token != null
+    isAuthenticated: state.auth.token != null,
+    roles: state.auth.roles, 
+    dname: state.auth.displayName
   };
 };
 

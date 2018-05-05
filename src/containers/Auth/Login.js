@@ -50,6 +50,13 @@ class Login extends Component {
         this.props.onAuth(this.state.email, this.state.password);
     }
 
+    handleKeyPress = (event) => {
+        if(event.key === 'Enter'){
+            this.submitHandler(event)
+            // console.log('enter press here! ')
+        }
+      }
+
     render() {
 
         let errorMessage = null;
@@ -84,6 +91,7 @@ class Login extends Component {
                                     <TextField
                                         floatingLabelText="Email"
                                         onChange={(event, newValue) => this.setState({ email: newValue })}
+                                        onKeyPress={this.handleKeyPress}
                                     />
                                     <br />
                                     <TextField
@@ -91,6 +99,7 @@ class Login extends Component {
                                         hintText="Enter your Password"
                                         floatingLabelText="Password"
                                         onChange={(event, newValue) => this.setState({ password: newValue })}
+                                        onKeyPress={this.handleKeyPress}
                                     />
                                     <br />
                                     <RaisedButton label="Submit" primary={true} style={{ margin: 15 }} onClick={(event) => this.submitHandler(event)} />
@@ -118,7 +127,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password) => dispatch(actions.auth(email, password)),
+        onAuth: (email, password) => dispatch(actions.fbAuth(email, password)),
         onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
     };
 };

@@ -5,6 +5,8 @@ const initialState = {
     token: null,
     userId: null,
     email: 'anonymous',
+    displayName: 'anonymous',
+    roles: [],
 
     authRedirectPath: '/',
     loading: false,
@@ -20,6 +22,8 @@ const authSuccess = (state, action) => {
         token: action.token,
         userId: action.userId,
         email: action.email,
+        displayName: action.displayName,
+        roles: action.roles,
         loading: false,
         error: null   
      } );
@@ -27,14 +31,22 @@ const authSuccess = (state, action) => {
 
 const authFail = (state, action) => {
     return updateObject( state, {
-        email: 'anonymous',
         error: action.error,
+        email: 'anonymous',
+        displayName: 'anonymous',
+        roles: [],
         loading: false
     });
 };
 
 const authLogout = (state, action) => {
-    return updateObject(state, { email: 'anonymous', token: null, userId: null });
+    return updateObject(state, { 
+        token: null, 
+        userId: null,
+        email: 'anonymous', 
+        displayName: 'anonymous',
+        roles: [],
+    });
 };
 
 const setAuthRedirectPath = (state, action) => {

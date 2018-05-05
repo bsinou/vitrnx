@@ -17,15 +17,19 @@ const authItems = [
     { url: '/logout', label: 'Ciao!' }
 ]
 
-// const adminExtraItems  = [
-//     ...baseItems, 
-// ]
+const editorExtraItems  = [
+    ...baseItems, 
+    { url: '/all', label: 'All' },
+    { url: '/logout', label: 'Ciao!' }
+]
 
 
 const navigationItems = (props) => {
 
-    // const items = props.isAuth ? authItems : anonItems;
-    const items = authItems;
+    let items = authItems;
+    if (props.roles && props.roles.includes("EDITOR")){
+         items = editorExtraItems
+    }
 
     var links = items.map(
         item => (<NavigationItem key={item.url} link={item.url}>{item.label}</NavigationItem>)

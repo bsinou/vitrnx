@@ -256,7 +256,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onRegister: (name, email, password, address) => dispatch(actions.register(name, email, password, address)),
+        onRegister: (name, email, password, address) => dispatch(actions.fbRegister(name, email, password, address)),
         onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
     };
 };

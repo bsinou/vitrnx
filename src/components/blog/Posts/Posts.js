@@ -24,8 +24,6 @@ class Posts extends Component {
     }
 
     componentDidMount() {
-        console.log('In Posts.componentDidMount(), props: ', this.props);
-        // console.log('In Posts.componentDidMount(), route token: ', this.props.route.token);
         this.loadData();
     }
 
@@ -39,15 +37,10 @@ class Posts extends Component {
         if (this.props.match.params.id) {
             if (!this.state.loadedCategory || this.state.loadedCategory !== this.props.match.params.id) {
 
-                // retrieve token from redux and pass it to axios
                 var options = { headers: { 'Authorization': this.props.token } };
                 var url = '/posts?tag=' + this.props.match.params.id;
-                // console.log('### About to call: '+url);
-
                 apiServer.get(url, options)
-                    // apiServer.post('/posts/')
                     .then(response => {
-                        console.log(response.data);
                         const posts = response.data.posts.slice(0, 10);
                         const updatedPosts = posts.map(
                             post => { return { ...post }; }
