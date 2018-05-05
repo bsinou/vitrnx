@@ -6,7 +6,7 @@ const initialState = {
     userId: null,
     email: 'anonymous',
     displayName: 'anonymous',
-    roles: [],
+    roles: [], // Arrays in redux must be initialised to an empty array rather than null.
 
     authRedirectPath: '/',
     loading: false,

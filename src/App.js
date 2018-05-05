@@ -10,6 +10,7 @@ import * as actions from './store/actions/index';
 // Vitrnx specific components
 import Layout from './hoc/Layout/Layout'
 import Blog from './containers/Blog/Blog'
+import QueryPosts from './containers/Blog/QueryPosts'
 // Static pages
 import Home from './static/Home/Home'
 import Teaser from './static/Teaser/Teaser'
@@ -74,7 +75,7 @@ class App extends Component {
               <Route path="/logout" component={Logout} />
               <Route path="/p/" component={Blog} />
               <Route path="/q/" component={Blog} />
-              <Route path="/all/" component={Blog} />
+              <Route path="/all/" component={QueryPosts} />
               <Route path="/" exact component={Home} />
               <Redirect to="/" />
             </Switch>

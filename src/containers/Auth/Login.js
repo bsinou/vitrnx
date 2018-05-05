@@ -53,7 +53,6 @@ class Login extends Component {
     handleKeyPress = (event) => {
         if(event.key === 'Enter'){
             this.submitHandler(event)
-            // console.log('enter press here! ')
         }
       }
 
