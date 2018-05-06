@@ -10,9 +10,11 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import ContentEdit from 'material-ui/svg-icons/editor/mode-edit';
 import ContentDelete from 'material-ui/svg-icons/content/clear';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
+import Divider from 'material-ui/Divider';
 
 // Own component
 import PostInfo from '../PostInfo/PostInfo';
+import Comments from '../../comment/Comments';
 import Aux from '../../../hoc/Aux/Aux';
 
 
@@ -110,6 +112,7 @@ class Post extends Component {
     }
 
 
+
     render() {
         let post = <p style={{ textAlign: 'center' }}>Please select a Post!</p>;
         if (this.props.match.params.id) {
@@ -130,6 +133,11 @@ class Post extends Component {
                             <PostInfo tags={this.state.loadedPost.tags} date={this.state.loadedPost.date} author={this.state.loadedPost.author} />
                             <Markdown className={classes.Body} escapeHtml={true} source={this.state.loadedPost.body} />
                         </div>
+                        <Divider />
+                        <div className={classes.SubCard}>
+                            <Comments postId={this.state.loadedPost.path} />
+                        </div>
+
                     </div>
                 </Aux>
             );

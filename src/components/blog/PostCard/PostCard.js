@@ -1,6 +1,8 @@
 import React from 'react';
-import { Card, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import moment from 'moment';
+
+import { Card, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import comment from '../../../assets/images/ic_comment_white_18px.svg';
 
 // See:
 // Main concepts and shown examples:  https://material.io/guidelines/components/cards.html
@@ -20,16 +22,35 @@ function subtitle(props) {
       subtitle = subtitle + ' #' + tagArr[i];
     }
   }
-  return subtitle
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      {subtitle}
+      <div style={{ marginLeft: '10px' }}>
+        <img src={comment} alt="comment" />
+        <span style={{ marginLeft: '4px', verticalAlign: 'top' }}>4</span >
+      </div>
+    </div>
+  );
 }
 
 const PostCard = (props) => (
   <Card style={cardStyle} onClick={props.clicked}>
-    <CardMedia style={{ height: '240px' }} overlay={<CardTitle title={props.title} subtitle={subtitle(props)} />} >
+    <CardMedia
+      style={{ height: '240px' }}
+      overlay={
+        <CardTitle
+          title={props.title}
+          subtitle={
+            subtitle(props)
+          }
+        />
+      }
+    >
       <img style={{ height: '240px', width: '320px' }} src={props.thumb} alt={props.title + ' - image is not available'} />
     </CardMedia>
-    {/* <CardTitle subtitle={props.author+', on '+ moment(props.date).format('MMMM Do')} />  */}
-    <CardText style={{ textAlign: 'left', height: '60px', width: '320px' }}> {props.desc} </CardText>
+    <CardText style={{ textAlign: 'left', height: '60px', width: '320px' }}>
+      <div>{props.desc}</div>
+    </CardText>
   </Card>
 );
 

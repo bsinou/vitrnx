@@ -110,7 +110,6 @@ class Posts extends Component {
                 });
         }
         return (
-            // <Aux>
             <Aux>
                 {this.getAddBtn(this.state.canEdit)}
                 <div className={classes.Posts}>
@@ -118,24 +117,6 @@ class Posts extends Component {
                 </div>
             </Aux>
         );
-        //    {/* </Aux> */ }
-        //     {/* <Aux>
-        //             {this.getAddBtn(this.state.canEdit)}
-        //             <div className={classes.TableDisplay}>
-        //                 <div className={classes.LeftCol}>
-        //                     {posts[0]}
-        //                 </div>
-        //                 {posts.length > 2 ? (
-        //                 <div className={classes.RightCol}>
-        //                     {posts[1]}
-        //                     {posts[2]}
-        //                 </div>) : null}
-        //             </div>
-        //             {posts.length > 3 ? (
-        //                     <section>{posts.slice(3)}</section>
-        //                 ) : null}
-        //         </Aux> */}
-
     }
 }
 

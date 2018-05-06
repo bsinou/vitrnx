@@ -5,7 +5,8 @@
 
   
 .Title, h1 {
-    color: #a94c40;
+    color: #4d1a80;
+    text-align: left;
     font-size: 1.5em;
     font-weight: normal; 
 }
@@ -20,7 +21,6 @@ h2 {
     font-size: 1.0em;
     margin : 16px;
     width: 90%;
- 
 }
 
 .Desc, h3 {
