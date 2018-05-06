@@ -14,7 +14,8 @@ var cardStyle = {
 
 function subtitle(props) {
 
-  let subtitle = props.author + ', on ' + moment(props.date).format('MMMM Do') + '. ';
+  const dateStr = moment(props.date * 1000).format('MMMM Do')
+  let subtitle = props.author + ', on ' + dateStr + '. ';
 
   let tagArr = props.tags.split(' ');
   for (let i in tagArr) {
@@ -22,13 +23,22 @@ function subtitle(props) {
       subtitle = subtitle + ' #' + tagArr[i];
     }
   }
+
+  let commentStr = null;
+  if (parseInt(props.commentCount, 10) > 0) {
+    commentStr = (
+      <div style={{ marginLeft: '10px' }}>
+        <span style={{ marginLeft: '4px', verticalAlign: 'top' }}> {"  "}</span >
+        <img src={comment} style={{ opacity: '0.8' }}  alt="comment" />
+        <span style={{ marginLeft: '4px', verticalAlign: 'top' }}> {"  "+props.commentCount+ " "}</span >
+      </div>
+    );
+  }
+
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       {subtitle}
-      <div style={{ marginLeft: '10px' }}>
-        <img src={comment} alt="comment" />
-        <span style={{ marginLeft: '4px', verticalAlign: 'top' }}>4</span >
-      </div>
+      {commentStr}
     </div>
   );
 }
@@ -46,7 +56,7 @@ const PostCard = (props) => (
         />
       }
     >
-      <img style={{ height: '240px', width: '320px' }} src={props.thumb} alt={props.title + ' - image is not available'} />
+      <img style={{ height: '240px', width: '320px' }} src={"../imgRepo/" +props.thumb} alt={props.title + ' - image is not available'} />
     </CardMedia>
     <CardText style={{ textAlign: 'left', height: '60px', width: '320px' }}>
       <div>{props.desc}</div>

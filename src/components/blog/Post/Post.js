@@ -46,7 +46,7 @@ class Post extends Component {
                 var options = { headers: { 'Authorization': this.props.token } };
                 apiServer.get('/posts/' + cId, options).then(response => {
                     console.log(response.data)
-                    this.setState({ loadedPost: response.data.post, claims: response.data.claims });
+                    this.setState({ loadedPost: response.data.post});
                 });
             }
         }
@@ -64,15 +64,23 @@ class Post extends Component {
         if (window.confirm('Are you sure you want to completely remove this post?')) {
             var options = { headers: { 'Authorization': this.props.token } };
             apiServer.delete('/posts/' + id, options).then(response => {
-                console.log(response.data)
-                this.props.history.push('/q/news');
+                this.props.history.goBack();
+                //this.props.history.push('/q/News');
             });
         }
     };
 
-    getEditBtns = (id, canEdit, canManage) => {
+    canEdit = () => {
+        return this.props.roles.includes("EDITOR") || this.props.roles.includes("MODERATOR");
+    }
+    
+    canDelete = () => {
+        return this.props.roles.includes("MODERATOR") || this.props.userId === this.state.loadedPost.authorId;
+    }
+
+    getEditBtns = (id) => {
         let btns = null;
-        if (canEdit) {
+        if (this.canEdit()) {
             btns = (
                 <div>
                     <ul className={classes.SideButtons} >
@@ -93,7 +101,7 @@ class Post extends Component {
                                 <ContentEdit />
                             </FloatingActionButton>
                         </li>
-                        {canManage ? (
+                        {this.canDelete() ? (
                             <li key="delete" >
                                 <FloatingActionButton
                                     onClick={() => this.deletePostHandler(id)}
@@ -121,7 +129,7 @@ class Post extends Component {
         if (this.state.loadedPost) {
             post = (
                 <Aux>
-                    {this.getEditBtns(this.state.loadedPost.path, this.state.claims.canEdit === "true", this.state.claims.canManage === "true")}
+                    {this.getEditBtns(this.state.loadedPost.path)}
                     <div className={classes.Post}>
                         <Card>
                             <CardMedia overlay={<CardTitle title={this.state.loadedPost.title} />}>

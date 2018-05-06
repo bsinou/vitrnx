@@ -12,11 +12,12 @@ const postInfo = (props) => {
             return (<NavLink key={tag} to={'/q/' + tag} className="TextLink">#{tag}</NavLink>);
         });
     }
-
+    const dateStr = moment(props.date*1000).format('MMMM Do YYYY');
+    
     return (
         <div className={classes.PostInfo}>
             <div className={classes.Author}>
-                {props.author}, on {moment(props.date).format('MMMM Do YYYY')} | {tags}
+                {props.author}, on {dateStr} | {tags}
             </div>
         </div>
     );

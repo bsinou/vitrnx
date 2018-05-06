@@ -2,7 +2,7 @@
 
 ## Blockers
 
-- enhance list and single post page layout
+- ~~enhance list and single post page layout~~
 
 User 
 
@@ -17,7 +17,7 @@ User
 - ~~finalise post dao -> ID issue~~
 - ~~implement corresponding tests~~
 - ~~update, delete, list,~~ tags 
-
+- full select on double click
 
 ## Features
 
@@ -27,6 +27,7 @@ User
 - images
 - video
 - add search, enhance filtering
+- better management of the session time out
 
 ## Layout 
 
@@ -39,10 +40,10 @@ User
 
 ## Cards
 
-- enhance list and single post page layout
+- ~~enhance list and single post page layout~~
 - First, check the [doc](https://material.io/guidelines/components/cards.html#cards-behavior)
 - manage images
-- add comments 
+- ~~add comments~~ 
 - limit desc size
 
 ## Hover buttons 
@@ -60,9 +61,9 @@ User
 
 - bind CTRL-S
 - Enhance error msg and save feedback
-- bind submit button with enter keystroke on login page
+- ~~bind submit button with enter keystroke on login page~~
 - full text & images are selected when navigating using double click
-- rather store name than display name in author field
+- ~~rather store name than display name in author field~~
 - export mongoDB content as JSON
 
 ## Auth
@@ -83,7 +84,7 @@ Markdown editor
 - Downgrad react version.
 - Stabilise distribution 
 - define deployment 
-- make CLI command for start, backup and import posts
+- make CLI command for ~~start~~, backup and import posts
 
 ## Users
 
@@ -92,3 +93,7 @@ Markdown editor
 - ~~claims, display or not~~ 
 - Add tests to check claims on post & delete
 
+
+## Backend
+
+- clean comments on post delete

@@ -41,43 +41,10 @@ const styles = {
 
 class EditPost extends Component {
     state = {
-    }
-
-    constructor(props) {
-        super(props);
-
-        this.handleMarkdownChange = this.handleMarkdownChange.bind(this)
-
-        this.state = {
-            id: '',
-            path: '',
-            date: '',
-            title: '',
-            author: '',
-            tags: '',
-            thumb: '',
-            hero: '',
-            desc: '',
-            body: '',
-            createdOn: '',
-            lastUpdatedOn: '',
-            lastUpdatedBy: '',
-
-            canManage: false,
-
-            slideIndex: 0,
-            htmlMode: 'raw'
-        };
-    }
-
-    handleChange = (value) => {
-        this.setState({
-            slideIndex: value,
-        });
-    };
-
-    handleMarkdownChange(evt) {
-        this.setState({ body: evt.target.value })
+        post: {},
+        // Tab and MD editor management
+        slideIndex: 0,
+        htmlMode: 'raw'
     }
 
     componentDidMount() {
@@ -91,63 +58,66 @@ class EditPost extends Component {
     loadData() {
         const currId = this.props.match.params.id;
         if (currId) {
-            if (!this.state.path || this.state.path !== currId) {
+            if (!this.state.post.path || this.state.post.path !== currId) {
                 var options = { headers: { 'Authorization': this.props.token } };
                 axios
                     .get('/posts/' + currId, options)
                     .then(response => {
-                        this.setState({ ...response.data.post, claims: response.data.claims  });
+                        this.setState({ post: { ...response.data.post } });
                     })
                     .catch(error => {
                         console.log('# could not load ' + currId, error)
-                        this.setState({ path: currId });
+                        this.setState({ post: {...this.state.post, path: currId } });
                     });
             }
         }
     }
 
     postDataHandler = () => {
-        const data = {
-            // Edited by user
-            id: this.state.id,
-            path: this.state.path,
-            title: this.state.title,
-            tags: this.state.tags,
-            desc: this.state.desc,
-            thumb: this.state.thumb,
-            hero: this.state.hero,
-            // MD rendering 
-            body: this.state.body,
-        };
-
-        // retrieve token from redux and pass it to axios
+        var data = {...this.state.post}
         var options = { headers: { 'Authorization': this.props.token } };
+
         axios.post('/posts', data, options).then(response => {
             console.log(response); // TODO Give feedback to the user, TODO also implement regular auto-save 
-            this.setState({ ...response.data.post, claims: response.data.claims  });
+            this.setState({ post: { ...response.data.post }, claims: response.data.claims });
         }).catch(err => {
             console.log(err); // TODO handle error?
         });
     }
 
-    deletePostHandler = (path, id) => {
+    deletePostHandler = () => {
         if (window.confirm('Are you sure you want to completely remove this post?')) {
-            if (!id || id === "") {// No ID <=> new post, simply forward to cancel
+            if (!this.state.post.id || this.state.post.id === "") {// No ID <=> new post, simply forward to cancel
                 this.cancelHandler()
             }
             var options = { headers: { 'Authorization': this.props.token } };
-            axios.delete('/posts/' + path, options).then(response => {
-                this.props.history.push('/q/news');
+            axios.delete('/posts/' + this.state.post.path, options).then(response => {
+                this.props.history.goBack();
+                // this.props.history.push('/q/News');
             });
         }
-
     };
 
     cancelHandler = () => {
         this.props.history.goBack();
     };
 
-    getEditBtns = (path, id, canManage) => {
+    canDelete = () => {
+        return this.props.roles.includes("MODERATOR") || this.props.userId === this.state.post.authorId;
+    }
+
+    handleChange = (value) => {
+        this.setState({
+            slideIndex: value,
+        });
+    };
+
+    handleMarkdownChange = (evt) => {
+        this.setState({ post: { ...this.state.post, body: evt.target.value } })
+    }
+
+
+    getEditBtns = () => {
         return (
             <div>
                 <ul className={classes.SideButtons} >
@@ -176,10 +146,10 @@ class EditPost extends Component {
                         </FloatingActionButton>
 
                     </li>
-                    {canManage ?
+                    {this.canDelete() ?
                         <li>
                             <FloatingActionButton
-                                onClick={() => this.deletePostHandler(id)}
+                                onClick={() => this.deletePostHandler()}
                                 mini={true}
                                 secondary={true}
                                 style={btnStyle}>
@@ -196,7 +166,7 @@ class EditPost extends Component {
     render() {
         return (
             <div className={classes.EditPost}>
-                {this.getEditBtns(this.state.path, this.state.id, (this.state.claims && this.state.claims.canManage==="true"))}
+                {this.getEditBtns()}
                 <Tabs
                     onChange={this.handleChange}
                     value={this.state.slideIndex} >
@@ -211,32 +181,32 @@ class EditPost extends Component {
                             <TextField
                                 floatingLabelText="Title"
                                 fullWidth hintText="A title for your post"
-                                value={this.state.title}
-                                onChange={(event) => this.setState({ title: event.target.value })}
+                                value={this.state.post.title}
+                                onChange={(event) => this.setState({ post: {...this.state.post, title: event.target.value } })}
                             /><br />
                             <TextField
                                 floatingLabelText="Slug"
                                 fullWidth hintText="a-nice-name-without-fantasy"
-                                value={this.state.path}
-                                onChange={(event) => this.setState({ path: event.target.value })}
+                                value={this.state.post.path}
+                                onChange={(event) => this.setState({ post: {...this.state.post, path: event.target.value } })}
                             /><br />
                             <TextField
                                 floatingLabelText="Thumbnail image path"
                                 fullWidth hintText="Path of a 320x240px thumbnail image"
-                                value={this.state.thumb}
-                                onChange={(event) => this.setState({ thumb: event.target.value })}
+                                value={this.state.post.thumb}
+                                onChange={(event) => this.setState({ post: {...this.state.post, thumb: event.target.value } })}
                             /><br />
                             <TextField
                                 floatingLabelText="Hero image path"
                                 fullWidth hintText="Path of a 800x200px hero image"
-                                value={this.state.hero}
-                                onChange={(event) => this.setState({ hero: event.target.value })}
+                                value={this.state.post.hero}
+                                onChange={(event) => this.setState({ post: {...this.state.post, hero: event.target.value } })}
                             /><br />
                             <TextField
                                 floatingLabelText="Tags"
                                 fullWidth hintText="For instance: news music program"
-                                value={this.state.tags}
-                                onChange={(event) => this.setState({ tags: event.target.value })}
+                                value={this.state.post.tags}
+                                onChange={(event) => this.setState({ post: {...this.state.post, tags: event.target.value } })}
                             /><br />
                             <TextField
                                 floatingLabelText="Description"
@@ -245,8 +215,8 @@ class EditPost extends Component {
                                 multiLine={true}
                                 rows={4}
                                 rowsMax={10}
-                                value={this.state.desc}
-                                onChange={(event) => this.setState({ desc: event.target.value })}
+                                value={this.state.post.desc}
+                                onChange={(event) => this.setState({ post: {...this.state.post, desc: event.target.value } })}
                             />
                         </div>
                         <div
@@ -260,7 +230,7 @@ class EditPost extends Component {
                             <div className={classes.TabInnerCol}>
                                 <Textarea
                                     rows={10}
-                                    value={this.state.body}
+                                    value={this.state.post.body}
                                     onChange={this.handleMarkdownChange}
                                 />
                             </div>
@@ -268,7 +238,7 @@ class EditPost extends Component {
                             <div className={[classes.Preview, classes.TabInnerCol].join(' ')}>
                                 <Markdown
                                     className={classes.Result}
-                                    source={this.state.body}
+                                    source={this.state.post.body}
                                 />
                             </div>
                         </div>
@@ -282,7 +252,8 @@ class EditPost extends Component {
 const mapStateToProps = state => {
     return {
         token: state.auth.token,
-        // currUserMail: state.auth.email
+        userId: state.auth.userId,
+        roles: state.auth.roles,
     };
 };
 

@@ -13,13 +13,11 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import classes from './Posts.css';
 import './Posts.css';
 
-
-class Posts extends Component {
+export default class Posts extends Component {
 
     state = {
         posts: [],
         loadedCategory: null,
-        canEdit: false,
         error: false
     }
 
@@ -41,11 +39,11 @@ class Posts extends Component {
                 var url = '/posts?tag=' + this.props.match.params.id;
                 apiServer.get(url, options)
                     .then(response => {
-                        const posts = response.data.posts.slice(0, 10);
+                        const posts = response.data.posts.slice(0, 12);
                         const updatedPosts = posts.map(
                             post => { return { ...post }; }
                         );
-                        this.setState({ posts: updatedPosts, canEdit: response.data.claims.canEdit, loadedCategory: this.props.match.params.id });
+                        this.setState({ posts: updatedPosts, loadedCategory: this.props.match.params.id });
                     }).catch(error => {
                         console.log(error);
                         this.setState({ error: true, loadedCategory: this.props.match.params.id })
@@ -64,9 +62,14 @@ class Posts extends Component {
     };
 
 
-    getAddBtn = (canEdit) => {
+    canCreatePost = () => {
+        return this.props.roles.includes("EDITOR") || this.props.roles.includes("MODERATOR");
+    }
+
+
+    getAddBtn = () => {
         let btns = null;
-        if (canEdit === "true") {
+        if (this.canCreatePost()) {
             btns = (
                 <div>
                     <ul className={classes.SideButtons} >
@@ -91,20 +94,13 @@ class Posts extends Component {
         if (!this.state.error) {
             posts = this.state.posts.map(
                 post => {
-                    return (  // TODO rather directly pass the object than the props one by one
+                    return (  
                         <PostCard
                             className={classes.PostCard}
                             key={post.path}
-                            path={post.path}
-                            title={post.title}
-                            tags={post.tags}
-                            author={post.author}
-                            desc={post.desc}
-                            date={post.date}
                             currId={this.state.loadedCategory ? this.state.loadedCategory : 'all'}
-                            // thumb={post.thumb}
-                            thumb={"../imgRepo/" + post.thumb}
                             clicked={() => this.postSelectedHandler(post.path)}
+                            {...post}
                         />
                     );
                 });
@@ -119,5 +115,3 @@ class Posts extends Component {
         );
     }
 }
-
-export default Posts;
