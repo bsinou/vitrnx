@@ -34,11 +34,11 @@ class Layout extends Component {
                     <Toolbar
                         className={classes.Toolbar}
                         isAuth={this.props.isAuthenticated}
-                        roles={this.props.roles}
+                        userRoles={this.props.userRoles}
                         drawerToggleClicked={this.sideDrawerToggleHandler} />
                     <SideDrawer
                         isAuth={this.props.isAuthenticated}
-                        roles={this.props.roles}
+                        userRoles={this.props.userRoles}
                         open={this.state.showSideDrawer}
                         closed={this.sideDrawerClosedHandler} />
                     <main className={classes.Content}>
@@ -68,7 +68,7 @@ class Layout extends Component {
 const mapStateToProps = state => {
     return {
         isAuthenticated: state.auth.token !== null,
-        roles: state.auth.roles
+        userRoles: state.auth.userRoles
     };
 };
 

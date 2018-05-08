@@ -27,7 +27,7 @@ const editorExtraItems  = [
 const navigationItems = (props) => {
 
     let items = authItems;
-    if (props.roles && props.roles.includes("EDITOR")){
+    if (props.userRoles && props.userRoles.includes("EDITOR")){
          items = editorExtraItems
     }
 

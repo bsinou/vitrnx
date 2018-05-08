@@ -17,14 +17,14 @@ export const authStart = () => {
     };
 };
 
-export const authSuccess = (token, userId, email, displayName, roles) => {
+export const authSuccess = (token, userId, email, displayName, userRoles) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         token: token,
         userId: userId,
         email: email,
         displayName: displayName,
-        roles: roles
+        userRoles: userRoles
     };
 };
 
@@ -129,7 +129,7 @@ export const userMeta = (idToken, localId) => {
         var options = { headers: { 'Authorization': idToken } };
         axios.post(url, authData, options)
             .then(response => {
-                dispatch(authSuccess(idToken, localId, response.data.userMeta.email, response.data.userMeta.displayName, response.data.userMeta.roles));
+                dispatch(authSuccess(idToken, localId, response.data.userMeta.email, response.data.userMeta.displayName, response.data.userMeta.userRoles));
             })
             .catch(err => {
                 console.log(err);

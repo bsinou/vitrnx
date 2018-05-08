@@ -91,7 +91,7 @@ class Comments extends Component {
                             onCommentChange={() => this.loadData(true)}
                             token={this.props.token}
                             userId={this.props.userId}
-                            userRoles={this.props.roles}
+                            userRoles={this.props.userRoles}
                             comment={comment}
                             // id={comment.id}
                             // authorId={comment.authorId}
@@ -131,7 +131,7 @@ const mapStateToProps = state => {
     return {
         token: state.auth.token,
         userId: state.auth.userId, 
-        roles: state.auth.roles, 
+        userRoles: state.auth.userRoles, 
     };
 };
 

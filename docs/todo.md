@@ -9,6 +9,8 @@ User
 - ~~Enhance labels in auth page (use register rather than sign up)~~
 - ~~Add fields in register form~~ 
 - ~~Claims~~
+- add sync with firebase
+- add artist page
 
 
 ## Bugs

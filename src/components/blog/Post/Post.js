@@ -71,11 +71,11 @@ class Post extends Component {
     };
 
     canEdit = () => {
-        return this.props.roles.includes("EDITOR") || this.props.roles.includes("MODERATOR");
+        return this.props.userRoles.includes("EDITOR") || this.props.userRoles.includes("MODERATOR");
     }
     
     canDelete = () => {
-        return this.props.roles.includes("MODERATOR") || this.props.userId === this.state.loadedPost.authorId;
+        return this.props.userRoles.includes("MODERATOR") || this.props.userId === this.state.loadedPost.authorId;
     }
 
     getEditBtns = (id) => {

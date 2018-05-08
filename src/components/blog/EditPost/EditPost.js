@@ -103,7 +103,7 @@ class EditPost extends Component {
     };
 
     canDelete = () => {
-        return this.props.roles.includes("MODERATOR") || this.props.userId === this.state.post.authorId;
+        return this.props.userRoles.includes("MODERATOR") || this.props.userId === this.state.post.authorId;
     }
 
     handleChange = (value) => {
@@ -253,7 +253,7 @@ const mapStateToProps = state => {
     return {
         token: state.auth.token,
         userId: state.auth.userId,
-        roles: state.auth.roles,
+        userRoles: state.auth.userRoles,
     };
 };
 

@@ -18,7 +18,7 @@ class Blog extends Component {
                         <EditPost  {...props}
                             token={this.props.token}
                             userId={this.props.userId}
-                            roles={this.props.roles}
+                            userRoles={this.props.userRoles}
                         />
                     )
                 } />
@@ -28,7 +28,7 @@ class Blog extends Component {
                         <EditPost  {...props}
                             token={this.props.token}
                             userId={this.props.userId}
-                            roles={this.props.roles}
+                            userRoles={this.props.userRoles}
                         />
                     )
                 } />
@@ -38,7 +38,7 @@ class Blog extends Component {
                         <Post  {...props}
                             token={this.props.token}
                             userId={this.props.userId}
-                            roles={this.props.roles}
+                            userRoles={this.props.userRoles}
                         />
                     )
                 } />
@@ -48,7 +48,7 @@ class Blog extends Component {
                         <Posts  {...props}
                             token={this.props.token}
                             userId={this.props.userId}
-                            roles={this.props.roles}
+                            userRoles={this.props.userRoles}
                         />
                     )
                 } />
@@ -62,7 +62,7 @@ const mapStateToProps = state => {
     return {
         token: state.auth.token,
         userId: state.auth.userId,
-        roles: state.auth.roles,
+        userRoles: state.auth.userRoles,
     };
 };
 

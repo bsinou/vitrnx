@@ -63,7 +63,7 @@ export default class Posts extends Component {
 
 
     canCreatePost = () => {
-        return this.props.roles.includes("EDITOR") || this.props.roles.includes("MODERATOR");
+        return this.props.userRoles.includes("EDITOR") || this.props.userRoles.includes("MODERATOR");
     }
 
 

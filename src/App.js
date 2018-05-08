@@ -67,7 +67,7 @@ class App extends Component {
     );
 
     if (this.props.isAuthenticated) {
-      if (this.props.roles && this.props.roles.includes("EDITOR")) {
+      if (this.props.userRoles && this.props.userRoles.includes("EDITOR")) {
         routes = (
           <Layout>
             <Switch>
@@ -110,7 +110,7 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     isAuthenticated: state.auth.token != null,
-    roles: state.auth.roles, 
+    userRoles: state.auth.userRoles, 
     dname: state.auth.displayName
   };
 };

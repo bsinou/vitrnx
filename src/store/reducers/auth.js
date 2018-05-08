@@ -6,7 +6,7 @@ const initialState = {
     userId: null,
     email: 'anonymous',
     displayName: 'anonymous',
-    roles: [], // Arrays in redux must be initialised to an empty array rather than null.
+    userRoles: [], // Arrays in redux must be initialised to an empty array rather than null.
 
     authRedirectPath: '/',
     loading: false,
@@ -23,7 +23,7 @@ const authSuccess = (state, action) => {
         userId: action.userId,
         email: action.email,
         displayName: action.displayName,
-        roles: action.roles,
+        userRoles: action.userRoles,
         loading: false,
         error: null   
      } );
@@ -34,7 +34,7 @@ const authFail = (state, action) => {
         error: action.error,
         email: 'anonymous',
         displayName: 'anonymous',
-        roles: [],
+        userRoles: [],
         loading: false
     });
 };
@@ -45,7 +45,7 @@ const authLogout = (state, action) => {
         userId: null,
         email: 'anonymous', 
         displayName: 'anonymous',
-        roles: [],
+        userRoles: [],
     });
 };
 
