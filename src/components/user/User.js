@@ -18,14 +18,16 @@ export default class User extends React.Component {
   state = {
     isSelf: false,
     isAdmin: false,
-   
+
     initialUser: null,
     updatedUser: null,
 
+    knownRoles: null,
+
     // Dirty management of loaded state to avoid infinite looping
     loadedUserId: null,
-    errorMsg: null, 
-   
+    errorMsg: null,
+
     // Manage dialog state
     open: false,
   };
@@ -43,26 +45,43 @@ export default class User extends React.Component {
   }
 
   loadData() {
+    var options = { headers: { 'Authorization': this.props.token } };
+
     const cId = this.props.match.params.id;
     if (cId) {
       if (!this.state.loadedUserId || this.state.loadedUserId !== cId) {
-        var options = { headers: { 'Authorization': this.props.token } };
         axios.get('/users/' + cId, options).then(response => {
           console.log(response.data)
-          this.setState({ 
-              initialUser: { ...response.data.user }, 
-              updatedUser: { ...response.data.user }, 
-              loadedUserId: cId,
-              errorMsg: null, 
-          });
-        })
-        .catch(error => {
-          this.setState({ 
+          this.setState({
+            initialUser: { ...response.data.user },
+            updatedUser: { ...response.data.user },
             loadedUserId: cId,
-            errorMsg: error.message, 
-        });
+            errorMsg: null,
+          });
+        }).catch(error => {
+          this.setState({
+            loadedUserId: cId,
+            errorMsg: error.message,
+          });
         });
       }
+    }
+
+
+    if (!this.state.errorMsg && !this.state.knownRoles) {
+      // Retrieve role list
+      axios.get('/roles', options).then(response => {
+        console.log('Retrieved roles', response.data)
+        let retrievedRoles = new Map();
+        response.data.roles.map(role => {
+          retrievedRoles.set(role.roleId, role.label);
+        })
+        this.setState({
+          knownRoles: retrievedRoles,
+        });
+      }).catch(error => {
+        console.log('Could not retrieve roles', error)
+      });
     }
   }
 
@@ -148,6 +167,19 @@ export default class User extends React.Component {
   //   });
   // }
 
+  getRoleString(roles) {
+    console.log('roles', roles);
+    return roles.map(
+      role => {
+        console.log('Retrieving label for', role);
+        console.log('We have', this.state.knownRoles.get(role));
+        return (
+          this.state.knownRoles.get(role)
+        );
+      }
+    ).join(', ');
+  }
+
   render() {
     // Update dialog action 
     const actions = [
@@ -186,7 +218,9 @@ export default class User extends React.Component {
           <div>
             <div className={classes.CommentMeta}>{this.state.initialUser.name}</div>
             <div className={classes.CommentMeta}>{this.state.initialUser.email}</div>
-            <div className={classes.CommentMeta}>{this.state.initialUser.email}</div>
+            {!this.state.knownRoles ? null : (
+              <div className={classes.CommentMeta}>{this.getRoleString(this.state.initialUser.userRoles)}</div>
+            )}
           </div>
           <Divider />
 

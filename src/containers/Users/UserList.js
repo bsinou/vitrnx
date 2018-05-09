@@ -58,7 +58,7 @@ export default class UserList extends Component {
 
 
     getRoleString(roles){
-        return roles.map(role => role.label).join(' ')
+        return roles.map(role => role.label).join(', ')
     }
 
     // TODO add new user component
