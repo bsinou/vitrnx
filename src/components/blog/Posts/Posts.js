@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import apiServer from '../../../apiServer';
 
 import PostCard from '../PostCard/PostCard';
-import Aux from '../../../hoc/Aux/Aux';
+import AuxWrapper from '../../../hoc/AuxWrapper/AuxWrapper';
 
 
 // Material UI
@@ -106,12 +106,12 @@ export default class Posts extends Component {
                 });
         }
         return (
-            <Aux>
+            <AuxWrapper>
                 {this.getAddBtn(this.state.canEdit)}
                 <div className={classes.Posts}>
                     {posts}
                 </div>
-            </Aux>
+            </AuxWrapper>
         );
     }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {NavLink} from 'react-router-dom';
 
-import Aux from '../../hoc/Aux/Aux'
+import AuxWrapper from '../../hoc/AuxWrapper/AuxWrapper'
 
 import classes from './Home.css'
 
@@ -23,7 +23,7 @@ class Home extends Component {
         }
 
         return (
-            <Aux>
+            <AuxWrapper>
                 <div className={classes.Posts}>
                     <div className={classes.Intro}>
                         <p className={classes.IntroTitle}>{titleStr}</p>
@@ -49,7 +49,7 @@ class Home extends Component {
                         </div>
                     </div>
                 </div>
-            </Aux>
+            </AuxWrapper>
         );
     }
 }

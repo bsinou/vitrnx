@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Aux from '../../../hoc/Aux/Aux'
+import AuxWrapper from '../../../hoc/AuxWrapper/AuxWrapper'
 import Backdrop from '../Backdrop/Backdrop'
 
 
@@ -14,7 +14,7 @@ class Modal extends Component {
     
     render() {
         return (
-            <Aux>
+            <AuxWrapper>
                 <Backdrop
                     show={this.props.show}
                     clicked={this.props.modalClosed}
@@ -28,7 +28,7 @@ class Modal extends Component {
                 >
                     {this.props.children}
                 </div>
-            </Aux>
+            </AuxWrapper>
 
         );
     }

@@ -15,7 +15,7 @@ import Divider from 'material-ui/Divider';
 // Own component
 import PostInfo from '../PostInfo/PostInfo';
 import Comments from '../../comment/Comments';
-import Aux from '../../../hoc/Aux/Aux';
+import AuxWrapper from '../../../hoc/AuxWrapper/AuxWrapper';
 
 
 import classes from './Post.css';
@@ -128,7 +128,7 @@ class Post extends Component {
         }
         if (this.state.loadedPost) {
             post = (
-                <Aux>
+                <AuxWrapper>
                     {this.getEditBtns(this.state.loadedPost.path)}
                     <div className={classes.Post}>
                         <Card>
@@ -147,7 +147,7 @@ class Post extends Component {
                         </div>
 
                     </div>
-                </Aux>
+                </AuxWrapper>
             );
         }
         return post;

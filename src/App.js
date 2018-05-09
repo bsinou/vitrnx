@@ -11,6 +11,8 @@ import * as actions from './store/actions/index';
 import Layout from './hoc/Layout/Layout'
 import Blog from './containers/Blog/Blog'
 import QueryPosts from './containers/Blog/QueryPosts'
+import UserList from './containers/Dashboard/UserList'
+
 // Static pages
 import Home from './static/Home/Home'
 import Teaser from './static/Teaser/Teaser'
@@ -57,50 +59,44 @@ class App extends Component {
   }
 
   render() {
-
-    let routes = (
-      <Switch>
-        <Route path="/register" component={Register} />
-        <Route path="/" component={Login} />
-        <Redirect to="/" />
-      </Switch>
-    );
+    let routes = [
+      (<Route path="/register" component={Register} />),
+      (<Route path="/" component={Login} />),
+    ];
 
     if (this.props.isAuthenticated) {
+      routes = [
+        (<Route path="/teaser" component={Teaser} />),
+        (<Route path="/logout" component={Logout} />),
+        (<Route path="/p/" component={Blog} />),
+        (<Route path="/q/" component={Blog} />),
+        (<Route path="/" exact component={Home} />)
+      ]
+
       if (this.props.userRoles && this.props.userRoles.includes("EDITOR")) {
-        routes = (
-          <Layout>
-            <Switch>
-              <Route path="/teaser" component={Teaser} />
-              <Route path="/logout" component={Logout} />
-              <Route path="/p/" component={Blog} />
-              <Route path="/q/" component={Blog} />
-              <Route path="/all/" component={QueryPosts} />
-              <Route path="/" exact component={Home} />
-              <Redirect to="/" />
-            </Switch>
-          </Layout>
-        );
-      } else {
-        routes = (
-          <Layout>
-            <Switch>
-              <Route path="/teaser" component={Teaser} />
-              <Route path="/logout" component={Logout} />
-              <Route path="/p/" component={Blog} />
-              <Route path="/q/" component={Blog} />
-              <Route path="/" exact component={Home} />
-              <Redirect to="/" />
-            </Switch>
-          </Layout>
-        );
+        routes = [...routes,
+         (<Route path="/all/" component={QueryPosts} />)
+        ]
+      }
+
+      if (this.props.userRoles && (this.props.userRoles.includes("ADMIN") || this.props.userRoles.includes("USER_ADMIN"))) {
+        routes = [...routes,
+        (<Route path="/u/" component={UserList} />)
+        ]
       }
     }
 
+    routes = [ ...routes, (<Redirect to="/" />) ]
+
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
+      <MuiThemeProvider muiTheme={muiTheme} >
         <div className={classes.App}>
-          {routes}
+          <Layout>
+            <Switch>
+              {/* Spread operator didn't work here, aber WHY??  */}
+              {routes.map(element => element)}
+            </Switch>
+          </Layout>
         </div>
       </MuiThemeProvider>
     );
@@ -110,7 +106,7 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     isAuthenticated: state.auth.token != null,
-    userRoles: state.auth.userRoles, 
+    userRoles: state.auth.userRoles,
     dname: state.auth.displayName
   };
 };

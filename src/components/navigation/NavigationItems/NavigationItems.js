@@ -4,42 +4,45 @@ import NavigationItem from './NavigationItem/NavigationItem';
 
 import classes from './NavigationItems.css';
 
-const baseItems = [
-    { url: '/', label: 'Home' },
-    { url: '/teaser', label: 'Teaser' },
-    { url: '/q/News', label: 'News' },
-    { url: '/q/FAQ', label: 'FAQ' },
-]
+export default class NavigationItems extends React.Component {
 
+    getMenuItems() {
+        let items = [
+            { url: '/', label: 'Home' },
+            { url: '/teaser', label: 'Teaser' },
+            { url: '/q/News', label: 'News' },
+            { url: '/q/FAQ', label: 'FAQ' },
+        ]
 
-const authItems = [
-    ...baseItems,
-    { url: '/logout', label: 'Ciao!' }
-]
+        if (this.props.userRoles && this.props.userRoles.includes("EDITOR")) {
+            items = [...items,
+            { url: '/all', label: 'All' },
+            ]
+        }
 
-const editorExtraItems  = [
-    ...baseItems, 
-    { url: '/all', label: 'All' },
-    { url: '/logout', label: 'Ciao!' }
-]
+        if (this.props.userRoles && this.props.userRoles.includes("ADMIN")) {
+            items = [...items,
+            { url: '/u', label: 'Users' },
+            ]
+        }
 
+        // For now, always true when we reach this point
+        // if (isAuthenticated){
+        items = [...items, { url: '/logout', label: 'Ciao!' }]
 
-const navigationItems = (props) => {
-
-    let items = authItems;
-    if (props.userRoles && props.userRoles.includes("EDITOR")){
-         items = editorExtraItems
+        return items;
     }
 
-    var links = items.map(
-        item => (<NavigationItem key={item.url} link={item.url}>{item.label}</NavigationItem>)
-    );
+    render() {
 
-    return (
-        <ul className={classes.NavigationItems}>
-            {links}
-        </ul>
-    );
+        var links = this.getMenuItems().map(
+            item => (<NavigationItem key={item.url} link={item.url}>{item.label}</NavigationItem>)
+        );
+
+        return (
+            <ul className={classes.NavigationItems}>
+                {links}
+            </ul>
+        );
+    }
 }
-
-export default navigationItems;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Aux from '../../hoc/Aux/Aux'
+import AuxWrapper from '../../hoc/AuxWrapper/AuxWrapper'
 
 import classes from './Faq.css'
 
@@ -17,7 +17,7 @@ class Faq extends Component {
         }
 
         return (
-            <Aux>
+            <AuxWrapper>
                 <div className={classes.Posts}>
                     <div className={classes.Post}>
                         <p className={classes.PostTitle}>{titleStr}</p>
@@ -46,7 +46,7 @@ class Faq extends Component {
                         </div>
                     </div>
                 </div>
-            </Aux>
+            </AuxWrapper>
         );
     }
 }

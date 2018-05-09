@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Aux from '../Aux/Aux'
+import AuxWrapper from '../AuxWrapper/AuxWrapper'
 // import Modal from '../../components/ui/Modal/Modal'
 
 import Snackbar from 'material-ui/Snackbar';
@@ -72,7 +72,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
 
         render() {
             return (
-                <Aux>
+                <AuxWrapper>
                     {/* <Modal
                         show={this.state.error}
                         modalClosed={this.disposeModal}>
@@ -85,7 +85,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
                         autoHideDuration={4000}
                         onRequestClose={this.handleRequestClose}
                     />
-                </Aux>
+                </AuxWrapper>
             );
         }
     }

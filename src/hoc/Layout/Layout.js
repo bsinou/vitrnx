@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Aux from '../Aux/Aux';
+import AuxWrapper from '../AuxWrapper/AuxWrapper';
 import Toolbar from '../../components/navigation/Toolbar/Toolbar'
 import SideDrawer from '../../components/navigation/SideDrawer/SideDrawer'
 import Header from '../../components/ui/Header/Header'
@@ -29,7 +29,7 @@ class Layout extends Component {
 
         if (this.props.isAuthenticated) {
             return (
-                <Aux>
+                <AuxWrapper>
                     <Header className={classes.Header} />
                     <Toolbar
                         className={classes.Toolbar}
@@ -48,18 +48,18 @@ class Layout extends Component {
                         className={classes.Footer}
                         isAuth={this.props.isAuthenticated}
                     />
-                </Aux>
+                </AuxWrapper>
             );
         } else {
             return (
 
-                <Aux>
+                <AuxWrapper>
                     <Header />
                     <main className={classes.Content}>
                         {this.props.children}
                     </main>
                     <Footer />
-                </Aux>
+                </AuxWrapper>
             );
         }
     }
