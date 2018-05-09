@@ -18,21 +18,18 @@ export default class User extends React.Component {
   state = {
     isSelf: false,
     isAdmin: false,
+   
+    initialUser: null,
+    updatedUser: null,
+
+    // Dirty management of loaded state to avoid infinite looping
+    loadedUserId: null,
+    errorMsg: null, 
+   
     // Manage dialog state
     open: false,
   };
 
-  //   constructor(props) {
-  //     super(props);
-
-  // //     console.log('In constructor:',this.props.user)
-  //     // this.state = {
-  //     //   initialUser: { ...this.props.user, userRoles: { ...this.props.user.userRoles } },
-  //     //   updatedUser: { ...this.props.user, userRoles: { ...this.props.user.userRoles } },
-  //     //   isAdmin: this.props.userRoles.includes("USER_ADMIN") || this.props.userRoles.includes("ADMIN"),
-  //     //   isSelf: this.props.userId === this.props.user.userId
-  //     // }
-  //   }
 
 
   componentDidMount() {
@@ -48,11 +45,22 @@ export default class User extends React.Component {
   loadData() {
     const cId = this.props.match.params.id;
     if (cId) {
-      if (!this.state.initialUser || this.state.initialUser.userId !== cId) {
+      if (!this.state.loadedUserId || this.state.loadedUserId !== cId) {
         var options = { headers: { 'Authorization': this.props.token } };
         axios.get('/users/' + cId, options).then(response => {
           console.log(response.data)
-          this.setState({ initialUser: { ...response.data.user }, updatedUser: { ...response.data.user } });
+          this.setState({ 
+              initialUser: { ...response.data.user }, 
+              updatedUser: { ...response.data.user }, 
+              loadedUserId: cId,
+              errorMsg: null, 
+          });
+        })
+        .catch(error => {
+          this.setState({ 
+            loadedUserId: cId,
+            errorMsg: error.message, 
+        });
         });
       }
     }
