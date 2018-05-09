@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import apiServer from '../../apiServer';
 
@@ -8,7 +7,7 @@ import { List, ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import { darkBlack } from 'material-ui/styles/colors';
 
-class UserList extends Component {
+export default class UserList extends Component {
 
     state = {
         users: [],
@@ -51,12 +50,16 @@ class UserList extends Component {
         }
     }
 
-    userSelectedHandler = (event, path) => {
+    userSelectedHandler = (event, userId) => {
         event.stopPropagation();
         event.preventDefault();
-        console.log('hop');
-        // this.props.history.push('/u/' + path);
+        this.props.history.push('/u/' + userId);
     };
+
+
+    getRoleString(roles){
+        return roles.map(role => role.label).join(' ')
+    }
 
     // TODO add new user component
 
@@ -75,6 +78,7 @@ class UserList extends Component {
                                 secondaryText={
                                     <p>
                                         <span style={{ color: darkBlack }}>{user.email} </span>
+                                        { this.getRoleString(user.roles)}
                                     </p>
                                 }
                                 secondaryTextLines={2}
@@ -93,12 +97,3 @@ class UserList extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        token: state.auth.token,
-        userRoles: state.auth.userRoles,
-        dname: state.auth.displayName
-    };
-};
-
-export default connect(mapStateToProps)(UserList);

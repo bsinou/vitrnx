@@ -11,7 +11,7 @@ import * as actions from './store/actions/index';
 import Layout from './hoc/Layout/Layout'
 import Blog from './containers/Blog/Blog'
 import QueryPosts from './containers/Blog/QueryPosts'
-import UserList from './containers/Dashboard/UserList'
+import Users from './containers/Users/Users'
 
 // Static pages
 import Home from './static/Home/Home'
@@ -81,7 +81,7 @@ class App extends Component {
 
       if (this.props.userRoles && (this.props.userRoles.includes("ADMIN") || this.props.userRoles.includes("USER_ADMIN"))) {
         routes = [...routes,
-        (<Route path="/u/" component={UserList} />)
+          (<Route path="/u/" component={Users} />)
         ]
       }
     }

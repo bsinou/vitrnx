@@ -1,8 +1,6 @@
 import React from 'react';
-import moment from 'moment';
 import axios from '../../apiServer'
 
-import Markdown from 'react-markdown';
 import Divider from 'material-ui/Divider';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -12,7 +10,7 @@ import TextField from 'material-ui/TextField';
 // Styling
 import editIcon from '../../assets/images/edit_1x.png';
 import deleteIcon from '../../assets/images/delete_1x.png';
-import classes from './Comment.css';
+import classes from './User.css';
 
 
 export default class User extends React.Component {
@@ -24,16 +22,41 @@ export default class User extends React.Component {
     open: false,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      initialUser: { ...this.props.user, userRoles: { ...this.props.user.userRoles } },
-      updatedUser: { ...this.props.user, userRoles: { ...this.props.user.userRoles } },
-      isAdmin: this.props.userRoles.includes("USER_ADMIN") || this.props.userRoles.includes("ADMIN"),
-      isSelf: this.props.userId === this.props.user.userId
-    }
+  //   constructor(props) {
+  //     super(props);
+
+  // //     console.log('In constructor:',this.props.user)
+  //     // this.state = {
+  //     //   initialUser: { ...this.props.user, userRoles: { ...this.props.user.userRoles } },
+  //     //   updatedUser: { ...this.props.user, userRoles: { ...this.props.user.userRoles } },
+  //     //   isAdmin: this.props.userRoles.includes("USER_ADMIN") || this.props.userRoles.includes("ADMIN"),
+  //     //   isSelf: this.props.userId === this.props.user.userId
+  //     // }
+  //   }
+
+
+  componentDidMount() {
+    console.log(this.props);
+    this.loadData();
   }
 
+  componentDidUpdate() {
+    console.log(this.state);
+    this.loadData();
+  }
+
+  loadData() {
+    const cId = this.props.match.params.id;
+    if (cId) {
+      if (!this.state.initialUser || this.state.initialUser.userId !== cId) {
+        var options = { headers: { 'Authorization': this.props.token } };
+        axios.get('/users/' + cId, options).then(response => {
+          console.log(response.data)
+          this.setState({ initialUser: { ...response.data.user }, updatedUser: { ...response.data.user } });
+        });
+      }
+    }
+  }
 
   // getEditBtn = (token, id, authorId, onCommentChange) => {
   //   let btns = null;
@@ -121,37 +144,49 @@ export default class User extends React.Component {
     // Update dialog action 
     const actions = [
       <FlatButton label="Cancel" primary={true} onClick={this.handleCancelUpdate} />,
-      <FlatButton label="Submit" primary={true} onClick={() => this.handleDoUpdate(this.props.token, this.props.comment, this.props.onCommentChange)} />,
+      <FlatButton label="Submit" primary={true} onClick={() => this.handleDoUpdate(this.props.token, this.props.comment, this.props.onUserChange)} />,
     ];
 
 
-    // Unix time is in full seconds and moment expects ms
-    let dateStr = moment(this.props.comment.date * 1000).format('MMM D, YYYY');
-    return (
+    let user = <p style={{ textAlign: 'center' }}>No user found</p>;
+    if (this.props.match.params.id) {
+      user = <p style={{ textAlign: 'center' }}>Loading...</p>;
+    }
+    if (this.state.initialUser) {
 
-      <div className={classes.CommentBox} >
-        {this.getEditBtn(this.props.token, this.props.comment.id, this.props.comment.authorId, this.props.onCommentChange)}
+      console.log('State before rendering:', this.state)
 
-        <Dialog title="" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleCancelUpdate} >
-          <TextField
-            floatingLabelText="Edit your comment..."
-            fullWidth
-            multiLine={true}
-            rows={2}
-            rowsMax={4}
-            value={this.state.updatedBody}
-            onChange={this.handleBodyChange}
-            onKeyPress={this.handleKeyPress}
-          />
-        </Dialog>
 
-        <div>
-          <div className={classes.CommentMeta}>{this.props.comment.author}, {dateStr}</div>
-          <Markdown className={classes.CommentBody} escapeHtml={true} source={this.props.comment.body} />
+      user = (
+        <div className={classes.CommentBox} >
+          {/* {this.getEditBtn(this.props.token, this.props.comment.id, this.props.comment.authorId, this.props.onCommentChange)} */}
+
+          <Dialog title="" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleCancelUpdate} >
+            Here I am to edit user info
+              {/* <TextField
+                floatingLabelText="Edit user info"
+                fullWidth
+                multiLine={true}
+                rows={2}
+                rowsMax={4}
+                value={this.state.updatedBody}
+                onChange={this.handleBodyChange}
+                onKeyPress={this.handleKeyPress}
+              /> */}
+          </Dialog>
+
+          <div>
+            <div className={classes.CommentMeta}>{this.state.initialUser.name}</div>
+            <div className={classes.CommentMeta}>{this.state.initialUser.email}</div>
+            <div className={classes.CommentMeta}>{this.state.initialUser.email}</div>
+          </div>
+          <Divider />
+
+          {/* TODO add for instance the list of the comments entered by this user... */}
         </div>
-        <Divider />
-      </div>
-    );
+      )
+    }
+    return (user);
   }
 }
 
