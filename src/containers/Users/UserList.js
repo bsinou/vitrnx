@@ -57,6 +57,9 @@ export default class UserList extends Component {
 
 
     getRoleString(roles){
+        if (!roles){
+            return "";
+        }
         return roles.map(role => role.label).join(', ')
     }
 

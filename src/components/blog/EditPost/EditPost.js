@@ -79,7 +79,7 @@ class EditPost extends Component {
 
         axios.post('/posts', data, options).then(response => {
             console.log(response); // TODO Give feedback to the user, TODO also implement regular auto-save 
-            this.setState({ post: { ...response.data.post }, claims: response.data.claims });
+            this.setState({ post: { ...response.data.post } });
         }).catch(err => {
             console.log(err); // TODO handle error?
         });

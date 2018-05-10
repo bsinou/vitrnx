@@ -27,7 +27,6 @@ const style = {
 class Post extends Component {
     state = {
         loadedPost: null,
-        claims: null
     }
 
     componentDidMount() {

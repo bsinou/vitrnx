@@ -107,7 +107,7 @@ export default class Posts extends Component {
         }
         return (
             <AuxWrapper>
-                {this.getAddBtn(this.state.canEdit)}
+                {this.getAddBtn()}
                 <div className={classes.Posts}>
                     {posts}
                 </div>
