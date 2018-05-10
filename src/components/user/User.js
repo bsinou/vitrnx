@@ -6,12 +6,13 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
+import EditUserDialog from './EditUserDialog';
+
 
 // Styling
 import editIcon from '../../assets/images/edit_1x.png';
 import deleteIcon from '../../assets/images/delete_1x.png';
 import classes from './User.css';
-
 
 export default class User extends React.Component {
 
@@ -24,43 +25,48 @@ export default class User extends React.Component {
 
     knownRoles: null,
 
+    initialRoles: [],
+    updatedRoles: [],
+
     // Dirty management of loaded state to avoid infinite looping
     loadedUserId: null,
     errorMsg: null,
 
     // Manage dialog state
     open: false,
+    editUserDialog: null,
   };
 
 
-
   componentDidMount() {
-    console.log(this.props);
-    this.loadData();
+    this.loadData(false);
   }
 
   componentDidUpdate() {
-    console.log(this.state);
-    this.loadData();
+    this.loadData(false);
   }
 
-  loadData() {
+  loadData(force) {
     var options = { headers: { 'Authorization': this.props.token } };
 
     const cId = this.props.match.params.id;
     if (cId) {
-      if (!this.state.loadedUserId || this.state.loadedUserId !== cId) {
+      if (force || !this.state.loadedUserId || this.state.loadedUserId !== cId) {
         axios.get('/users/' + cId, options).then(response => {
-          console.log(response.data)
+          console.log('Retrieved from REST', response.data)
           this.setState({
             initialUser: { ...response.data.user },
             updatedUser: { ...response.data.user },
+            initialRoles: [...response.data.user.userRoles],
+            updatedRoles: [...response.data.user.userRoles],
             loadedUserId: cId,
+            editUserDialog: null,
             errorMsg: null,
           });
         }).catch(error => {
           this.setState({
             loadedUserId: cId,
+            editUserDialog: null,
             errorMsg: error.message,
           });
         });
@@ -85,50 +91,44 @@ export default class User extends React.Component {
     }
   }
 
-  // getEditBtn = (token, id, authorId, onCommentChange) => {
-  //   let btns = null;
-  //   if (this.canEdit()) {
-  //     btns = (
-  //       <div className={classes.AllBtnBox}>
-  //         <ul className={classes.CommentButtons} >
-  //           <li>
-  //             <div className={classes.SingleBtnBox} onClick={() => this.deleteComment(token, id, onCommentChange)}>
-  //               <img src={deleteIcon} alt="remove comment" />
-  //             </div>
-  //           </li>
-  //           <li>
-  //             <div className={classes.SingleBtnBox} onClick={this.handleOpen}>
-  //               <img src={editIcon} alt="edit comment" />
-  //             </div>
-  //           </li>
-  //         </ul>
-  //       </div>
-  //     );
-  //   }
-  //   return btns;
-  // }
-
 
   /* DELETION */
 
-  deleteUser(token, id, onUserChange) {
+  deleteUser() {
     if (window.confirm('Are you sure you want to delete this user?')) {
-      var options = { headers: { 'Authorization': token } };
-      axios.delete('/user/' + id, options).then(response => {
-        onUserChange();
+      var options = { headers: { 'Authorization': this.props.token } };
+      axios.delete('/user/' + this.state.loadedUserId, options).then(response => {
+        this.onUserChange();
       });
     }
   }
 
   /* UPDATE */
 
-  handleOpen = () => {
-    this.setState({ open: true });
+  handleClose = (hasChanged) => {
+    if (hasChanged) {
+      this.loadData(true);
+    } else {
+      this.setState({ editUserDialog: null });
+    }
   };
 
-  handleClose = () => {
-    this.setState({ open: false });
+
+  handleOpen = () => {
+    let dialog = (<EditUserDialog
+      token={this.props.token}
+      userId={this.props.userId}
+      userRoles={this.props.userRoles}
+      editedUser={this.state.initialUser}
+      editedUserRoles={this.state.initialUser.userRoles}
+      knownRoles={this.state.knownRoles}
+
+      onClose={this.handleClose}
+    />);
+
+    this.setState({ editUserDialog: dialog });
   };
+
 
   handleCancelUpdate = () => {
     this.setState({ open: false, updatedUser: { ...this.state.initialUser } });
@@ -161,60 +161,51 @@ export default class User extends React.Component {
     }
   }
 
-  // handleNameChange = (e) => {
-  //   this.setState({
-  //     updatedUser: {... this.state.updatedUser, }, e.target.value
-  //   });
-  // }
+  canEdit = () => {
+    return this.props.userRoles.includes("ADMIN") ||
+      this.props.userRoles.includes("USER_ADMIN") ||
+      this.props.userId === this.state.initialUser.userId;
+  }
+
+  getEditBtn = () => {
+    let btns = null;
+    if (this.canEdit()) {
+      btns = (
+        <div className={classes.AllBtnBox}>
+          <ul className={classes.CommentButtons} >
+            <li>
+              <div className={classes.SingleBtnBox} onClick={this.deleteUser}>
+                <img src={deleteIcon} alt="delete user" />
+              </div>
+            </li>
+            <li>
+              <div className={classes.SingleBtnBox} onClick={this.handleOpen}>
+                <img src={editIcon} alt="edit user" />
+              </div>
+            </li>
+          </ul>
+        </div>
+      );
+    }
+    return btns;
+  }
 
   getRoleString(roles) {
-    console.log('roles', roles);
-    return roles.map(
-      role => {
-        console.log('Retrieving label for', role);
-        console.log('We have', this.state.knownRoles.get(role));
-        return (
-          this.state.knownRoles.get(role)
-        );
-      }
-    ).join(', ');
+    return roles.map(role => this.state.knownRoles.get(role)).join(', ');
   }
 
   render() {
-    // Update dialog action 
-    const actions = [
-      <FlatButton label="Cancel" primary={true} onClick={this.handleCancelUpdate} />,
-      <FlatButton label="Submit" primary={true} onClick={() => this.handleDoUpdate(this.props.token, this.props.comment, this.props.onUserChange)} />,
-    ];
-
 
     let user = <p style={{ textAlign: 'center' }}>No user found</p>;
     if (this.props.match.params.id) {
       user = <p style={{ textAlign: 'center' }}>Loading...</p>;
     }
+
     if (this.state.initialUser) {
-
-      console.log('State before rendering:', this.state)
-
-
       user = (
         <div className={classes.CommentBox} >
-          {/* {this.getEditBtn(this.props.token, this.props.comment.id, this.props.comment.authorId, this.props.onCommentChange)} */}
-
-          <Dialog title="" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleCancelUpdate} >
-            Here I am to edit user info
-              {/* <TextField
-                floatingLabelText="Edit user info"
-                fullWidth
-                multiLine={true}
-                rows={2}
-                rowsMax={4}
-                value={this.state.updatedBody}
-                onChange={this.handleBodyChange}
-                onKeyPress={this.handleKeyPress}
-              /> */}
-          </Dialog>
-
+          {this.getEditBtn()}
+          {this.state.editUserDialog}
           <div>
             <div className={classes.CommentMeta}>{this.state.initialUser.name}</div>
             <div className={classes.CommentMeta}>{this.state.initialUser.email}</div>
@@ -223,7 +214,6 @@ export default class User extends React.Component {
             )}
           </div>
           <Divider />
-
           {/* TODO add for instance the list of the comments entered by this user... */}
         </div>
       )

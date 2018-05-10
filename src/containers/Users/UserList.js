@@ -26,7 +26,6 @@ export default class UserList extends Component {
     }
 
     loadData() {
-        console.log(this.props.userRoles);
         if (
             !this.props.token ||
             !this.props.userRoles ||
