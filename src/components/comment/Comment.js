@@ -2,17 +2,20 @@ import React from 'react';
 import moment from 'moment';
 import axios from '../../apiServer'
 
+// import { withStyles } from 'material-ui/styles';
+
 import Markdown from 'react-markdown';
 import Divider from 'material-ui/Divider';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import Dialog, { DialogTitle } from 'material-ui/Dialog';
+import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
-
+import EditButtons from './EditButtons';
 
 // Styling
-import editIcon from '../../assets/images/edit_1x.png';
-import deleteIcon from '../../assets/images/delete_1x.png';
-import classes from './Comment.css';
+import customClasses from './Comment.css';
+import { DialogContent } from 'material-ui';
+import { DialogActions } from 'material-ui';
+
 
 
 export default class Comment extends React.Component {
@@ -31,52 +34,11 @@ export default class Comment extends React.Component {
     }
   }
 
-  // componentDidUpdate() {
-  //   this.setState( {
-  //     open: false,
-  //     initialBody: this.props.body,
-  //     updatedBody: this.props.body,
-  //   })
-  // }
 
   canEdit() {
     return this.props.userRoles.includes("MODERATOR") || this.props.userId === this.props.comment.authorId;
   }
 
-  getEditBtn = (token, id, authorId, onCommentChange) => {
-    let btns = null;
-    if (this.canEdit()) {
-      btns = (
-        <div className={classes.AllBtnBox}>
-          <ul className={classes.CommentButtons} >
-            <li>
-              <div className={classes.SingleBtnBox} onClick={() => this.deleteComment(token, id, onCommentChange)}>
-                <img src={deleteIcon} alt="remove comment" />
-              </div>
-            </li>
-            <li>
-              <div className={classes.SingleBtnBox} onClick={this.handleOpen}>
-                <img src={editIcon} alt="edit comment" />
-              </div>
-            </li>
-          </ul>
-        </div>
-      );
-    }
-    return btns;
-  }
-
-
-  /* DELETION */
-
-  deleteComment(token, id, onCommentChange) {
-    if (window.confirm('Are you sure you want to delete this comment?')) {
-      var options = { headers: { 'Authorization': token } };
-      axios.delete('/comments/' + id, options).then(response => {
-        onCommentChange();
-      });
-    }
-  }
 
   /* UPDATE */
 
@@ -92,7 +54,7 @@ export default class Comment extends React.Component {
     this.setState({ open: false, updatedBody: this.state.initialBody });
   };
 
-  handleDoUpdate = () =>  {
+  handleDoUpdate = () => {
     const data = {
       ...this.props.comment,
       body: this.state.updatedBody,
@@ -115,43 +77,62 @@ export default class Comment extends React.Component {
     }
   }
 
-  handleBodyChange = (e) => {
+  handleChange = name => event => {
     this.setState({
-      updatedBody: e.target.value
+      [name]: event.target.value,
     });
+  };
+
+
+  /* DELETION */
+  deleteComment = (id) => {
+    if (window.confirm('Are you sure you want to delete this comment?')) {
+      var options = { headers: { 'Authorization': this.props.token } };
+      axios.delete('/comments/' + this.props.comment.id, options).then(response => {
+        this.props.onCommentChange();
+      });
+    }
   }
 
   render() {
-    // Update dialog action 
-    const actions = [
-      <FlatButton label="Cancel" primary={true} onClick={this.handleCancelUpdate} />,
-      <FlatButton label="Submit" primary={true} onClick={() => this.handleDoUpdate(this.props.token, this.props.comment, this.props.onCommentChange)} />,
-    ];
-
 
     // Unix time is in full seconds and moment expects ms
     let dateStr = moment(this.props.comment.date * 1000).format('MMM D, YYYY');
     return (
+      <div  >
+        <Dialog
+          // style={{zIndex: 200}}
+          open={this.state.open}
+          onClose={this.handleCancelUpdate}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="edit-comment-dialog-title">Modify the comment</DialogTitle>
+          <DialogContent>
+            <TextField
+              helperText="Edit your comment..."
+              autoFocus
+              fullWidth
+              value={this.state.updatedBody}
+              // multiLine={true}
+              // rows={2}
+              // rowsMax={4}
+              onChange={this.handleChange('updatedBody')}
+              onKeyPress={this.handleKeyPress}
+            />
 
-      <div className={classes.CommentBox} >
-        {this.getEditBtn(this.props.token, this.props.comment.id, this.props.comment.authorId, this.props.onCommentChange)}
-
-        <Dialog title="" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleCancelUpdate} >
-          <TextField
-            floatingLabelText="Edit your comment..."
-            fullWidth
-            multiLine={true}
-            rows={2}
-            rowsMax={4}
-            value={this.state.updatedBody}
-            onChange={this.handleBodyChange}
-            onKeyPress={this.handleKeyPress}
-          />
+          </DialogContent>
+          <DialogActions>
+            <Button color="primary" onClick={this.handleCancelUpdate} >Cancel</Button>,
+            <Button color="primary" onClick={() => this.handleDoUpdate(this.props.token, this.props.comment, this.props.onCommentChange)} >Submit</Button>,
+          </DialogActions>
         </Dialog>
 
-        <div>
-          <div className={classes.CommentMeta}>{this.props.comment.author}, {dateStr}</div>
-          <Markdown className={classes.CommentBody} escapeHtml={true} source={this.props.comment.body} />
+        <div className={customClasses.CommentBox}>
+          <div className={customClasses.CommentMeta}>
+            {this.props.comment.author + ', ' + dateStr}
+            {this.canEdit() ? (<EditButtons className={customClasses.AllBtnBox} onEdit={this.handleOpen} onDelete={this.deleteComment} />) : null}
+          </div>
+          <Markdown className={customClasses.CommentBody} escapeHtml={true} source={this.props.comment.body} />
         </div>
         <Divider />
       </div>

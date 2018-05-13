@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
@@ -6,33 +6,31 @@ import * as actions from '../../store/actions/index';
 
 import classes from './Auth.css';
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { red200, red300, red400 } from 'material-ui/styles/colors';
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import { red300, red400 } from 'material-ui/colors';
 import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton';
+import Grid from 'material-ui/Grid';
+import Paper from 'material-ui/Paper';
+import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
+import Button from 'material-ui/Button';
 
 
-// This replaces some of the default material UI styles.
-// More on Colors: http://www.material-ui.com/#/customization/colors
-const muiTheme = getMuiTheme({
-    appBar: {
-        height: 65,
-        color: red300
+const theme = createMuiTheme({
+    palette: {
+        background: {
+            paper: red300
+        },
+        primary: red300,
     },
-    raisedButton: {
-        primaryColor: red300
+
+    paper: {
+        zDepth: 0,
     },
-    textField: {
-        floatingLabelColor: red200,
-        focusColor: red300,
-    }
 });
 
 
-
-class Login extends Component {
+class Login extends React.Component {
     state = {
         email: '',
         password: '',
@@ -46,20 +44,25 @@ class Login extends Component {
     }
 
     submitHandler = (event) => {
+        console.log('About to submit. State: ', this.state)
         event.preventDefault();
         this.props.onAuth(this.state.email, this.state.password);
     }
 
     handleKeyPress = (event) => {
-        if(event.key === 'Enter'){
+        if (event.key === 'Enter') {
             this.submitHandler(event)
         }
-      }
+    }
+    handleChange = name => event => {
+        this.setState({
+          [name]: event.target.value,
+        });
+      };
 
     render() {
 
         let errorMessage = null;
-
         if (this.props.error) {
             errorMessage = (<p style={{ textAlign: 'left', margin: 15, color: red400, fontsize: '0.8em' }}>Something went wrong...</p>);
             if ('INVALID_EMAIL' === this.props.error.message) {
@@ -72,48 +75,66 @@ class Login extends Component {
             }
         }
 
-
         return (
-            <div className={classes.FullAnonBody}>
-                <div className={classes.OuterBox}>
-                    <div className={classes.LeftCol}> </div>
-                    <MuiThemeProvider muiTheme={muiTheme}>
+            <MuiThemeProvider theme={theme}>
+                <Grid className={classes.AnonBody}
+                    container
+                    alignItems="center"
+                    direction="column"
+                    justify="center">
+                    <Grid className={classes.AuthForm} >
+                        <AppBar position="static" color="secondary" >
+                            <Paper>
+                                <Typography
+                                    className={classes.FormHeader}
+                                    height="60"
+                                    variant="title"
+                                    color="inherit" >
+                                    Festival 4.0
+                            </Typography>
+                            </Paper>
+                        </AppBar>
+                        <div >
+                            {errorMessage}
+                            <TextField
+                                id="email"
+                                label="Email"
+                                margin="normal"
+                                onChange={this.handleChange('email')}
+                                onKeyPress={this.handleKeyPress}
+                            />
+                            <br />
+                            <TextField
+                                id="password"
+                                type="password"
+                                helperText="Enter your Password"
+                                label="Password"
+                                margin="normal"
+                                onChange={this.handleChange('password')}
+                                onKeyPress={this.handleKeyPress}
+                            />
+                            <br />
+                            <Button
 
-                        <div className={classes.RightCol}>
-                            <div className={classes.AuthForm}>
-                                <AppBar
-                                    showMenuIconButton={false}
-                                    title="Festival 4.0"
-                                />
-                                <div className={classes.InnerBox}>
-                                    {errorMessage}
-                                    <TextField
-                                        floatingLabelText="Email"
-                                        onChange={(event, newValue) => this.setState({ email: newValue })}
-                                        onKeyPress={this.handleKeyPress}
-                                    />
-                                    <br />
-                                    <TextField
-                                        type="password"
-                                        hintText="Enter your Password"
-                                        floatingLabelText="Password"
-                                        onChange={(event, newValue) => this.setState({ password: newValue })}
-                                        onKeyPress={this.handleKeyPress}
-                                    />
-                                    <br />
-                                    <RaisedButton label="Submit" primary={true} style={{ margin: 15 }} onClick={(event) => this.submitHandler(event)} />
-                                </div>
-                            </div>
-                            <div style={{ margin: 15, color: red400, fontsize: '0.8em' }}>
-                                No account yet? Please  <NavLink to="/register" >Register</NavLink>
-                            </div>
+                                variant="raised"
+                                label="Submit"
+                                style={{ margin: 15 }}
+                                onClick={(event) => this.submitHandler(event)} >
+                                SUBMIT
+                                </Button>
                         </div>
-                    </MuiThemeProvider>
-                </div>
-            </div>
+                    </Grid>
+                    <Grid style={{ margin: 15, color: red400, fontsize: '0.8em' }}>
+                        No account yet? Please  <NavLink to="/register" >Register</NavLink>
+                    </Grid>
+
+
+                </Grid>
+            </MuiThemeProvider>
         );
     }
 }
+
 
 const mapStateToProps = state => {
     return {

@@ -7,7 +7,7 @@ import apiServer from '../../apiServer';
 import { List, ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Avatar from 'material-ui/Avatar';
-import { darkBlack } from 'material-ui/styles/colors';
+import { darkBlack } from 'material-ui/colors';
 
 class QueryPosts extends Component {
 

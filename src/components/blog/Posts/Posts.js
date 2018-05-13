@@ -2,18 +2,26 @@ import React, { Component } from 'react';
 
 import apiServer from '../../../apiServer';
 
+import { withStyles } from 'material-ui/styles';
+
+
 import PostCard from '../PostCard/PostCard';
 import AuxWrapper from '../../../hoc/AuxWrapper/AuxWrapper';
 
 
 // Material UI
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
+import Button from 'material-ui/Button';
+import Icon from 'material-ui/Icon'
 
 import classes from './Posts.css';
-import './Posts.css';
 
-export default class Posts extends Component {
+const styles = theme => ({
+    button: {
+        margin: theme.spacing.unit,
+    },
+});
+
+class Posts extends Component {
 
     state = {
         posts: [],
@@ -71,18 +79,18 @@ export default class Posts extends Component {
         let btns = null;
         if (this.canCreatePost()) {
             btns = (
-                <div>
-                    <ul className={classes.SideButtons} >
-                        <li>
-                            <FloatingActionButton
-                                onClick={this.newPostHandler}
-                                mini={true}
-                                secondary={true}
-                                style={{ marginRight: 14, marginTop: 10 }}>
-                                <ContentAdd />
-                            </FloatingActionButton>
-                        </li>
-                    </ul>
+                <div className={classes.SideButtons}>
+                    <Button
+                        // variant="fab"
+                        color="primary"
+                        aria-label="add"
+                        className={classes.button}
+                        onClick={this.newPostHandler}
+                        // mini="true"
+                        // style={{ marginRight: 14, marginTop: 10 }}
+                        >
+                        <Icon>add_circle</Icon>
+                    </Button>
                 </div>
             );
         }
@@ -94,9 +102,8 @@ export default class Posts extends Component {
         if (!this.state.error) {
             posts = this.state.posts.map(
                 post => {
-                    return (  
+                    return (
                         <PostCard
-                            className={classes.PostCard}
                             key={post.path}
                             currId={this.state.loadedCategory ? this.state.loadedCategory : 'all'}
                             clicked={() => this.postSelectedHandler(post.path)}
@@ -115,3 +122,5 @@ export default class Posts extends Component {
         );
     }
 }
+
+export default withStyles(styles)(Posts);

@@ -3,10 +3,10 @@ import axios from '../../apiServer'
 
 import Divider from 'material-ui/Divider';
 import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import FlatButton from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 
-import Toggle from 'material-ui/Toggle';
+import Toggle from 'material-ui/Switch';
 
 const utils = require('../../utils/helpers');
 

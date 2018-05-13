@@ -1,46 +1,46 @@
-import React, { Component } from 'react';
-
+import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
 import * as actions from '../../store/actions/index';
 
-import Spinner from '../../components/ui/Spinner/Spinner';
 import classes from './Auth.css';
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { red200, red300, red400 } from 'material-ui/styles/colors';
+
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+
+import { red300, red400 } from 'material-ui/colors';
 import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton';
+import Grid from 'material-ui/Grid';
+import Button from 'material-ui/Button';
+import Paper from 'material-ui/Paper';
+import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
 
 
-// This replaces some of the default material UI styles.
-// More on Colors: http://www.material-ui.com/#/customization/colors
-const muiTheme = getMuiTheme({
-    appBar: {
-        height: 65,
-        color: red300
+const theme = createMuiTheme({
+    palette: {
+        background: {
+            paper: red300
+        },
+        primary: red300,
     },
-    raisedButton: {
-        primaryColor: red300
+
+    paper: {
+        zDepth: 0,
     },
-    textField: {
-        floatingLabelColor: red200,
-        focusColor: red300,
-    }
 });
 
 
-class Auth extends Component {
+
+class Auth extends React.Component {
     state = {
         fields: {
             name: {
                 type: 'name',
-                hintText: 'We will call you so...',
-                floatingLabelText: 'Name',
+                helperText: 'We will call you so...',
+                label: 'Name',
                 value: '',
                 validation: {
                     required: true,
@@ -51,8 +51,8 @@ class Auth extends Component {
             },
             email: {
                 type: 'email',
-                hintText: 'Enter your Email',
-                floatingLabelText: 'Email',
+                helperText: 'Enter your Email',
+                label: 'Email',
                 value: '',
                 validation: {
                     required: true,
@@ -63,8 +63,8 @@ class Auth extends Component {
             },
             password: {
                 type: 'password',
-                hintText: 'Enter your Password',
-                floatingLabelText: 'Password',
+                helperText: 'Enter your Password',
+                label: 'Password',
                 value: '',
                 validation: {
                     required: true,
@@ -75,8 +75,8 @@ class Auth extends Component {
             },
             address: {
                 type: 'address',
-                hintText: 'Enter here your dream address :)',
-                floatingLabelText: 'Address of your dreams',
+                helperText: 'Enter here your dream address :)',
+                label: 'Address of your dreams',
                 value: '',
                 validation: {
                     required: true,
@@ -132,12 +132,12 @@ class Auth extends Component {
         return ''
     }
 
-    inputChangedHandler = (event, controlName) => {
-        let errMsg = this.checkValidity(event.target.value, this.state.fields[controlName].validation)
+    handleChange = name => event => {
+        let errMsg = this.checkValidity(event.target.value, this.state.fields[name].validation)
         let canRegister = errMsg === '';
         if (canRegister) {
             for (let key in this.state.fields) {
-                if (key !== controlName && !this.isFieldValid(this.state.fields[key])) {
+                if (key !== name && !this.isFieldValid(this.state.fields[key])) {
                     canRegister = false;
                     break;
                 }
@@ -146,8 +146,8 @@ class Auth extends Component {
 
         const updatedControls = {
             ...this.state.fields,
-            [controlName]: {
-                ...this.state.fields[controlName],
+            [name]: {
+                ...this.state.fields[name],
                 value: event.target.value,
                 errorText: errMsg,
                 touched: true
@@ -160,13 +160,12 @@ class Auth extends Component {
     submitHandler = (event) => {
         event.preventDefault();
         this.props.onRegister(
-            this.state.fields.name.value, 
-            this.state.fields.email.value, 
-            this.state.fields.password.value, 
+            this.state.fields.name.value,
+            this.state.fields.email.value,
+            this.state.fields.password.value,
             this.state.fields.address.value
         );
     }
-
 
     render() {
         const formElementsArray = [];
@@ -180,14 +179,25 @@ class Auth extends Component {
         let fields = formElementsArray.map(e => (
             <TextField
                 key={e.id}
+                id={e.id}
                 {...e.config}
-                onChange={(event, newValue) => this.inputChangedHandler(event, e.id)}
+                onChange={this.handleChange(e.id)}
             />
         ));
-        let form = <form > {fields} </form>;
+        let form = (<form >
+            <Grid className={classes.Form}
+                container
+                alignItems="center"
+                direction="column"
+                justify="center"
+
+            >
+                {fields}
+            </Grid>
+        </form>);
 
         if (this.props.loading) {
-            form = <Spinner />
+            form = 'Loading...'
         }
 
         let errorMessage = null;
@@ -204,43 +214,42 @@ class Auth extends Component {
         }
 
         return (
-            <div className={classes.FullAnonBody}>
-                <div className={classes.OuterBox}>
-                    <div className={classes.LeftCol}> </div>
-                    <MuiThemeProvider muiTheme={muiTheme}>
-                        <div className={classes.RightCol}>
-
-                            <div className={classes.RegisterForm}>
-                                <AppBar
-                                    showMenuIconButton={false}
-                                    title="Please provide following information"
-                                />
-                                <div className={classes.InnerBox}>
-                                    {errorMessage}
-                                    {authRedirect}
-
-                                    {form}
-
-                                    <br />
-                                    <RaisedButton
-                                        label="Register"
-                                        primary={true}
-                                        disabled={!this.state.canRegister}
-                                        style={{ margin: 15 }}
-                                        onClick={(event) => this.submitHandler(event)}
-                                    />
-                                </div>
-                            </div>
-                            <div style={{ margin: 15, color: red400, fontsize: '0.8em' }}>
-                                Already have an account? Please  <NavLink to="/" >Sign in</NavLink>
-                            </div>
-
-                        </div>
-                    </MuiThemeProvider>
-
-                </div>
-
-            </div>
+            <MuiThemeProvider theme={theme}>
+                <Grid className={classes.AnonBody}
+                    container
+                    alignItems="center"
+                    direction="column"
+                    justify="center">
+                    <Grid className={classes.AuthForm} >
+                        <AppBar position="static" color="secondary" >
+                            <Paper>
+                                <Typography
+                                    className={classes.FormHeader}
+                                    height="60"
+                                    variant="title"
+                                    color="inherit" >
+                                    Please provide following information
+                            </Typography>
+                            </Paper>
+                        </AppBar>
+                        {errorMessage}
+                        {authRedirect}
+                        {form}
+                        <br />
+                        <Button
+                            variant="raised"
+                            label="Submit"
+                            style={{ margin: 15 }}
+                            onClick={(event) => this.submitHandler(event)}
+                        >
+                            SUBMIT
+                        </Button>
+                    </Grid>
+                    <Grid style={{ margin: 15, color: red400, fontsize: '0.8em' }}>
+                        Already have an account? Please  <NavLink to="/" >Sign in</NavLink>
+                    </Grid>
+                </Grid>
+            </MuiThemeProvider>
         );
     }
 }

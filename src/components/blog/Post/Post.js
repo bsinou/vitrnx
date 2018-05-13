@@ -5,11 +5,10 @@ import apiServer from '../../../apiServer';
 import Markdown from 'react-markdown';
 
 // Material UI
-import { Card, CardMedia, CardTitle } from 'material-ui/Card';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import ContentEdit from 'material-ui/svg-icons/editor/mode-edit';
-import ContentDelete from 'material-ui/svg-icons/content/clear';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
+import { withStyles } from 'material-ui/styles';
+import Card, { CardMedia, CardTitle } from 'material-ui/Card';
+import Icon from 'material-ui/Icon';
+import Button from 'material-ui/Button';
 import Divider from 'material-ui/Divider';
 
 // Own component
@@ -18,11 +17,63 @@ import Comments from '../../comment/Comments';
 import AuxWrapper from '../../../hoc/AuxWrapper/AuxWrapper';
 
 
-import classes from './Post.css';
+import customCss from './Post.css';
 const style = {
     marginRight: 14,
     marginTop: 10,
 };
+
+const postStyles = theme => ({
+
+    card: {
+        maxWidth: 345,
+    },
+    media: {
+        height: 0,
+        paddingTop: '56.25%', // 16:9
+    },
+
+    root: {
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.paper,
+    },
+});
+
+class Layout extends React.Component {
+    render() {
+        // console.log('et ici ',this.props.post);
+
+        const { classes, post } = this.props;
+        return (
+            <div className={customCss.Post}>
+                <Card>
+                    <CardMedia
+                        className={classes.media}
+                        image={"/imgRepo/" + post.hero}
+                        // overlay={<CardTitle>{post.title}</CardTitle>}
+                    />
+                    {/* <CardTitle>{post.title}</CardTitle> */}
+                </Card>
+                <div className={customCss.SubCard}>
+                    <h1>{post.title}</h1>
+                    <div className={customCss.Desc}>{post.desc}</div>
+                    <PostInfo tags={post.tags} date={post.date} author={post.author} />
+                    <Markdown className={customCss.Body} escapeHtml={true} source={post.body} />
+                </div>
+                <Divider />
+                <div className={customCss.SubCard}>
+                    <Comments postId={post.path} />
+                </div>
+            </div>
+        );
+    }
+}
+
+// PostLayout.propTypes = {
+//     classes: PropTypes.object.isRequired,
+// };
+
+const PostLayout = withStyles(postStyles)(Layout);
 
 class Post extends Component {
     state = {
@@ -30,7 +81,6 @@ class Post extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props);
         this.loadData();
     }
 
@@ -44,8 +94,7 @@ class Post extends Component {
             if (!this.state.loadedPost || this.state.loadedPost.path !== cId) {
                 var options = { headers: { 'Authorization': this.props.token } };
                 apiServer.get('/posts/' + cId, options).then(response => {
-                    console.log(response.data)
-                    this.setState({ loadedPost: response.data.post});
+                    this.setState({ loadedPost: response.data.post });
                 });
             }
         }
@@ -64,7 +113,6 @@ class Post extends Component {
             var options = { headers: { 'Authorization': this.props.token } };
             apiServer.delete('/posts/' + id, options).then(response => {
                 this.props.history.goBack();
-                //this.props.history.push('/q/News');
             });
         }
     };
@@ -72,7 +120,7 @@ class Post extends Component {
     canEdit = () => {
         return this.props.userRoles.includes("EDITOR") || this.props.userRoles.includes("MODERATOR");
     }
-    
+
     canDelete = () => {
         return this.props.userRoles.includes("MODERATOR") || this.props.userId === this.state.loadedPost.authorId;
     }
@@ -81,34 +129,24 @@ class Post extends Component {
         let btns = null;
         if (this.canEdit()) {
             btns = (
+                // TODO simplify and factorize this
                 <div>
-                    <ul className={classes.SideButtons} >
+                    <ul className={customCss.SideButtons} >
                         <li key="add" >
-                            <FloatingActionButton
-                                onClick={this.newPostHandler}
-                                mini={true}
-                                secondary={true}
-                                style={style}>
-                                <ContentAdd />
-                            </FloatingActionButton>
+                            <Button onClick={this.newPostHandler}>
+                                <Icon >add_circle</Icon>
+                            </Button>
                         </li>
                         <li key="edit" >
-                            <FloatingActionButton
-                                onClick={() => this.editPostHandler(id)}
-                                mini={true}
-                                style={style}>
-                                <ContentEdit />
-                            </FloatingActionButton>
+                            <Button onClick={() => this.editPostHandler(id)}>
+                                <Icon >edit_circle</Icon>
+                            </Button>
                         </li>
                         {this.canDelete() ? (
                             <li key="delete" >
-                                <FloatingActionButton
-                                    onClick={() => this.deletePostHandler(id)}
-                                    mini={true}
-                                    secondary={true}
-                                    style={style}>
-                                    <ContentDelete />
-                                </FloatingActionButton>
+                                <Button onClick={() => this.deletePostHandler(id)} >
+                                    <Icon >delete_circle</Icon>
+                                </Button>
                             </li>
                         ) : null}
                     </ul>
@@ -117,8 +155,6 @@ class Post extends Component {
         }
         return btns;
     }
-
-
 
     render() {
         let post = <p style={{ textAlign: 'center' }}>Please select a Post!</p>;
@@ -129,23 +165,7 @@ class Post extends Component {
             post = (
                 <AuxWrapper>
                     {this.getEditBtns(this.state.loadedPost.path)}
-                    <div className={classes.Post}>
-                        <Card>
-                            <CardMedia overlay={<CardTitle title={this.state.loadedPost.title} />}>
-                                <img src={"../imgRepo/" + this.state.loadedPost.hero} alt="" />
-                            </CardMedia>
-                        </Card>
-                        <div className={classes.SubCard}>
-                            <div className={classes.Desc}>{this.state.loadedPost.desc}</div>
-                            <PostInfo tags={this.state.loadedPost.tags} date={this.state.loadedPost.date} author={this.state.loadedPost.author} />
-                            <Markdown className={classes.Body} escapeHtml={true} source={this.state.loadedPost.body} />
-                        </div>
-                        <Divider />
-                        <div className={classes.SubCard}>
-                            <Comments postId={this.state.loadedPost.path} />
-                        </div>
-
-                    </div>
+                    <PostLayout post={this.state.loadedPost} />
                 </AuxWrapper>
             );
         }

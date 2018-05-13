@@ -5,7 +5,7 @@ import apiServer from '../../apiServer';
 // Material UI
 import { List, ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
-import { darkBlack } from 'material-ui/styles/colors';
+import { darkBlack } from 'material-ui/colors';
 
 export default class UserList extends Component {
 

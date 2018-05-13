@@ -1,31 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import axios from '../../../apiServer';
-
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 
+import EditButtons from '../../ui/EditButtons/EditButtons';
 import Markdown from 'react-markdown';
 import Textarea from 'react-expanding-textarea';
 
-// From https://github.com/oliviertassinari/react-swipeable-views
-import SwipeableViews from 'react-swipeable-views';
+import PropTypes from 'prop-types';
+
 // Material UI
+import { withStyles } from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
-import { Tabs, Tab } from 'material-ui/Tabs';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ActionSave from 'material-ui/svg-icons/content/save';
-import ActionCancel from 'material-ui/svg-icons/navigation/cancel';
-import ActionDelete from 'material-ui/svg-icons/content/clear';
+import AppBar from 'material-ui/AppBar';
+import Tabs, { Tab } from 'material-ui/Tabs';
+import Typography from 'material-ui/Typography';
 
-
-import classes from './EditPost.css';
-
-const btnStyle = {
-    marginRight: 14,
-    marginTop: 10,
-};
-
+import customCss from './EditPost.css';
 
 const styles = {
     headline: {
@@ -39,12 +31,157 @@ const styles = {
     },
 };
 
-class EditPost extends Component {
+
+function TabContainer(props) {
+    return (
+        <Typography component="div" style={{ padding: 8 * 3 }}>
+            {props.children}
+        </Typography>
+    );
+}
+
+TabContainer.propTypes = {
+    children: PropTypes.node.isRequired,
+};
+
+const styles2 = theme => ({
+    root: {
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.paper,
+    },
+});
+
+class SimpleTabs extends React.Component {
     state = {
-        post: {},
+        tabIndex: 0,
+    };
+
+    handleChange = (event, tabIndex) => {
+        this.setState({ tabIndex });
+    };
+
+    handleValueChange = name => event => {
+        this.props.onValueChanged(event, name)
+    }
+
+    handleMdChange = name => event => {
+        // console.log('Handle MD Change for ', name)
+        this.props.onMarkdownChanged(event);
+    }
+
+    render() {
+        const { classes, post } = this.props;
+        const { tabIndex } = this.state;
+
+        return (
+            <div className={classes.root}>
+                <AppBar position="static">
+                    <Tabs tabIndex={tabIndex} onChange={this.handleChange}>
+                        <Tab label="Overview & Meta-Data" />
+                        <Tab label="Markdown body" />
+                    </Tabs>
+                </AppBar>
+                {tabIndex === 0 && <TabContainer>
+
+                    <div className={customCss.TabContent}>
+                        <div className={customCss.TabInnerCol} style={styles.slide}>
+                            <TextField
+                                id="title"
+                                helperText="A title for your post"
+                                value={post.title}
+                                onChange={this.handleValueChange('title')}
+                                fullWidth />
+                            <TextField
+                                // label="Slug"
+                                helperText="a-nice-name-without-fantasy"
+                                value={post.path}
+                                onChange={this.handleValueChange('path')}
+                                fullWidth />
+                            <TextField
+                                // fullWidth
+                                // label="Thumbnail image path"
+                                helperText="Path of a 320x240px thumbnail image"
+                                value={post.thumb}
+                                // onChange={() => onValueChanged('thumb')}
+                                onChange={this.handleValueChange('thumb')}
+                                // onChange={(event) => this.setState({ post: { ...this.state.post, thumb: event.target.value } })}
+                                fullWidth />
+                            <TextField
+                                // label="Hero image path"
+                                helperText="Path of a 800x200px hero image"
+                                value={post.hero}
+                                // onChange={() => onValueChanged('hero')}
+                                onChange={this.handleValueChange('hero')}
+                                // onChange={(event) => this.setState({ post: { ...this.state.post, hero: event.target.value } })}
+                                fullWidth />
+                            <TextField
+                                // label="Tags"
+                                helperText="For instance: news music program"
+                                value={post.tags}
+                                onChange={this.handleValueChange('tags')}
+                                // onChange={() => onValueChanged('tags')}
+                                // onChange={(event) => this.setState({ post: { ...this.state.post, tags: event.target.value } })}
+                                fullWidth />
+                            <TextField
+                                // label="Description"
+                                fullWidth
+                                helperText="A short desc of your post"
+                                // multiLine={true}
+                                rows={4}
+                                rowsMax={10}
+                                onChange={this.handleValueChange('desc')}
+                                value={post.desc}
+                            // onChange={() => onValueChanged('desc')}
+                            // onChange={(event) => this.setState({ post: { ...this.state.post, desc: event.target.value } })}
+                            />
+                        </div>
+                        <div
+                            className={customCss.TabInnerCol}>
+                            TODO: Show Pictures
+                        </div>
+
+                    </div>
+
+
+                </TabContainer>}
+
+                {tabIndex === 1 && <TabContainer>
+                    <div className={customCss.TabContent}>
+                        <div className={customCss.TabInnerCol}>
+                            <Textarea
+                                rows={10}
+                                value={post.body}
+                                onChange={this.handleMdChange('body')}
+                            />
+                        </div>
+
+                        <div className={[customCss.Preview, customCss.TabInnerCol].join(' ')}>
+                            <Markdown
+                                className={customCss.Result}
+                                source={post.body}
+                            />
+                        </div>
+                    </div>
+                </TabContainer>}
+            </div>
+        );
+    }
+}
+
+SimpleTabs.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+const EditorTabs = withStyles(styles2)(SimpleTabs);
+
+
+class EditPost extends React.Component {
+    state = {
         // Tab and MD editor management
         slideIndex: 0,
-        htmlMode: 'raw'
+        htmlMode: 'raw',
+
+        open: false
     }
 
     componentDidMount() {
@@ -58,7 +195,7 @@ class EditPost extends Component {
     loadData() {
         const currId = this.props.match.params.id;
         if (currId) {
-            if (!this.state.post.path || this.state.post.path !== currId) {
+            if (!this.state.post || this.state.post.path !== currId) {
                 var options = { headers: { 'Authorization': this.props.token } };
                 axios
                     .get('/posts/' + currId, options)
@@ -67,14 +204,14 @@ class EditPost extends Component {
                     })
                     .catch(error => {
                         console.log('# could not load ' + currId, error)
-                        this.setState({ post: {...this.state.post, path: currId } });
+                        this.setState({ post: { ...this.state.post, path: currId } });
                     });
             }
         }
     }
 
     postDataHandler = () => {
-        var data = {...this.state.post}
+        var data = { ...this.state.post }
         var options = { headers: { 'Authorization': this.props.token } };
 
         axios.post('/posts', data, options).then(response => {
@@ -106,144 +243,36 @@ class EditPost extends Component {
         return this.props.userRoles.includes("MODERATOR") || this.props.userId === this.state.post.authorId;
     }
 
-    handleChange = (value) => {
+    handleChange = (tabIndex) => {
         this.setState({
-            slideIndex: value,
+            slideIndex: tabIndex,
         });
     };
+
+    onValueChange = (event, key) => {
+        let updatedPost = { ...this.state.post };
+        updatedPost[key] = event.target.value
+        this.setState(
+            { post: updatedPost }
+        );
+    };
+
 
     handleMarkdownChange = (evt) => {
         this.setState({ post: { ...this.state.post, body: evt.target.value } })
     }
 
-
-    getEditBtns = () => {
-        return (
-            <div>
-                <ul className={classes.SideButtons} >
-                    <li>
-                        <FloatingActionButton
-                            onClick={this.postDataHandler}
-                            mini={true}
-                            style={btnStyle}>
-                            <ActionSave />
-                        </FloatingActionButton>
-                    </li>
-
-                    {/* 
-                        TODO : add tooltip
-                        see: http://bluedesk.blogspot.de/2017/10/react-material-ui-fab-with-optional_18.html
-                        or mui v1.00 => FAB have no tooltip before v1 (we're currently using v0.20) 
-                    */}
-                    <li>
-                        <FloatingActionButton
-                            onClick={this.cancelHandler}
-                            mini={true}
-                            secondary={true}
-                            style={btnStyle}
-                            tooltip="Say something" >
-                            <ActionCancel />
-                        </FloatingActionButton>
-
-                    </li>
-                    {this.canDelete() ?
-                        <li>
-                            <FloatingActionButton
-                                onClick={() => this.deletePostHandler()}
-                                mini={true}
-                                secondary={true}
-                                style={btnStyle}>
-                                <ActionDelete />
-                            </FloatingActionButton>
-                        </li>
-                        : null
-                    }
-                </ul>
-            </div>
-        );
-    }
-
     render() {
-        return (
-            <div className={classes.EditPost}>
-                {this.getEditBtns()}
-                <Tabs
-                    onChange={this.handleChange}
-                    value={this.state.slideIndex} >
-                    <Tab label="Summary" value={0} />
-                    <Tab label="Body" value={1} />
-                </Tabs>
-                <SwipeableViews
-                    index={this.state.slideIndex}
-                    onChangeIndex={this.handleChange}>
-                    <div className={classes.TabContent}>
-                        <div className={classes.TabInnerCol} style={styles.slide}>
-                            <TextField
-                                floatingLabelText="Title"
-                                fullWidth hintText="A title for your post"
-                                value={this.state.post.title}
-                                onChange={(event) => this.setState({ post: {...this.state.post, title: event.target.value } })}
-                            /><br />
-                            <TextField
-                                floatingLabelText="Slug"
-                                fullWidth hintText="a-nice-name-without-fantasy"
-                                value={this.state.post.path}
-                                onChange={(event) => this.setState({ post: {...this.state.post, path: event.target.value } })}
-                            /><br />
-                            <TextField
-                                floatingLabelText="Thumbnail image path"
-                                fullWidth hintText="Path of a 320x240px thumbnail image"
-                                value={this.state.post.thumb}
-                                onChange={(event) => this.setState({ post: {...this.state.post, thumb: event.target.value } })}
-                            /><br />
-                            <TextField
-                                floatingLabelText="Hero image path"
-                                fullWidth hintText="Path of a 800x200px hero image"
-                                value={this.state.post.hero}
-                                onChange={(event) => this.setState({ post: {...this.state.post, hero: event.target.value } })}
-                            /><br />
-                            <TextField
-                                floatingLabelText="Tags"
-                                fullWidth hintText="For instance: news music program"
-                                value={this.state.post.tags}
-                                onChange={(event) => this.setState({ post: {...this.state.post, tags: event.target.value } })}
-                            /><br />
-                            <TextField
-                                floatingLabelText="Description"
-                                fullWidth
-                                hintText="A short desc of your post"
-                                multiLine={true}
-                                rows={4}
-                                rowsMax={10}
-                                value={this.state.post.desc}
-                                onChange={(event) => this.setState({ post: {...this.state.post, desc: event.target.value } })}
-                            />
-                        </div>
-                        <div
-                            className={classes.TabInnerCol}>
-                            TODO: Show Pictures
-                        </div>
-
-                    </div>
-                    <div style={styles.slide}>
-                        <div className={classes.TabContent}>
-                            <div className={classes.TabInnerCol}>
-                                <Textarea
-                                    rows={10}
-                                    value={this.state.post.body}
-                                    onChange={this.handleMarkdownChange}
-                                />
-                            </div>
-
-                            <div className={[classes.Preview, classes.TabInnerCol].join(' ')}>
-                                <Markdown
-                                    className={classes.Result}
-                                    source={this.state.post.body}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </SwipeableViews>
+        return !this.props.token || !this.state.post ? null : (
+            <div className={customCss.EditPost}>
+                <EditButtons
+                    onSave={this.postDataHandler}
+                    onCancel={this.cancelHandler}
+                    onDelete={this.deletePostHandler} canDelete={this.canDelete} />
+                <EditorTabs
+                    post={this.state.post}
+                    onValueChanged={this.onValueChange}
+                    onMarkdownChanged={this.handleMarkdownChange} />
             </div>
         );
     }

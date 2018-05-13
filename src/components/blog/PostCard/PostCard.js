@@ -1,18 +1,27 @@
 import React from 'react';
 import moment from 'moment';
 
-import { Card, CardMedia, CardTitle, CardText } from 'material-ui/Card';
-import comment from '../../../assets/images/ic_comment_white_18px.svg';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
+//CardActions,, CardTitle
+import Card, { CardContent, CardMedia } from 'material-ui/Card';
+import Icon from 'material-ui/Icon';
+import Typography from 'material-ui/Typography';
 
-// See:
-// Main concepts and shown examples:  https://material.io/guidelines/components/cards.html
-// Examples with code: http://www.material-ui.com/#/components/card 
+const styles = {
+  card: {
+    // maxWidth: 345,
+    width: 345,
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
+};
 
-var cardStyle = {
-  margin: '8px'
-}
 
-function subtitle(props) {
+function subTitle(props) {
+  // const subTitle = (props) => {
 
   const dateStr = moment(props.date * 1000).format('MMMM Do')
   let subtitle = props.author + ', on ' + dateStr + '. ';
@@ -27,41 +36,51 @@ function subtitle(props) {
   let commentStr = null;
   if (parseInt(props.commentCount, 10) > 0) {
     commentStr = (
-      <div style={{ marginLeft: '10px' }}>
-        <span style={{ marginLeft: '4px', verticalAlign: 'top' }}> {"  "}</span >
-        <img src={comment} style={{ opacity: '0.8' }}  alt="comment" />
-        <span style={{ marginLeft: '4px', verticalAlign: 'top' }}> {"  "+props.commentCount+ " "}</span >
+      <div style={{ align: 'left', marginLeft: '10px' }}>
+        <Icon style={{ marginLeft: '0.2em', opacity: '0.6', fontSize: '1.2em' }}>comment</Icon>
+        <span style={{ marginLeft: '4px', verticalAlign: 'top' }}> {props.commentCount}</span >
       </div>
     );
   }
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'left' }}>
       {subtitle}
       {commentStr}
     </div>
   );
 }
 
-const PostCard = (props) => (
-  <Card style={cardStyle} onClick={props.clicked}>
-    <CardMedia
-      style={{ height: '240px' }}
-      overlay={
-        <CardTitle
-          title={props.title}
-          subtitle={
-            subtitle(props)
-          }
-        />
-      }
-    >
-      <img style={{ height: '240px', width: '320px' }} src={"../imgRepo/" +props.thumb} alt={props.title + ' - image is not available'} />
-    </CardMedia>
-    <CardText style={{ textAlign: 'left', height: '60px', width: '320px' }}>
-      <div>{props.desc}</div>
-    </CardText>
-  </Card>
-);
+// alternative syntax
+// function PostCard(props) {
+const PostCard = (props) => {
 
-export default PostCard;
+  const { classes } = props;
+
+  return (
+    <div>
+      <Card className={classes.card} onClick={props.clicked}>
+        <CardMedia
+          className={classes.media}
+          image={"../imgRepo/" + props.thumb}
+        // overlay does not work?? overlay={ <CardTitle title={props.title}/>}
+        />
+        <CardContent style={{ textAlign: 'left' }}>
+          <Typography gutterBottom variant="headline" >
+            {props.title}
+          </Typography>
+          {subTitle(props)}
+          <Typography component="p">
+            {props.desc}
+          </Typography>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+PostCard.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(PostCard);

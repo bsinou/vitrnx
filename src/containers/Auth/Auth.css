@@ -10,11 +10,15 @@
 
 /*     background:linear-gradient(#888, #ccc, #8bb38e), url("/imgRepo/tract-4.2.jpg") no-repeat;
 */
-.FullAnonBody {
+.AnonBody {
     background: url("/imgRepo/tract-4.6.jpg");
     background-size:  cover;
     min-height: 100%;
     flex: 1;
+}
+
+.Form {
+    margin: 1em;
 }
 
 
@@ -43,12 +47,14 @@
 }
 
 .AuthForm {
-    height: auto;
-    width: 380px;
-	margin: 4em auto;
+    min-width: 320px;
 	background: #F1F8E9;
     border: 1px solid #FFCDD2;
     box-shadow: 0 2px 3px #EF9A9A;
+}
+
+.FormHeader {
+    padding: 1em;
 }
 
 .InnerBox {

@@ -9,7 +9,7 @@ export default class NavigationItems extends React.Component {
     getMenuItems() {
         let items = [
             { url: '/', label: 'Home' },
-            { url: '/teaser', label: 'Teaser' },
+            // { url: '/teaser', label: 'Teaser' },
             { url: '/q/News', label: 'News' },
             { url: '/q/FAQ', label: 'FAQ' },
         ]

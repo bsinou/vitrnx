@@ -1,0 +1,31 @@
+
+.SideButtons {
+	position: fixed;
+    display: flex;
+    flex-direction: column;
+	top: 240px;
+    right: 0;
+    list-style: none;
+    z-index: 99;
+}
+
+.AllBtnBox{
+    margin-left: 1em;
+    font-size: 0.4em;
+}
+
+
+.SingleBtnBox {
+    margin: 0px 4px; 
+    padding: 0px 0px;
+
+    -webkit-transition:  background .2s ease-in-out;
+    -moz-transition:  background .2s ease-in-out;
+    -o-transition:  background .2s ease-in-out;
+    transition:  background .2s ease-in-out;
+    opacity: 0.1;
+}
+
+.SingleBtnBox:hover {
+    opacity: 0.6;
+}

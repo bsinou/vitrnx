@@ -6,7 +6,6 @@ import Comment from './Comment'
 
 import TextField from 'material-ui/TextField';
 
-
 class Comments extends Component {
 
     state = {
@@ -32,7 +31,7 @@ class Comments extends Component {
             if (force || !this.state.postId || this.state.postId !== this.props.postId) {
 
                 var options = { headers: { 'Authorization': this.props.token } };
-                var url = '/comments?postId=' + this.props.postId;
+                var url = '/posts/'+ this.props.postId+'/comments' ;
                 apiServer.get(url, options)
                     .then(response => {
                         const currComments = response.data.comments;
@@ -42,7 +41,7 @@ class Comments extends Component {
                         this.setState({ comments: updatedComments, postId: this.props.postId, error: false });
                     }).catch(error => {
                         console.log(error);
-                        this.setState({ error: true, loadedCategory: this.props.postId })
+                        this.setState({ error: true, postId: this.props.postId })
                     });
             }
         }
@@ -93,11 +92,6 @@ class Comments extends Component {
                             userId={this.props.userId}
                             userRoles={this.props.userRoles}
                             comment={comment}
-                            // id={comment.id}
-                            // authorId={comment.authorId}
-                            // author={comment.author}
-                            // date={comment.date}
-                            // body={comment.body}
                         />
                     );
                 });
@@ -109,8 +103,7 @@ class Comments extends Component {
                 <div>
                     <TextField
                         fullWidth
-                        hintText="Write a comment..."
-                        multiLine={true}
+                        helperText="Add a comment..."
                         rows={2}
                         rowsMax={4}
                         value={this.state.newCommentBody}

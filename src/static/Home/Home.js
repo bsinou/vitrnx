@@ -1,29 +1,50 @@
 import React, { Component } from 'react';
-import {NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import AuxWrapper from '../../hoc/AuxWrapper/AuxWrapper'
 
 import classes from './Home.css'
 
+import Paper from 'material-ui/Paper';
+import Grid from 'material-ui/Grid';
+
 
 class Home extends Component {
 
-    gotoPrevious() { }
 
-    gotoNext() { }
-
-    closeLightbox() { }
 
     render() {
-
-        let titleStr = 'Welcome in our Festival 4.0 space!';
         // Not very clean
-        if (window.innerWidth < 500) {
-            titleStr = 'Welcome'
-        }
+        let titleStr = window.innerWidth < 500 ? 'Welcome' : 'Welcome in our Festival 4.0 space!';
 
         return (
             <AuxWrapper>
+                <div className={classes.Root}>
+                    <Grid container spacing={24}>
+                        <Grid item xs={12}>
+                            <Paper className={classes.Paper}>xs=12</Paper>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Paper className={classes.Paper}>xs=6</Paper>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Paper className={classes.Paper}>xs=6</Paper>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Paper className={classes.Paper}>xs=3</Paper>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Paper className={classes.Paper}>xs=3</Paper>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Paper className={classes.Paper}>xs=3</Paper>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Paper className={classes.Paper}>xs=3</Paper>
+                        </Grid>
+                    </Grid>
+                </div>
+
                 <div className={classes.Posts}>
                     <div className={classes.Intro}>
                         <p className={classes.IntroTitle}>{titleStr}</p>
@@ -41,8 +62,8 @@ class Home extends Component {
                     <div className={classes.Post}>
                         <p className={classes.PostTitle}>Here we go!</p>
                         <div className={classes.PostBody}>
-                            <p>More than words... &nbsp;&nbsp;&nbsp;&nbsp;       
-                                <NavLink to="/teaser" className="TextLink">
+                            <p>More than words... &nbsp;&nbsp;&nbsp;&nbsp;
+                                <NavLink to="/v/dibu" className="TextLink">
                                     A small introducing video
                                 </NavLink>
                             </p>
@@ -53,5 +74,6 @@ class Home extends Component {
         );
     }
 }
+
 
 export default Home;

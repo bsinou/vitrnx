@@ -21,6 +21,7 @@ h2 {
     font-size: 1.0em;
     margin : 16px;
     width: 90%;
+    text-align: left;  
 }
 
 .Desc, h3 {
