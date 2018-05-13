@@ -1,13 +1,51 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import apiServer from '../../apiServer';
 
 // Material UI
-import { List, ListItem } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
+import { withStyles } from 'material-ui/styles';
+import List, { ListItem, ListItemText, ListItemAvatar} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
-import { darkBlack } from 'material-ui/colors';
+import Button from 'material-ui/Button';
+import Dialog, { DialogTitle } from 'material-ui/Dialog';
+
+import AddIcon from '@material-ui/icons/Add';
+import Typography from 'material-ui/Typography';
+import blue from 'material-ui/colors/blue';
+
+
+const styles = {
+    avatar: {
+        backgroundColor: blue[100],
+        color: blue[600],
+    },
+};
+
+function Post (props) {
+    const {classes, post, postSelected } = props
+   
+    let dateStr = moment(post.date*1000).format('MMMM Do YYYY');
+ 
+    return (
+         <ListItem
+            key={post.path}
+            onClick={postSelected}>
+            <ListItemAvatar>
+                <Avatar className={classes.avatar} src={"../imgRepo/" + post.thumb} />
+            </ListItemAvatar>
+            <ListItemText
+                style={{ textAlign: 'left' }}
+                primary={post.title + ', by ' + post.author + ' on ' + dateStr+ '. ' + post.tags}
+                secondary={post.desc}
+            />
+        </ListItem>
+    );
+}
+        
+const StyledPost = withStyles(styles)(Post);
+
 
 class QueryPosts extends Component {
 
@@ -19,7 +57,6 @@ class QueryPosts extends Component {
         loaded: false,
 
     }
-
 
     componentDidMount() {
         this.loadData();
@@ -62,32 +99,11 @@ class QueryPosts extends Component {
         let posts = <p style={{ textAlign: 'center' }}>Something went wrong: could not load post list...</p>
         if (!this.state.error) {
             posts = this.state.posts.map(
-                post => {
-                    return (
-                        <div key={post.path}>
-                            <ListItem
-                                style={{ textAlign: 'left' }}
-                                leftAvatar={<Avatar src={"../imgRepo/" + post.thumb} />}
-                                primaryText={post.title}
-                                secondaryText={
-                                    <p>
-                                        <span style={{ color: darkBlack }}>{post.author}, {post.tags} - </span>
-                                        {post.desc}
-                                    </p>
-                                }
-                                secondaryTextLines={2}
-                                onClick={(event) => this.postSelectedHandler(event, post.path)}
-                            />
-                            <Divider inset={true} />
-                        </div>);
-                });
+                post => <StyledPost 
+                            postSelected={(event) => this.postSelectedHandler(event, post.path)} 
+                            post={post}/>);
         }
-
-        return (
-            <List>
-                {posts}
-            </List>
-        );
+        return (<List>{posts}</List>);
     }
 }
 

@@ -1,14 +1,93 @@
 import React from 'react';
 import axios from '../../apiServer'
 
-import Divider from 'material-ui/Divider';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/Button';
-import TextField from 'material-ui/TextField';
+import { withStyles } from 'material-ui/styles';
 
-import Toggle from 'material-ui/Switch';
+import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog';
+import Button from 'material-ui/Button';
+import TextField from 'material-ui/TextField';
+import Divider from 'material-ui/Divider';
+import Switch from 'material-ui/Switch';
+import green from 'material-ui/colors/green';
+import { FormGroup, FormControlLabel } from 'material-ui/Form';
 
 const utils = require('../../utils/helpers');
+
+const styles = {
+  switchBase: {
+    color: green[50],
+    '&$checked': {
+      color: green[500],
+      '& + $bar': {
+        backgroundColor: green[500],
+      },
+    },
+  },
+  bar: {},
+  checked: {},
+};
+
+class SwitchLabels extends React.Component {
+  state = {
+    checkedA: true,
+    checkedB: true,
+    checkedF: true,
+  };
+
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.checked });
+  };
+
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <FormGroup row>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={this.state.checkedA}
+              onChange={this.handleChange('checkedA')}
+              value="checkedA"
+            />
+          }
+          label="Secondary"
+        />
+        <FormControlLabel
+          control={
+            <Switch
+              checked={this.state.checkedB}
+              onChange={this.handleChange('checkedB')}
+              value="checkedB"
+              color="primary"
+            />
+          }
+          label="Primary"
+        />
+        <FormControlLabel control={<Switch value="checkedC" />} label="Uncontrolled" />
+        <FormControlLabel disabled control={<Switch value="checkedD" />} label="Disabled" />
+        <FormControlLabel disabled control={<Switch checked value="checkedE" />} label="Disabled" />
+        <FormControlLabel
+          control={
+            <Switch
+              checked={this.state.checkedF}
+              onChange={this.handleChange('checkedF')}
+              value="checkedF"
+              classes={{
+                switchBase: classes.switchBase,
+                checked: classes.checked,
+                bar: classes.bar,
+              }}
+            />
+          }
+          label="Custom color"
+        />
+      </FormGroup>
+    );
+  }
+}
+
+const StyledSwitch = withStyles(styles)(SwitchLabels);
 
 export default class EditUserDialog extends React.Component {
 
@@ -159,7 +238,7 @@ export default class EditUserDialog extends React.Component {
 
     this.state.knownRoles.forEach((value, key, map) => {
       list = [...list,
-      (<Toggle key={key} label={value} style={{ toggle: { marginBottom: 16 } }}
+      (<Switch key={key} label={value} style={{ toggle: { marginBottom: 16 } }}
         toggled={this.state.updatedRoles && this.state.updatedRoles.includes(key)}
         onToggle={() => this.toggleRole(key)} />)
       ]
@@ -172,12 +251,6 @@ export default class EditUserDialog extends React.Component {
   }
 
   render() {
-
-    // Update dialog action 
-    const actions = [
-      <FlatButton label="Cancel" primary={true} onClick={this.handleCancelUpdate} />,
-      <FlatButton label="Submit" primary={true} onClick={() => this.handleDoUpdate(this.props.token, this.props.comment, this.props.onUserChange)} />,
-    ];
 
     const formElementsArray = [];
     for (let key in this.state.formFields) {
@@ -196,10 +269,21 @@ export default class EditUserDialog extends React.Component {
     ));
 
     return (
-      <Dialog title={'Editing ' + this.state.formFields.name.value} actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleCancelUpdate} >
-        {fields}
-        <Divider />
-        {!this.state.knownRoles ? null : this.getRolesToggleList()}
+      <Dialog
+        open={this.state.open}
+        onClose={this.handleCancelUpdate}
+        aria-labelledby="form-dialog-title">
+        <DialogTitle id="edit-user-dialog-title">{'Editing ' + this.state.formFields.name.value}</DialogTitle>
+        <DialogContent>
+          <StyledSwitch />
+          {fields}
+          <Divider />
+          {!this.state.knownRoles ? null : this.getRolesToggleList()}
+        </DialogContent>
+        <DialogActions>
+          <Button primary={true} onClick={this.handleCancelUpdate} >Cancel</Button>,
+          <Button primary={true} onClick={() => this.handleDoUpdate(this.props.token, this.props.user, this.props.onUserChange)} >Submit</Button>,
+        </DialogActions>
       </Dialog>
     );
   }

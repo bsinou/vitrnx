@@ -101,7 +101,6 @@ export default class Comment extends React.Component {
     return (
       <div  >
         <Dialog
-          // style={{zIndex: 200}}
           open={this.state.open}
           onClose={this.handleCancelUpdate}
           aria-labelledby="form-dialog-title"
@@ -121,10 +120,7 @@ export default class Comment extends React.Component {
             />
 
           </DialogContent>
-          <DialogActions>
-            <Button color="primary" onClick={this.handleCancelUpdate} >Cancel</Button>,
-            <Button color="primary" onClick={() => this.handleDoUpdate(this.props.token, this.props.comment, this.props.onCommentChange)} >Submit</Button>,
-          </DialogActions>
+         
         </Dialog>
 
         <div className={customClasses.CommentBox}>

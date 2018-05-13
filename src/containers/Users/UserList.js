@@ -3,10 +3,46 @@ import React, { Component } from 'react';
 import apiServer from '../../apiServer';
 
 // Material UI
-import { List, ListItem } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
+
+import { withStyles } from 'material-ui/styles';
+import Button from 'material-ui/Button';
+import Avatar from 'material-ui/Avatar';
+import Dialog, { DialogTitle } from 'material-ui/Dialog';
+import PersonIcon from '@material-ui/icons/Person';
+import AddIcon from '@material-ui/icons/Add';
+import Typography from 'material-ui/Typography';
+import blue from 'material-ui/colors/blue';
+
+import List, { ListItem, ListItemText, ListItemAvatar} from 'material-ui/List';
 import { darkBlack } from 'material-ui/colors';
 
+const styles = {
+    avatar: {
+        backgroundColor: blue[100],
+        color: blue[600],
+    },
+};
+
+function User (props) {
+    const {classes, user, roleStr, userSelected } = props
+   
+    return (
+        <ListItem key={user.userId} onClick={userSelected}>
+            <ListItemAvatar>
+                <Avatar className={classes.avatar}>
+                    <PersonIcon />
+                </Avatar>
+            </ListItemAvatar>
+            <ListItemText
+                style={{ textAlign: 'left' }}
+                primary={user.name + ', ' + user.email + ', ' + roleStr}
+            // secondaryLines={2}
+            />
+        </ListItem>);
+}
+
+
+const StyledUser = withStyles(styles)(User);
 export default class UserList extends Component {
 
     state = {
@@ -56,8 +92,8 @@ export default class UserList extends Component {
     };
 
 
-    getRoleString(roles){
-        if (!roles){
+    getRoleString(roles) {
+        if (!roles) {
             return "";
         }
         return roles.map(role => role.label).join(', ')
@@ -65,37 +101,22 @@ export default class UserList extends Component {
 
     // TODO add new user component
 
-    // , {user.userRoles.join(', ')} -
     render() {
         let users = <p style={{ textAlign: 'center' }}>Something went wrong: could not load user list...</p>
         if (!this.state.error) {
             users = this.state.users.map(
                 user => {
                     return (
-                        <div key={user.userId}>
-                            <ListItem
-                                style={{ textAlign: 'left' }}
-                                // leftAvatar={<Avatar src={"../imgRepo/" + user.thumb} />}
-                                primaryText={user.name}
-                                secondaryText={
-                                    <p>
-                                        <span style={{ color: darkBlack }}>{user.email} </span>
-                                        { this.getRoleString(user.roles)}
-                                    </p>
-                                }
-                                secondaryTextLines={2}
-                                onClick={(event) => this.userSelectedHandler(event, user.userId)}
-                            />
-                            <Divider inset={true} />
-                        </div>);
+                        <StyledUser 
+                        user={user} 
+                        roleStr={this.getRoleString(user.roles)} 
+                        userSelected={ (event) => this.userSelectedHandler(event, user.userId)}
+                        />
+                    );
                 });
         }
 
-        return (
-            <List>
-                {users}
-            </List>
-        );
+        return ( <List> {users} </List> );
     }
 }
 
