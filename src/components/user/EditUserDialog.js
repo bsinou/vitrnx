@@ -89,7 +89,17 @@ class SwitchLabels extends React.Component {
 
 const StyledSwitch = withStyles(styles)(SwitchLabels);
 
-export default class EditUserDialog extends React.Component {
+class EditUserDialog extends React.Component {
+
+  // getRoles = (knowRoles, userRoles ) => {
+
+  // for (let )
+
+  // forEach(callbackfn: (value: V, key: K, map: ReadonlyMap<K, V>) => void, thisArg?: any): void;
+  // return roles;
+
+
+  //   };
 
   constructor(props) {
     super(props);
@@ -197,6 +207,12 @@ export default class EditUserDialog extends React.Component {
     return request;
   }
 
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.checked });
+  };
+
+
+
   handleDoUpdate = () => {
     const options = { headers: { 'Authorization': this.props.token } };
     let onCloseFunc = this.state.onClose;
@@ -218,19 +234,27 @@ export default class EditUserDialog extends React.Component {
   // ROLE EDITION 
   canEditRoles = () => { // only admins
     return this.state.userRoles.includes("ADMIN") || this.state.userRoles.includes("USER_ADMIN");
-  }
-
-  toggleRole = (key) => {
-    if (!this.state.updatedRoles) { return }
-    const updated = [...this.state.updatedRoles]
-    var index = updated.indexOf(key);
-    if (index !== -1) { // remove...
-      updated.splice(index, 1);
-    } else { // add
-      updated.push(key)
-    }
-    this.setState({ updatedRoles: [...updated] })
   };
+
+  // handleChange = name => event => {
+  //   this.setState({ [name]: event.target.checked });
+  // };
+
+
+  toggleRole = key => event => {
+    if (this.state.updatedRoles) { 
+
+      const updated = [...this.state.updatedRoles]
+      var index = updated.indexOf(key);
+      if (index !== -1) { // remove...
+        updated.splice(index, 1);
+      } else { // add
+        updated.push(key)
+      }
+      this.setState({ updatedRoles: [...updated] });
+
+     }
+   }
 
   getRolesToggleList() {
     let list = [];
@@ -238,13 +262,25 @@ export default class EditUserDialog extends React.Component {
 
     this.state.knownRoles.forEach((value, key, map) => {
       list = [...list,
-      (<Switch key={key} label={value} style={{ toggle: { marginBottom: 16 } }}
-        toggled={this.state.updatedRoles && this.state.updatedRoles.includes(key)}
-        onToggle={() => this.toggleRole(key)} />)
-      ]
-    })
+      (
+          <FormControlLabel
+            key={key}
+            label={value}
+            control={
+              <Switch
+                checked={this.state.updatedRoles && this.state.updatedRoles.includes(key)}
+                onChange={this.toggleRole(key)}
+                value="checkedB"
+                style={{ toggle: { marginBottom: 16 } }}
+                color="primary"
+              />
+            }
+          />
+      )]
+    });
+
     return (
-      <div style={{ block: { maxWidth: 250 } }}>
+      <div style={{ marginTop: '2em', block: { maxWidth: 250 }, display:'flex', flexDirection:'column', padding:'4px 8px' }}>
         {list}
       </div>
     );
@@ -275,7 +311,6 @@ export default class EditUserDialog extends React.Component {
         aria-labelledby="form-dialog-title">
         <DialogTitle id="edit-user-dialog-title">{'Editing ' + this.state.formFields.name.value}</DialogTitle>
         <DialogContent>
-          <StyledSwitch />
           {fields}
           <Divider />
           {!this.state.knownRoles ? null : this.getRolesToggleList()}
@@ -288,6 +323,8 @@ export default class EditUserDialog extends React.Component {
     );
   }
 }
+
+export default EditUserDialog; // withStyles(styles)()
 
 
 

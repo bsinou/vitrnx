@@ -18,31 +18,25 @@ import AuxWrapper from '../../../hoc/AuxWrapper/AuxWrapper';
 
 
 import customCss from './Post.css';
-const style = {
-    marginRight: 14,
-    marginTop: 10,
-};
 
 const postStyles = theme => ({
-
-    card: {
-        maxWidth: 345,
-    },
-    media: {
-        height: 0,
-        paddingTop: '56.25%', // 16:9
-    },
 
     root: {
         flexGrow: 1,
         backgroundColor: theme.palette.background.paper,
     },
+    card: {
+        maxWidth: 345,
+    },
+    media: {
+        height: '200px',
+        paddingTop: '2%', // WTF
+    },
+
 });
 
 class Layout extends React.Component {
     render() {
-        // console.log('et ici ',this.props.post);
-
         const { classes, post } = this.props;
         return (
             <div className={customCss.Post}>
@@ -68,10 +62,6 @@ class Layout extends React.Component {
         );
     }
 }
-
-// PostLayout.propTypes = {
-//     classes: PropTypes.object.isRequired,
-// };
 
 const PostLayout = withStyles(postStyles)(Layout);
 
