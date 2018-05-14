@@ -190,7 +190,6 @@ class Auth extends React.Component {
                 alignItems="center"
                 direction="column"
                 justify="center"
-
             >
                 {fields}
             </Grid>

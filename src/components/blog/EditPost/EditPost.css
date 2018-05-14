@@ -16,6 +16,8 @@
     bottom: 0;
     width: 50%;
     overflow: auto;
+    display: flex;
+    flex-direction: column;
     
 }
 
@@ -23,17 +25,14 @@
     width: 100%;
 } 
 
-
 .EditPost input,
 .EditPost textarea,
 .EditPost select {
     display: block;
     width: 100%;
     box-sizing: border-box;
-    border: 1px solid black;
     outline: none;
     font: inherit;
-    margin: auto;
 }
 
 /* MARKDOWN EDITOR */

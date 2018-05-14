@@ -181,19 +181,23 @@ class EditPost extends React.Component {
         slideIndex: 0,
         htmlMode: 'raw',
 
-        open: false
+        open: false,
+
+        // dirty hack to avoid infinite looping
+        isNew: true
     }
 
     componentDidMount() {
         this.loadData();
     }
 
-    componentDidUpdate() {
-        this.loadData();
-    }
+    // componentDidUpdate() {
+    //     this.loadData();
+    // }
 
     loadData() {
         const currId = this.props.match.params.id;
+        console.log('Here', currId);
         if (currId) {
             if (!this.state.post || this.state.post.path !== currId) {
                 var options = { headers: { 'Authorization': this.props.token } };
@@ -207,7 +211,10 @@ class EditPost extends React.Component {
                         this.setState({ post: { ...this.state.post, path: currId } });
                     });
             }
-        }
+        } else {
+            // force initialisation of new post
+            this.setState({ post: {} });
+        } 
     }
 
     postDataHandler = () => {
@@ -263,7 +270,7 @@ class EditPost extends React.Component {
     }
 
     render() {
-        return !this.props.token || !this.state.post ? null : (
+        return (!this.props.token || !this.state.post) ? null : (
             <div className={customCss.EditPost}>
                 <EditButtons
                     onSave={this.postDataHandler}
