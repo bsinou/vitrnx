@@ -83,7 +83,7 @@ a:focus {
 
   
   :global .TextLink {
-    color: black;
+    color: #f1d923;
   }
   
   :global .TextLink a:hover,

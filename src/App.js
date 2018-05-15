@@ -24,6 +24,7 @@ import Logout from './containers/Auth/Logout/Logout'
 import classes from './vitrnx.css';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import { red300 } from 'material-ui/colors';
+import { drawerWidth, transition, container } from "./assets/jss/common.jsx";
 
 
 // This replaces the textColor value on the palette
@@ -39,6 +40,33 @@ const theme = createMuiTheme({
     },
     primary: red300,
   },
+
+  wrapper: {
+    position: "relative",
+    top: "0",
+    height: "100vh"
+  },
+  mainPanel: {
+    // [theme.breakpoints.up("md")]: {
+    //   width: `calc(100% - ${drawerWidth}px)`
+    // },
+    overflow: "auto",
+    position: "relative",
+    float: "right",
+    ...transition,
+    maxHeight: "100%",
+    width: "100%",
+    overflowScrolling: 'touch'
+  },
+  content: {
+    marginTop: "70px",
+    padding: "30px 15px",
+    minHeight: "calc(100% - 123px)"
+  },
+  container,
+  map: {
+    marginTop: "70px"
+  }
 
  
 });
