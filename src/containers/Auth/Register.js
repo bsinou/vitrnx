@@ -32,8 +32,6 @@ const theme = createMuiTheme({
     },
 });
 
-
-
 class Auth extends React.Component {
     state = {
         fields: {
@@ -189,9 +187,17 @@ class Auth extends React.Component {
                 container
                 alignItems="center"
                 direction="column"
-                justify="center"
-            >
+                justify="center">
                 {fields}
+                <Button
+                    label="Submit"
+                    variant="raised"
+                    color="secondary"
+                    aria-label="submit"
+                    style={{ margin: 15 }}
+                    onClick={(event) => this.submitHandler(event)}>
+                    SUBMIT
+                </Button>
             </Grid>
         </form>);
 
@@ -214,40 +220,33 @@ class Auth extends React.Component {
 
         return (
             <MuiThemeProvider theme={theme}>
-                <Grid className={classes.AnonBody}
-                    container
-                    alignItems="center"
-                    direction="column"
-                    justify="center">
-                    <Grid className={classes.AuthForm} >
-                        <AppBar position="static" color="secondary" >
-                            <Paper>
-                                <Typography
-                                    className={classes.FormHeader}
-                                    height="60"
-                                    variant="title"
-                                    color="inherit" >
-                                    Please provide following information
-                            </Typography>
-                            </Paper>
-                        </AppBar>
-                        {errorMessage}
-                        {authRedirect}
-                        {form}
-                        <br />
-                        <Button
-                            variant="raised"
-                            label="Submit"
-                            style={{ margin: 15 }}
-                            onClick={(event) => this.submitHandler(event)}
-                        >
-                            SUBMIT
-                        </Button>
+                {authRedirect}
+                <div className={classes.AnonBody}>
+                    <Grid className={classes.FormBox}
+                        container
+                        alignItems="center"
+                        direction="column"
+                        justify="center" >
+                        <Grid className={classes.AuthForm} >
+                            <AppBar position="static" color="secondary" >
+                                <Paper>
+                                    <Typography
+                                        className={classes.FormHeader}
+                                        variant="title"
+                                        color="inherit" >
+                                        Please provide following info
+                                </Typography>
+                                </Paper>
+                            </AppBar>
+                            {errorMessage}
+                            {form}
+
+                        </Grid>
+                        <Grid style={{ margin: 15, fontsize: '0.8em' }}>
+                            Already have an account? Please  <NavLink to="/" >Sign in</NavLink>
+                        </Grid>
                     </Grid>
-                    <Grid style={{ margin: 15, color: red400, fontsize: '0.8em' }}>
-                        Already have an account? Please  <NavLink to="/" >Sign in</NavLink>
-                    </Grid>
-                </Grid>
+                </div>
             </MuiThemeProvider>
         );
     }

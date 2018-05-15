@@ -40,7 +40,7 @@ h2 {
 	position: fixed;
     display: flex;
     flex-direction: column;
-	top: 240px;
+	top: 320px;
     right: 0;
     list-style: none;
     z-index: 99;
@@ -62,6 +62,9 @@ h2 {
     .SubCard {
         width: 800px;
         margin: auto;
+    }
 
+    .SideButtons {
+        top: 420px;
     }
 }

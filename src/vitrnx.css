@@ -1,0 +1,104 @@
+/* For colors see : 
+    http://www.color-hex.com/color-palette/
+      - 37498 : you are blue as a night in Cub
+  dark blue #1   #410066 	
+  blue #2     	 #490d73 	
+	blue #3        #4d1a80 	
+	blue #4        #40268c 	
+  blue #5        #333399
+
+  lightbluegrey #7070b7
+  
+  Additionnal colors
+  - yellow #f1d923
+  - dark red #f0150a
+
+  */
+
+.UnusedStyleToShowColors {
+  /* Simple trick so that we can directly have an overview of the various 
+  colors we use in the IDE */
+  background: linear-gradient(to top right,
+    #333399,
+    #40268c,
+    #4d1a80, 
+    #490d73, 
+    #410066,
+    #7070b7,
+    #f5f5ff,
+    #f1d923,
+    #f0150a      
+  );  
+}
+  
+/* html { 
+  background: url(https://41.sinou.org/imgRepo/tract-4.6.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+} */
+
+/*, html, overflow-x: hidden;*/
+body {
+  font-family: Roboto, sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+
+.App-title {
+  margin-top: 16px;  
+  padding: 2px;
+  font-weight: bolder;
+  font-size: 2em;
+}
+  
+.App-subtitle {
+    padding: 2px;
+    font-size: 1.5em;
+}
+
+h3 {
+  font-weight: 500;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active,
+a:focus {
+  /* text-decoration: none; */
+  outline: 0;
+  color: #40268c;
+}
+.linked {
+  cursor: pointer;
+  z-index: 10;
+}
+
+
+
+  
+  :global .TextLink {
+    color: black;
+  }
+  
+  :global .TextLink a:hover,
+  :global .TextLink a:active {
+    color: red;
+    text-decoration: underline;
+  }
+  
+  
+  
+  /* OLD STOCK 
+  
+  @keyframes App-logo-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+   
+  */

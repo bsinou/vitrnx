@@ -28,15 +28,15 @@ function editButtons(props) {
     const { classes, onSave, onCancel, onDelete, canDelete } = props;
     return (
         <div className={[customClasses.AllBtnBox, customClasses.SideButtons].join(' ')}>
-            <Button onClick={onSave}>
+            <Button color="primary" onClick={onSave}>
                 <Icon>save</Icon>
             </Button>
-            <Button onClick={onCancel}>
+            <Button color="primary" onClick={onCancel}>
                 <Icon>cancel</Icon>
             </Button>
             {canDelete ? (
                 <li key="delete" >
-                    <Button onClick={onDelete} >
+                    <Button color="secondary" onClick={onDelete} >
                         <Icon>delete_circle</Icon>
                     </Button>
                 </li>

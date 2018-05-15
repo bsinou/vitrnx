@@ -21,15 +21,18 @@ import Logout from './containers/Auth/Logout/Logout'
 
 // Styling
 // Provides default material UI css props to children components
-import classes from './App.css';
+import classes from './vitrnx.css';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import { red300 } from 'material-ui/colors';
 
 
 // This replaces the textColor value on the palette
 // and then update the keys for each component that depends on it.
-// More on Colors: http://www.material-ui.com/#/customization/colors
+// More on Colors: http://material-ui-next.com/#/customization/colors
 const theme = createMuiTheme({
+  root: {
+    // overflow: 'hidden',
+  },
   palette: {
     background: {
       paper: red300
@@ -37,15 +40,7 @@ const theme = createMuiTheme({
     primary: red300,
   },
 
-  paper: {
-    zDepth: 0,
-  },
-  tabs: {
-    backgroundColor: '#333399'
-  },
-  inkBar: {
-    backgroundColor: '#f1d923'
-  },
+ 
 });
 
 class App extends Component {
@@ -60,12 +55,14 @@ class App extends Component {
   }
 
   render() {
+    const isAuth = this.props.isAuthenticated;
+
     let routes = [
       <Route path="/register" component={Register} />,
       <Route path="/" component={Login} />,
     ];
 
-    if (this.props.isAuthenticated) {
+    if (isAuth) {
       routes = [
         (<Route path="/v/:id" component={Teaser} />),
         (<Route path="/logout" component={Logout} />),
@@ -90,16 +87,21 @@ class App extends Component {
     routes = [...routes, (<Redirect to="/" />)]
 
     return (
-      <MuiThemeProvider theme={theme}>
-        <div className={classes.App}>
-          <Layout>
+      isAuth ?
+        (<MuiThemeProvider theme={theme}>
+          <Layout className={classes.Container}>
             <Switch>
               {/* Spread operator didn't work here, aber WHY??  */}
               {routes.map(element => element)}
             </Switch>
           </Layout>
-        </div>
-      </MuiThemeProvider>
+        </MuiThemeProvider>)
+        : (<MuiThemeProvider theme={theme}>
+          <Switch>
+            {/* Spread operator didn't work here, aber WHY??  */}
+            {routes.map(element => element)}
+          </Switch>
+        </MuiThemeProvider>)
     );
   }
 }

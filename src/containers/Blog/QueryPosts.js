@@ -8,11 +8,11 @@ import apiServer from '../../apiServer';
 import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemText, ListItemAvatar} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
-import Button from 'material-ui/Button';
-import Dialog, { DialogTitle } from 'material-ui/Dialog';
+// import Button from 'material-ui/Button';
+// import Dialog, { DialogTitle } from 'material-ui/Dialog';
 
-import AddIcon from '@material-ui/icons/Add';
-import Typography from 'material-ui/Typography';
+// import AddIcon from '@material-ui/icons/Add';
+// import Typography from 'material-ui/Typography';
 import blue from 'material-ui/colors/blue';
 
 
@@ -29,9 +29,7 @@ function Post (props) {
     let dateStr = moment(post.date*1000).format('MMMM Do YYYY');
  
     return (
-         <ListItem
-            key={post.path}
-            onClick={postSelected}>
+         <ListItem onClick={postSelected}>
             <ListItemAvatar>
                 <Avatar className={classes.avatar} src={"../imgRepo/" + post.thumb} />
             </ListItemAvatar>
@@ -99,8 +97,9 @@ class QueryPosts extends Component {
         let posts = <p style={{ textAlign: 'center' }}>Something went wrong: could not load post list...</p>
         if (!this.state.error) {
             posts = this.state.posts.map(
-                post => <StyledPost 
-                            postSelected={(event) => this.postSelectedHandler(event, post.path)} 
+                post => <StyledPost
+                            key={post.path}
+postSelected={(event) => this.postSelectedHandler(event, post.path)} 
                             post={post}/>);
         }
         return (<List>{posts}</List>);

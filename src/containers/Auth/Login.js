@@ -56,9 +56,9 @@ class Login extends React.Component {
     }
     handleChange = name => event => {
         this.setState({
-          [name]: event.target.value,
+            [name]: event.target.value,
         });
-      };
+    };
 
     render() {
 
@@ -77,59 +77,65 @@ class Login extends React.Component {
 
         return (
             <MuiThemeProvider theme={theme}>
-                <Grid className={classes.AnonBody}
-                    container
-                    alignItems="center"
-                    direction="column"
-                    justify="center">
-                    <Grid className={classes.AuthForm} >
-                        <AppBar position="static" color="secondary" >
-                            <Paper>
-                                <Typography
-                                    className={classes.FormHeader}
-                                    height="60"
-                                    variant="title"
-                                    color="inherit" >
-                                    Festival 4.0
+                <div className={classes.Container}>
+                    <div className={classes.AnonBody}>
+                        <Grid className={classes.FormBox}
+                            container
+                            alignItems="center"
+                            direction="column"
+                            justify="center">
+                            <Grid className={classes.AuthForm} >
+                                <AppBar position="static" color="secondary" >
+                                    <Paper>
+                                        <Typography
+                                            className={classes.FormHeader}
+                                            height="60"
+                                            variant="title"
+                                            color="inherit" >
+                                            Festival 4.0
                             </Typography>
-                            </Paper>
-                        </AppBar>
-                        <div >
-                            {errorMessage}
-                            <TextField
-                                id="email"
-                                label="Email"
-                                margin="normal"
-                                onChange={this.handleChange('email')}
-                                onKeyPress={this.handleKeyPress}
-                            />
-                            <br />
-                            <TextField
-                                id="password"
-                                type="password"
-                                helperText="Enter your Password"
-                                label="Password"
-                                margin="normal"
-                                onChange={this.handleChange('password')}
-                                onKeyPress={this.handleKeyPress}
-                            />
-                            <br />
-                            <Button
+                                    </Paper>
+                                </AppBar>
+                                <Grid className={classes.Form}
+                                    container
+                                    alignItems="center"
+                                    direction="column"
+                                    justify="center">
+                                    {errorMessage}
+                                    <TextField
+                                        id="email"
+                                        label="Email"
+                                        margin="normal"
+                                        onChange={this.handleChange('email')}
+                                        onKeyPress={this.handleKeyPress}
+                                    />
+                                    <TextField
+                                        id="password"
+                                        type="password"
+                                        helperText="Enter your Password"
+                                        label="Password"
+                                        margin="normal"
+                                        onChange={this.handleChange('password')}
+                                        onKeyPress={this.handleKeyPress}
+                                    />
 
-                                variant="raised"
-                                label="Submit"
-                                style={{ margin: 15 }}
-                                onClick={(event) => this.submitHandler(event)} >
-                                SUBMIT
-                                </Button>
-                        </div>
-                    </Grid>
-                    <Grid style={{ margin: 15, color: red400, fontsize: '0.8em' }}>
-                        No account yet? Please  <NavLink to="/register" >Register</NavLink>
-                    </Grid>
-
-
-                </Grid>
+                                    <Button
+                                        label="Submit"
+                                        variant="raised"
+                                        color="secondary"
+                                        aria-label="submit"
+                                        style={{ margin: 15 }}
+                                        onClick={(event) => this.submitHandler(event)} >
+                                        SUBMIT
+                            </Button>
+                                </Grid>
+                            </Grid>
+                            <Grid style={{ margin: 15, color: red400, fontsize: '0.8em' }}>
+                                No account yet? Please  <NavLink to="/register" >Register</NavLink>
+                            </Grid>
+                        </Grid>
+                    </div>
+                </div>
             </MuiThemeProvider>
         );
     }

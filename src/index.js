@@ -1,19 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-// 
 import thunk from 'redux-thunk';
+
+// VitrnX internal dependencies
+import App from './App';
+import registerServiceWorker from './registerServiceWorker';
+import authReducer from './store/reducers/auth';
+import userReducer from './store/reducers/user';
 
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 
-// VitrnX internal dependencies
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
-import authReducer from './store/reducers/auth';
-import userReducer from './store/reducers/user';
+import './vitrnx.css';
 
 // This can be a place to define axios defaults globally 
 // (below is line is useless: that's the default anyway)
@@ -37,5 +37,5 @@ const app = (
     </Provider>
 )
 
-ReactDOM.render(app, document.getElementById('root'));
+ReactDOM.render(app, document.getElementById('vitrnxSPA'));
 registerServiceWorker();

@@ -1,17 +1,12 @@
+.Container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: visible;
+}
+
+
 .Content {
     flex: 1;
-    /* margin-top: 16px; */
-    min-height: 100%;
 }
-
-.Header {
-    background-color: red;
-}
-.Toolbar {
-    background-color: green;
-}
-.Footer {
-    background-color: purple;
-}
-
 

@@ -6,7 +6,6 @@
 }
 
 .NavigationItem a {
-    color: #3c3f63;
     text-decoration: none;
     width: 100%;
     box-sizing: border-box;
@@ -27,7 +26,8 @@
         align-items: center ; 
     }
     
-    .NavigationItem a {
+    .NavigationItem a, 
+    .NavigationItem a:link {
         color: #f1d923;
         height: 100%;
         padding: 8px 10px;

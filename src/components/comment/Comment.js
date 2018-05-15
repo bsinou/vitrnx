@@ -2,20 +2,16 @@ import React from 'react';
 import moment from 'moment';
 import axios from '../../apiServer'
 
-// import { withStyles } from 'material-ui/styles';
-
 import Markdown from 'react-markdown';
-import Divider from 'material-ui/Divider';
-import Dialog, { DialogTitle } from 'material-ui/Dialog';
-import Button from 'material-ui/Button';
-import TextField from 'material-ui/TextField';
+
 import EditButtons from './EditButtons';
 
 // Styling
-import customClasses from './Comment.css';
-import { DialogContent } from 'material-ui';
-import { DialogActions } from 'material-ui';
+import Dialog, { DialogTitle, DialogContent } from 'material-ui/Dialog';
+import { Paper, Divider, TextField } from 'material-ui';
 
+
+import customClasses from './Comment.css';
 
 
 export default class Comment extends React.Component {
@@ -34,11 +30,9 @@ export default class Comment extends React.Component {
     }
   }
 
-
   canEdit() {
     return this.props.userRoles.includes("MODERATOR") || this.props.userId === this.props.comment.authorId;
   }
-
 
   /* UPDATE */
 
@@ -95,7 +89,6 @@ export default class Comment extends React.Component {
   }
 
   render() {
-
     // Unix time is in full seconds and moment expects ms
     let dateStr = moment(this.props.comment.date * 1000).format('MMM D, YYYY');
     return (
@@ -104,23 +97,23 @@ export default class Comment extends React.Component {
           open={this.state.open}
           onClose={this.handleCancelUpdate}
           aria-labelledby="form-dialog-title"
+        // style={{zIndex: 1300, backgroundColor: '#fff', opacity: '0.5'}}
         >
-          <DialogTitle id="edit-comment-dialog-title">Modify the comment</DialogTitle>
-          <DialogContent>
-            <TextField
-              helperText="Edit your comment..."
-              autoFocus
-              fullWidth
-              value={this.state.updatedBody}
-              // multiLine={true}
-              // rows={2}
-              // rowsMax={4}
-              onChange={this.handleChange('updatedBody')}
-              onKeyPress={this.handleKeyPress}
-            />
-
-          </DialogContent>
-         
+          <Paper style={{ zIndex: 1300, backgroundColor: '#fff' }}>
+            <DialogTitle id="edit-comment-dialog-title">Modify the comment</DialogTitle>
+            <DialogContent >
+              <TextField
+                helperText="Edit your comment..."
+                autoFocus
+                multiline
+                rowsMax="4"
+                fullWidth
+                value={this.state.updatedBody}
+                onChange={this.handleChange('updatedBody')}
+                onKeyPress={this.handleKeyPress}
+              />
+            </DialogContent>
+          </Paper>
         </Dialog>
 
         <div className={customClasses.CommentBox}>

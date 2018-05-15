@@ -3,13 +3,12 @@ import axios from '../../apiServer'
 
 import { withStyles } from 'material-ui/styles';
 
-import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog';
-import Button from 'material-ui/Button';
-import TextField from 'material-ui/TextField';
-import Divider from 'material-ui/Divider';
+
 import Switch from 'material-ui/Switch';
-import green from 'material-ui/colors/green';
+import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog';
 import { FormGroup, FormControlLabel } from 'material-ui/Form';
+import {Paper, TextField, Button, Divider}  from 'material-ui';
+import green from 'material-ui/colors/green';
 
 const utils = require('../../utils/helpers');
 
@@ -119,14 +118,14 @@ class EditUserDialog extends React.Component {
 
       formFields: {
         name: {
-          type: 'name',
-          hintText: 'We will call you so...',
+          label: 'Name',
+          helperText: '',
           value: props.editedUser.name,
           validation: {
             required: true,
             minLength: 5,
           },
-          errorText: '',
+          // errorText: '',
           touched: "false"
         },
       },
@@ -242,7 +241,7 @@ class EditUserDialog extends React.Component {
 
 
   toggleRole = key => event => {
-    if (this.state.updatedRoles) { 
+    if (this.state.updatedRoles) {
 
       const updated = [...this.state.updatedRoles]
       var index = updated.indexOf(key);
@@ -253,8 +252,8 @@ class EditUserDialog extends React.Component {
       }
       this.setState({ updatedRoles: [...updated] });
 
-     }
-   }
+    }
+  }
 
   getRolesToggleList() {
     let list = [];
@@ -263,24 +262,24 @@ class EditUserDialog extends React.Component {
     this.state.knownRoles.forEach((value, key, map) => {
       list = [...list,
       (
-          <FormControlLabel
-            key={key}
-            label={value}
-            control={
-              <Switch
-                checked={this.state.updatedRoles && this.state.updatedRoles.includes(key)}
-                onChange={this.toggleRole(key)}
-                value="checkedB"
-                style={{ toggle: { marginBottom: 16 } }}
-                color="primary"
-              />
-            }
-          />
+        <FormControlLabel
+          key={key}
+          label={value}
+          control={
+            <Switch
+              checked={this.state.updatedRoles && this.state.updatedRoles.includes(key)}
+              onChange={this.toggleRole(key)}
+              value="checkedB"
+              style={{ toggle: { marginBottom: 16 } }}
+              color="primary"
+            />
+          }
+        />
       )]
     });
 
     return (
-      <div style={{ marginTop: '2em', block: { maxWidth: 250 }, display:'flex', flexDirection:'column', padding:'4px 8px' }}>
+      <div style={{ marginTop: '2em', block: { maxWidth: 250 }, display: 'flex', flexDirection: 'column', padding: '4px 8px' }}>
         {list}
       </div>
     );
@@ -309,16 +308,19 @@ class EditUserDialog extends React.Component {
         open={this.state.open}
         onClose={this.handleCancelUpdate}
         aria-labelledby="form-dialog-title">
-        <DialogTitle id="edit-user-dialog-title">{'Editing ' + this.state.formFields.name.value}</DialogTitle>
-        <DialogContent>
-          {fields}
-          <Divider />
-          {!this.state.knownRoles ? null : this.getRolesToggleList()}
-        </DialogContent>
-        <DialogActions>
-          <Button primary={true} onClick={this.handleCancelUpdate} >Cancel</Button>,
-          <Button primary={true} onClick={() => this.handleDoUpdate(this.props.token, this.props.user, this.props.onUserChange)} >Submit</Button>,
+        <Paper style={{ zIndex: 1300, backgroundColor: '#fff' }}>
+
+          <DialogTitle id="edit-user-dialog-title">{'Editing ' + this.state.formFields.name.value}</DialogTitle>
+          <DialogContent>
+            {fields}
+            <Divider />
+            {!this.state.knownRoles ? null : this.getRolesToggleList()}
+          </DialogContent>
+          <DialogActions>
+            <Button color="primary" onClick={this.handleCancelUpdate} >Cancel</Button>,
+          <Button color="primary" onClick={() => this.handleDoUpdate(this.props.token, this.props.user, this.props.onUserChange)} >Submit</Button>,
         </DialogActions>
+        </Paper>
       </Dialog>
     );
   }

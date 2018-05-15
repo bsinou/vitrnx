@@ -116,7 +116,7 @@ class SimpleTabs extends React.Component {
                                 fullWidth />
                             <TextField
                                 // label="Tags"
-                                helperText="For instance: news music program"
+                                helperText="For instance: News or FAQ"
                                 value={post.tags}
                                 onChange={this.handleValueChange('tags')}
                                 // onChange={() => onValueChanged('tags')}

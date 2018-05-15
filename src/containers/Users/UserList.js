@@ -3,18 +3,16 @@ import React, { Component } from 'react';
 import apiServer from '../../apiServer';
 
 // Material UI
-
 import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
+import List, { ListItem, ListItemText, ListItemAvatar } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
-import Dialog, { DialogTitle } from 'material-ui/Dialog';
 import PersonIcon from '@material-ui/icons/Person';
-import AddIcon from '@material-ui/icons/Add';
-import Typography from 'material-ui/Typography';
 import blue from 'material-ui/colors/blue';
 
-import List, { ListItem, ListItemText, ListItemAvatar} from 'material-ui/List';
-import { darkBlack } from 'material-ui/colors';
+// import Dialog, { DialogTitle } from 'material-ui/Dialog';
+// import Button from 'material-ui/Button';
+// import AddIcon from '@material-ui/icons/Add';
+// import Typography from 'material-ui/Typography';
 
 const styles = {
     avatar: {
@@ -23,9 +21,9 @@ const styles = {
     },
 };
 
-function User (props) {
-    const {classes, user, roleStr, userSelected } = props
-   
+function User(props) {
+    const { classes, user, roleStr, userSelected } = props
+
     return (
         <ListItem key={user.userId} onClick={userSelected}>
             <ListItemAvatar>
@@ -107,16 +105,17 @@ export default class UserList extends Component {
             users = this.state.users.map(
                 user => {
                     return (
-                        <StyledUser 
-                        user={user} 
-                        roleStr={this.getRoleString(user.roles)} 
-                        userSelected={ (event) => this.userSelectedHandler(event, user.userId)}
+                        <StyledUser
+                            key={user.userId}
+                            user={user}
+                            roleStr={this.getRoleString(user.roles)}
+                            userSelected={(event) => this.userSelectedHandler(event, user.userId)}
                         />
                     );
                 });
         }
 
-        return ( <List> {users} </List> );
+        return (<List> {users} </List>);
     }
 }
 

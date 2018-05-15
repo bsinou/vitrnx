@@ -29,7 +29,7 @@ class Layout extends Component {
 
         if (this.props.isAuthenticated) {
             return (
-                <AuxWrapper>
+                <div className={classes.Container}>
                     <Header className={classes.Header} />
                     <Toolbar
                         className={classes.Toolbar}
@@ -41,23 +41,22 @@ class Layout extends Component {
                         userRoles={this.props.userRoles}
                         open={this.state.showSideDrawer}
                         closed={this.sideDrawerClosedHandler} />
-                    <main className={classes.Content}>
+                    <div className={classes.Content}>
                         {this.props.children}
-                    </main>
+                    </div>
                     <Footer
                         className={classes.Footer}
                         isAuth={this.props.isAuthenticated}
                     />
-                </AuxWrapper>
+                </div>
             );
         } else {
             return (
-
                 <AuxWrapper>
                     <Header />
-                    <main className={classes.Content}>
+                    <div className={classes.Content}>
                         {this.props.children}
-                    </main>
+                    </div>
                     <Footer />
                 </AuxWrapper>
             );

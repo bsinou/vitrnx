@@ -25,9 +25,6 @@ const postStyles = theme => ({
         flexGrow: 1,
         backgroundColor: theme.palette.background.paper,
     },
-    card: {
-        maxWidth: 345,
-    },
     media: {
         height: '200px',
         paddingTop: '2%', // WTF
@@ -46,12 +43,12 @@ class Layout extends React.Component {
                         image={"/imgRepo/" + post.hero}
                         // overlay={<CardTitle>{post.title}</CardTitle>}
                     />
-                    {/* <CardTitle>{post.title}</CardTitle> */}
+                    {/* <CardTitle>{post.title}</CardTitle>  */}
                 </Card>
                 <div className={customCss.SubCard}>
                     <h1>{post.title}</h1>
-                    <div className={customCss.Desc}>{post.desc}</div>
                     <PostInfo tags={post.tags} date={post.date} author={post.author} />
+                    <div className={customCss.Desc}>{post.desc}</div>
                     <Markdown className={customCss.Body} escapeHtml={true} source={post.body} />
                 </div>
                 <Divider />
@@ -124,18 +121,18 @@ class Post extends Component {
                     <ul className={customCss.SideButtons} >
                         <li key="add" >
                             <Button onClick={this.newPostHandler}>
-                                <Icon >add_circle</Icon>
+                                <Icon color="primary">add_circle</Icon>
                             </Button>
                         </li>
                         <li key="edit" >
                             <Button onClick={() => this.editPostHandler(id)}>
-                                <Icon >edit_circle</Icon>
+                                <Icon color="primary">edit_circle</Icon>
                             </Button>
                         </li>
                         {this.canDelete() ? (
                             <li key="delete" >
                                 <Button onClick={() => this.deletePostHandler(id)} >
-                                    <Icon >delete_circle</Icon>
+                                    <Icon color="secondary">delete_circle</Icon>
                                 </Button>
                             </li>
                         ) : null}

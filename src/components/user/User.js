@@ -53,7 +53,7 @@ export default class User extends React.Component {
     if (cId) {
       if (force || !this.state.loadedUserId || this.state.loadedUserId !== cId) {
         axios.get('/users/' + cId, options).then(response => {
-          console.log('Retrieved from REST', response.data)
+          // console.log('Retrieved from REST', response.data)
           this.setState({
             initialUser: { ...response.data.user },
             updatedUser: { ...response.data.user },
@@ -77,7 +77,7 @@ export default class User extends React.Component {
     if (!this.state.errorMsg && !this.state.knownRoles) {
       // Retrieve role list
       axios.get('/roles', options).then(response => {
-        console.log('Retrieved roles', response.data)
+        // console.log('Retrieved roles', response.data)
         let retrievedRoles = new Map();
         response.data.roles.map(role => {
           retrievedRoles.set(role.roleId, role.label);
@@ -90,7 +90,6 @@ export default class User extends React.Component {
       });
     }
   }
-
 
   /* DELETION */
 

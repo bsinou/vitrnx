@@ -1,7 +1,8 @@
 .Toolbar {
     height: 36px;
     width:100%;
-    background-color: #000000;
+    background: linear-gradient(to top right,#7070b7,#7070b7,#7070b7, #333399,#40268c);  
+    background-color: #7070b7;
     display: flex;
     justify-content: space-between;
     align-items: center;
