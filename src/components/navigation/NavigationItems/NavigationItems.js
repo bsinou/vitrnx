@@ -9,7 +9,7 @@ export default class NavigationItems extends React.Component {
     getMenuItems() {
         let items = [
             { url: '/', label: 'Home' },
-            // { url: '/teaser', label: 'Teaser' },
+            { url: '/v/dibu', label: 'Videos' },
             { url: '/q/News', label: 'News' },
             { url: '/q/FAQ', label: 'FAQ' },
         ]
@@ -17,6 +17,12 @@ export default class NavigationItems extends React.Component {
         if (this.props.userRoles && this.props.userRoles.includes("EDITOR")) {
             items = [...items,
             { url: '/all', label: 'All' },
+            ]
+        }
+        
+        if (this.props.userRoles && (this.props.userRoles.includes("VOLUNTEER") || this.props.userRoles.includes("ORGANISATION") )) {
+            items = [...items,
+            { url: '/dashboard', label: 'Dashboard' },
             ]
         }
 

@@ -1,10 +1,31 @@
 
 
-var admin = [
-    "Double check the prefecture",
-    "Talk with the mayor."
-];
-
+var admin = {
+    tasks: [
+        {
+            id: 2,
+            category: "admin",
+            desc: "Double check the prefecture: this might be a little bit tricky, because they are only open on Tuesday from 9 to 11.30 AM and on Thursdays, 3 to 5PM. They also only speak Hungarish.",
+            manager: "Bruno", 
+            creationDate: null,
+            closeDate: null,
+            closeBy: null,
+            cancelDate: null,
+            dueDate: null,       
+        },
+        {
+            id: 3,
+            category: "admin",
+            desc: "Talk with the mayor.",
+            manager: "Jackie", 
+            creationDate: null,
+            closeDate: null,
+            closeBy: null,
+            cancelDate: null,
+            dueDate: null,
+        },
+    ]
+};
 
 var prog = [
     "Call bruddi Phil",
@@ -33,10 +54,9 @@ var guests = [
 
 
 module.exports = {
-    // these 3 are used to create the tasks lists in TasksCard - Dashboard view
     admin,
     prog,
-    montage, 
+    montage,
     foodAndDrink,
     guests
 };

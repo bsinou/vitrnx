@@ -104,6 +104,7 @@ class Comments extends Component {
                     <TextField
                         fullWidth
                         helperText="Add a comment..."
+                        multiLine
                         rows={2}
                         rowsMax={4}
                         value={this.state.newCommentBody}

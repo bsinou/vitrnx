@@ -7,16 +7,17 @@ import * as actions from './store/actions/index';
 
 // Vitrnx specific components
 import Layout from './hoc/Layout/Layout'
-import Blog from './containers/Blog/Blog'
-import QueryPosts from './containers/Blog/QueryPosts'
-import Users from './containers/Users/Users'
+import Blog from './containers/blog/Blog'
+import QueryPosts from './containers/blog/QueryPosts'
+import Users from './containers/users/Users'
 
 // Static pages
 import Home from './static/Home/Home'
 import Teaser from './static/Teaser/Teaser'
-import Register from './containers/Auth/Register'
-import Login from './containers/Auth/Login'
-import Logout from './containers/Auth/Logout/Logout'
+import Dashboard from './containers/dashboard/Dashboard'
+import Register from './containers/auth/Register'
+import Login from './containers/auth/Login'
+import Logout from './containers/auth/Logout/Logout'
 
 
 // Styling
@@ -67,8 +68,6 @@ const theme = createMuiTheme({
   map: {
     marginTop: "70px"
   }
-
- 
 });
 
 class App extends Component {
@@ -104,6 +103,14 @@ class App extends Component {
         (<Route path="/all/" component={QueryPosts} />)
         ]
       }
+
+      if (this.props.userRoles && (this.props.userRoles.includes("VOLUNTEER") || this.props.userRoles.includes("ORGANISATION") )) {
+        routes = [...routes,
+        (<Route path="/dashboard" component={Dashboard} />)
+        ]
+      }
+
+      
 
       if (this.props.userRoles && (this.props.userRoles.includes("ADMIN") || this.props.userRoles.includes("USER_ADMIN"))) {
         routes = [...routes,

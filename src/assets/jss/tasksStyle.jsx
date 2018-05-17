@@ -1,6 +1,3 @@
-// ##############################
-// // // Tasks styles
-// #############################
 
 import { defaultFont, primaryColor, dangerColor } from "./common.jsx";
 
@@ -17,14 +14,14 @@ const tasksStyle = {
     display: "flex",
     border: "none",
     padding: "12px 8px !important",
-    verticalAlign: "middle"
+    verticalAlign: "left"
   },
   tableCell: {
     ...defaultFont,
-    padding: "8px",
+    padding: "4px",
     verticalAlign: "middle",
     border: "none",
-    lineHeight: "1.42857143",
+    lineHeight: "1.20",
     fontSize: "14px"
   },
   tableActionButton: {

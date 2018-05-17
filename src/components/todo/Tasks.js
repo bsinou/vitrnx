@@ -17,38 +17,19 @@ import PropTypes from "prop-types";
 import tasksStyle from "../../assets/jss/tasksStyle.jsx";
 
 class Tasks extends React.Component {
-  
-  state = {
-    checked: this.props.checkedIndexes
-  };
 
-  handleToggle = value => () => {
-    const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    this.setState({
-      checked: newChecked
-    });
-  };
   render() {
-    const { classes, tasksIndexes, tasks } = this.props;
+    const { classes, tasks, closeTask, editTask, removeTask } = this.props;
     return (
       <Table className={classes.table}>
         <TableBody>
-          {tasksIndexes.map(value => (
-            <TableRow key={value} className={classes.tableRow}>
+          {!tasks ? null : tasks.map(task => (
+            <TableRow key={task.id} className={classes.tableRow}>
               <TableCell className={classes.tableCell}>
                 <Checkbox
-                  checked={this.state.checked.indexOf(value) !== -1}
+                  checked={task.closeDate && task.closeDate > 1}
                   tabIndex={-1}
-                  onClick={this.handleToggle(value)}
+                  onClick={() => closeTask(task)}
                   checkedIcon={<Check className={classes.checkedIcon} />}
                   icon={<Check className={classes.uncheckedIcon} />}
                   classes={{
@@ -56,10 +37,10 @@ class Tasks extends React.Component {
                   }}
                 />
               </TableCell>
-              <TableCell className={classes.tableCell}>
-                {tasks[value]}
+              <TableCell style={{ width: '480px' }} className={classes.tableCell} dense="true">
+                {task.desc}
               </TableCell>
-              <TableCell className={classes.tableActions}>
+              <TableCell className={classes.tableActions} >
                 <Tooltip
                   id="tooltip-top"
                   title="Edit Task"
@@ -69,6 +50,7 @@ class Tasks extends React.Component {
                   <IconButton
                     aria-label="Edit"
                     className={classes.tableActionButton}
+                    onClick={() => editTask(task.id)}
                   >
                     <Edit
                       className={
@@ -84,8 +66,9 @@ class Tasks extends React.Component {
                   classes={{ tooltip: classes.tooltip }}
                 >
                   <IconButton
-                    aria-label="Close"
+                    aria-label="Remove"
                     className={classes.tableActionButton}
+                    onClick={() => removeTask(task.id)}
                   >
                     <Close
                       className={
@@ -105,7 +88,6 @@ class Tasks extends React.Component {
 
 Tasks.propTypes = {
   classes: PropTypes.object.isRequired,
-  tasksIndexes: PropTypes.arrayOf(PropTypes.number),
   tasks: PropTypes.arrayOf(PropTypes.node)
 };
 

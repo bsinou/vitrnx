@@ -44,7 +44,6 @@ class Login extends React.Component {
     }
 
     submitHandler = (event) => {
-        console.log('About to submit. State: ', this.state)
         event.preventDefault();
         this.props.onAuth(this.state.email, this.state.password);
     }

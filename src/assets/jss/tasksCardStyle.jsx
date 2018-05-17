@@ -1,7 +1,3 @@
-// ##############################
-// // // TasksCard styles
-// #############################
-
 import {
   card,
   cardHeader,
@@ -23,19 +19,21 @@ const tasksCardStyle = theme => ({
     float: "left",
     fontWeight: "500",
     marginTop: "6px",
-    padding: "10px 10px 10px 0",
-    lineHeight: "14px",
+    padding: "2px 2px 2px 0",
+    lineHeight: "24px",
     fontSize: "14px",
     color: "#FFFFFF"
   },
   tabWrapper: {
-    width: "auto",
-    display: "inline-flex",
-    alignItems: "inherit",
+    width: "32",
+    minWidth: '32',
+    display: "flex",
+    // alignItems: "inherit",
     flexDirection: "row",
     justifyContent: "center",
     [theme.breakpoints.down("sm")]: {
-      display: "flex"
+      display: "flex",
+      flexDirection: "row",
     }
   },
   tabIcon: {
@@ -48,23 +46,23 @@ const tasksCardStyle = theme => ({
     display: "none"
   },
   labelIcon: {
-    height: "44px",
-    width: "110px",
-    minWidth: "72px",
+    height: "32",
+    width: "32px",
+    minWidth: "32px",
     paddingLeft: "14px",
     borderRadius: "3px"
   },
   tabsContainer: {
-    marginTop: "6px",
+    marginTop: "2px",
     color: "#FFFFFF",
     [theme.breakpoints.down("sm")]: {
       display: "grid"
     }
   },
   tabs: {
-    width: "110px",
-    minWidth: "70px",
-    paddingLeft: "12px"
+    width: "32px",
+    minWidth: "32px",
+    paddingLeft: "8px"
   },
   cardHeaderContent: {
     flex: "none"
