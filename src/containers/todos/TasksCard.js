@@ -16,7 +16,7 @@ import {
   TextField
 } from 'material-ui';
 
-import { VerifiedUser, Dashboard, Build, LocalBar, People } from "@material-ui/icons";
+import { VerifiedUser, Dashboard, QueueMusic, Build, LocalBar, People } from "@material-ui/icons";
 
 import tasksCardStyle from "../../assets/jss/tasksCardStyle";
 
@@ -80,7 +80,7 @@ class CardLayout extends React.Component {
                   label: classes.label,
                   // textColorInheritSelected: classes.textColorInheritSelected
                 }}
-                icon={<Dashboard className={classes.tabIcon} />}
+                icon={<QueueMusic className={classes.tabIcon} />}
               // label={"Prog"}
               />
               <Tab
@@ -145,16 +145,13 @@ class TasksCard extends React.Component {
     loaded: false,
     loadedIndex: -1,
     index: 0,
-    catIds: ['admin', 'prog', 'montage', 'foodAndDrink', 'guests'],
+    catIds: ['admin', 'prog', 'montage', 'drink', 'guests'],
   };
-
-
 
   loadData(force) {
     if (!this.props.token) { return; }
 
     if (force || this.state.index !== this.state.loadedIndex) {
-
       var options = { headers: { 'Authorization': this.props.token } };
       var url = '/tasks?categoryId=' + this.state.catIds[this.state.index];
       axios.get(url, options)
@@ -163,8 +160,6 @@ class TasksCard extends React.Component {
           const updatedTasks = currTasks.map(
             task => { return { ...task }; }
           );
-          console.log(this.state.index);
-
           this.setState({ tasks: updatedTasks, loadedIndex: this.state.index, error: false });
         }).catch(error => {
           console.log(error);
@@ -174,19 +169,20 @@ class TasksCard extends React.Component {
   }
 
   handleSelect = (event, value) => {
-    console.log(this.state.catIds[value], 'Selected', value, this.state.index)
+    // console.log('Here', this.state.index, value)
+
     if (this.state.index !== value) {
+      // console.log('There')
+      this.props.onSelect(this.state.catIds[value]);
       this.setState({ index: value });
     }
   };
 
   componentDidMount() {
-    console.log('Did mount')
     this.loadData(false);
   }
 
   componentDidUpdate() {
-    console.log('Did update')
     this.loadData(false);
   }
 
@@ -218,9 +214,9 @@ class TasksCard extends React.Component {
     console.log('Close #', task);
   }
 
-  editTask = (id) => {
-    console.log('Edit #', id);
-  }
+  // editTask = (task) => {
+  //   console.log('Edit #', id);
+  // }
 
   closeTask = (task) => {
     task.closeDate = Math.round(moment().valueOf() / 1000);
@@ -246,100 +242,13 @@ class TasksCard extends React.Component {
         selectedTabId={this.state.catIds[this.state.index]}
         onSelect={this.handleSelect}
         onCreateNew={this.newTaskHandler}
+        onChange={() => this.loadData(true)}
         tasks={this.state.tasks}
         closeTask={this.closeTask}
-        editTask={this.editTask}
+        editTask={this.putTask}
         removeTask={this.removeTask}
       />
     );
-    //   <Card className={classes.card}>
-    //     <CardHeader
-    //       classes={{
-    //         root: classes.cardHeader,
-    //         title: classes.cardTitle,
-    //         content: classes.cardHeaderContent
-    //       }}
-    //       title="TODO"
-    //       action={
-    //         <Tabs
-    //           classes={{
-    //             flexContainer: classes.tabsContainer,
-    //             indicator: classes.displayNone
-    //           }}
-    //           value={this.state.value}
-    //           onChange={this.handleChange}
-    //           textColor="inherit"
-    //         >
-    //           <Tab
-    //             classes={{
-    //               wrapper: classes.tabWrapper,
-    //               labelIcon: classes.labelIcon,
-    //               label: classes.label,
-    //               textColorInheritSelected: classes.textColorInheritSelected
-    //             }}
-    //             icon={<VerifiedUser className={classes.tabIcon} />}
-    //           // label={"Admin"}
-    //           />
-    //           <Tab
-    //             classes={{
-    //               wrapper: classes.tabWrapper,
-    //               labelIcon: classes.labelIcon,
-    //               label: classes.label,
-    //               textColorInheritSelected: classes.textColorInheritSelected
-    //             }}
-    //             icon={<Dashboard className={classes.tabIcon} />}
-    //           // label={"Prog"}
-    //           />
-    //           <Tab
-    //             classes={{
-    //               wrapper: classes.tabWrapper,
-    //               labelIcon: classes.labelIcon,
-    //               label: classes.label,
-    //               textColorInheritSelected: classes.textColorInheritSelected
-    //             }}
-    //             icon={<Build className={classes.tabIcon} />}
-    //           // label={"Montage"}
-    //           />
-    //           <Tab
-    //             classes={{
-    //               wrapper: classes.tabWrapper,
-    //               labelIcon: classes.labelIcon,
-    //               label: classes.label,
-    //               textColorInheritSelected: classes.textColorInheritSelected
-    //             }}
-    //             icon={<LocalBar className={classes.tabIcon} />}
-    //           // label={"Drinks..."}
-    //           />
-    //           <Tab
-    //             classes={{
-    //               wrapper: classes.tabWrapper,
-    //               labelIcon: classes.labelIcon,
-    //               label: classes.label,
-    //               textColorInheritSelected: classes.textColorInheritSelected
-    //             }}
-    //             icon={<People className={classes.tabIcon} />}
-    //           // label={"Guests"}
-    //           />
-    //         </Tabs>
-    //       }
-    //     />
-    //     <CardContent>
-    //       <TextField
-    //         fullWidth
-    //         label="Create a task..."
-    //         multiLine
-    //         rows={2}
-    //         rowsMax={4}
-    //         value={this.state.newTaskDesc}
-    //         onChange={this.handleDescChange}
-    //         onKeyPress={this.handleKeyPress}
-    //       />
-    //       <Typography component="div">
-    //         {/* <Tasks tasks={tasks} closeTask={(id) => this.closeTask(id)} editTask={(id) => this.editTask(id)} removeTask={(id) => this.removeTask(id)} /> */}
-    //       </Typography>
-    //     </CardContent>
-    //   </Card>
-    // );
   }
 }
 

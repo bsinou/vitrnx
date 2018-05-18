@@ -35,7 +35,7 @@ const defaultFont = {
   lineHeight: "1.5em"
 };
 
-const primaryColor = "#9c27b0";
+const primaryColor = "#40268c";
 const warningColor = "#ff9800";
 const dangerColor = "#f44336";
 const successColor = "#4caf50";
@@ -81,7 +81,9 @@ const blueCardHeader = {
   ...infoBoxShadow
 };
 const purpleCardHeader = {
-  background: "linear-gradient(60deg, #ab47bc, #8e24aa)",
+  // C'Est moche ca ...
+  background: "linear-gradient(60deg, #ef5350, #e53935)",
+  // background: "linear-gradient(60deg, #ab47bc, #8e24aa)",
   ...primaryBoxShadow
 };
 

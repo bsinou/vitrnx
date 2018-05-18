@@ -16,11 +16,9 @@ import PostInfo from '../PostInfo/PostInfo';
 import Comments from '../../comment/Comments';
 import AuxWrapper from '../../../hoc/AuxWrapper/AuxWrapper';
 
-
 import customCss from './Post.css';
 
 const postStyles = theme => ({
-
     root: {
         flexGrow: 1,
         backgroundColor: theme.palette.background.paper,
@@ -29,7 +27,6 @@ const postStyles = theme => ({
         height: '200px',
         paddingTop: '2%', // WTF
     },
-
 });
 
 class Layout extends React.Component {

@@ -1,34 +1,26 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import moment from 'moment';
-import axios from '../../apiServer';
+import { connect } from 'react-redux';
 
 import TasksCard from '../todos/TasksCard';
 import StatsCard from '../../components/dashboard/StatsCard'
-import { Grid, GridListTile, Paper} from 'material-ui';
+import CategoryOverview from './CategoryOverview';
 
 
+import { Grid, GridListTile } from 'material-ui';
 import {
-    ContentCopy,
-    Store,
-    InfoOutline,
     Warning,
     DateRange,
-    LocalOffer,
-    Update,
-    ArrowUpward,
-    AccessTime,
-    Accessibility,
-    FlightTakeoff, 
+    FlightTakeoff,
     People
 } from "@material-ui/icons";
+import customCss from './Dashboard.css';
 
-
-import { admin, prog, montage, foodAndDrink, guests } from "../../assets/dummyData/todo.jsx";
-
-
-// The Dashboard component manages routes and provides a default layout
 class Dashboard extends React.Component {
+
+    state = {
+        currCategoryId: 'admin',
+    }
 
     getDaysToGo() {
         var a = moment([2018, 6, 13]);
@@ -36,19 +28,21 @@ class Dashboard extends React.Component {
         return a.diff(b, 'days') //
     }
 
-    onCategoryUpdate = (id, force) => {
-        console.log('Update to category ', id)
+    onCategoryUpdate = (id) => {
+        this.setState({ currCategoryId: id })
     }
 
     render() {
+        const prefix = 'orga-';  // FIXME: less prone to collision
+
         return (
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <div>
-                    OK guy, now we have to move on...
+            <div className={customCss.Dashboard}>
+                <div className={customCss.DashboardCol}>
+                    <CategoryOverview id={prefix + this.state.currCategoryId} />
                 </div>
-                <div>
+                <div className={customCss.DashboardCol}>
                     <Grid container style={{ overflow: 'visible', padding: '1em', listStyle: 'none' }}>
-                        <GridListTile xs={12} sm={6} md={6} style={{}}>
+                        <GridListTile xs={4} sm={4} md={2} style={{}}>
                             <StatsCard
                                 icon={FlightTakeoff}
                                 iconColor="green"
@@ -58,7 +52,7 @@ class Dashboard extends React.Component {
                                 statLink={{ text: "It's coming...", href: "#doSomething" }}
                             />
                         </GridListTile>
-                        <GridListTile xs={12} sm={6} md={6}>
+                        <GridListTile xs={4} sm={4} md={2}>
                             <StatsCard
                                 icon={People}
                                 iconColor="orange"
@@ -68,12 +62,21 @@ class Dashboard extends React.Component {
                                 statText="Last 24 Hours: -3"
                             />
                         </GridListTile>
-                        <GridListTile xs={12} sm={12} md={12} style={{ overflow: 'visible' }}>
-                            <TasksCard 
-                                style={{ overflow: 'visible' }} 
+                        {/* <GridListTile xs={4} sm={4} md={2} style={{}}>
+                            <StatsCard
+                                icon={FlightTakeoff}
+                                iconColor="red"
+                                title={"" + this.getDaysToGo()}
+                                description="Budget"
+                                statIcon={Warning}
+                                statLink={{ text: "It's coming...", href: "#doSomething" }}
+                            />
+                        </GridListTile> */}
+                        <GridListTile xs={8} md={4}>
+                            <TasksCard
                                 isDirty={true}
-                                categoryId="admin"
-                                onSelect={this.onCategoryUpdate} 
+                                categoryId={this.state.currCategoryId}
+                                onSelect={this.onCategoryUpdate}
                             />
                         </GridListTile>
                     </Grid>

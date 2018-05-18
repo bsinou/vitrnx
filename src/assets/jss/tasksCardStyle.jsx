@@ -18,15 +18,15 @@ const tasksCardStyle = theme => ({
     ...defaultFont,
     float: "left",
     fontWeight: "500",
-    marginTop: "6px",
+    marginTop: "2px",
     padding: "2px 2px 2px 0",
-    lineHeight: "24px",
+    lineHeight: "16px",
     fontSize: "14px",
     color: "#FFFFFF"
   },
   tabWrapper: {
-    width: "32",
-    minWidth: '32',
+    minWidth: "32px",
+    width: "32px",
     display: "flex",
     // alignItems: "inherit",
     flexDirection: "row",
@@ -46,7 +46,7 @@ const tasksCardStyle = theme => ({
     display: "none"
   },
   labelIcon: {
-    height: "32",
+    height: "32px",
     width: "32px",
     minWidth: "32px",
     paddingLeft: "14px",
@@ -55,9 +55,9 @@ const tasksCardStyle = theme => ({
   tabsContainer: {
     marginTop: "2px",
     color: "#FFFFFF",
-    [theme.breakpoints.down("sm")]: {
-      display: "grid"
-    }
+    // [theme.breakpoints.down("sm")]: {
+    //   display: "grid"
+    // }
   },
   tabs: {
     width: "32px",

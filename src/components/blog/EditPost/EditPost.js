@@ -191,13 +191,8 @@ class EditPost extends React.Component {
         this.loadData();
     }
 
-    // componentDidUpdate() {
-    //     this.loadData();
-    // }
-
     loadData() {
         const currId = this.props.match.params.id;
-        console.log('Here', currId);
         if (currId) {
             if (!this.state.post || this.state.post.path !== currId) {
                 var options = { headers: { 'Authorization': this.props.token } };

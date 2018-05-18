@@ -1,0 +1,84 @@
+.Dashboard {
+    width: 100%;
+    margin: 0px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+
+.DashboardCol {
+    max-width: 540px;
+    /* overflow: auto; */
+}
+
+/* MARKDOWN EDITOR */
+
+.TabInnerCol {
+    /* border: 1px solid greenyellow; */
+
+    display: block;
+    position: static;
+
+    margin: 0.4em;
+    width: 96%;
+    box-sizing: border-box;
+    outline: none;
+    padding: 0px;
+    text-align: left;
+    min-width: 460px;
+}
+
+
+.TabInnerCol textarea {
+    flex-grow: 2;
+    display: block;
+    min-height: 500px;
+    min-width: 460px;
+}
+
+.TabInnerCol Markdown {
+    flex-grow: 1;
+    overflow: none;
+    padding: 10px;
+    color: #444;
+    font-family: Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+    font-size: 16px;
+    line-height: 1.2em;
+}
+
+/* Category Editor */
+.EditButtons {
+    /* border: 1px solid salmon; */
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+	top: 180px;
+    right: 10px;
+    list-style: none;
+    z-index: 99;
+    margin-left: 1em;
+    font-size: 0.4em;
+}
+
+
+@media (max-width: 650px) {
+    .Dashboard {
+        flex-direction: column;
+    }
+    
+    .DashboardCol {
+        min-width: 280px;
+    }
+    
+    .TabInnerCol textarea {
+        display: block;
+        min-height: 140px;
+        min-width: 280px;
+    }
+    .SideButtons {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+
