@@ -2,7 +2,7 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-    width: 100%;
+    width: 95%;
     margin: auto;
     padding: 1em 1em 1em 1em;
 }

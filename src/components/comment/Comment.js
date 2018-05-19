@@ -7,12 +7,11 @@ import Markdown from 'react-markdown';
 import EditButtons from './EditButtons';
 
 // Styling
-import Dialog, { DialogTitle, DialogContent } from 'material-ui/Dialog';
-import { Paper, Divider, TextField } from 'material-ui';
-
+import Dialog, { DialogTitle, DialogActions, DialogContent } from 'material-ui/Dialog';
+import { Paper, Divider, Button } from 'material-ui';
 
 import customClasses from './Comment.css';
-
+import { Input } from 'material-ui';
 
 export default class Comment extends React.Component {
 
@@ -97,22 +96,28 @@ export default class Comment extends React.Component {
           open={this.state.open}
           onClose={this.handleCancelUpdate}
           aria-labelledby="form-dialog-title"
-        // style={{zIndex: 1300, backgroundColor: '#fff', opacity: '0.5'}}
         >
-          <Paper style={{ zIndex: 1300, backgroundColor: '#fff' }}>
-            <DialogTitle id="edit-comment-dialog-title">Modify the comment</DialogTitle>
+          <Paper style={{ backgroundColor: '#fff', opacity: '0.95' }}>
+            <DialogTitle id="edit-comment-dialog-title">Edit your comment</DialogTitle>
             <DialogContent >
-              <TextField
-                helperText="Edit your comment..."
+              <Input
+                style={{minWidth:'320px'}}
                 autoFocus
                 multiline
-                rowsMax="4"
-                fullWidth
+                fullwidth
+                rows="4"
+
                 value={this.state.updatedBody}
                 onChange={this.handleChange('updatedBody')}
                 onKeyPress={this.handleKeyPress}
+                margin="normal"
               />
             </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleDoUpdate} color="primary">
+                Submit
+              </Button>
+            </DialogActions>
           </Paper>
         </Dialog>
 
@@ -128,4 +133,3 @@ export default class Comment extends React.Component {
     );
   }
 }
-

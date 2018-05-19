@@ -126,14 +126,13 @@ class App extends Component {
         (<MuiThemeProvider theme={theme}>
           <Layout className={classes.Container}>
             <Switch>
-              {/* Spread operator didn't work here, aber WHY??  */}
+              {/* Spread operator does not work here, WHY??  */}
               {routes.map(element => element)}
             </Switch>
           </Layout>
         </MuiThemeProvider>)
         : (<MuiThemeProvider theme={theme}>
           <Switch>
-            {/* Spread operator didn't work here, aber WHY??  */}
             {routes.map(element => element)}
           </Switch>
         </MuiThemeProvider>)

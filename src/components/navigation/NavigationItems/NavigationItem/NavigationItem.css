@@ -27,7 +27,9 @@
     }
     
     .NavigationItem a, 
-    .NavigationItem a:link {
+    .NavigationItem a:link,
+    .NavigationItem a.visited
+    {
         color: #f1d923;
         height: 100%;
         padding: 8px 10px;
@@ -35,12 +37,17 @@
     
     .NavigationItem a:hover,
     .NavigationItem a:active,
-    .NavigationItem a.active {
-        background-color: #f1d923;
-         border-top: 1px solid #619015;
+    .NavigationItem a:focus
+     {
+        /* background-color: #f1d923; */
+        /* box-shadow: 0 1px 2px #f0150a; */
+
+        /* border-radius: 5px; */
+        border-bottom: 1px solid #619015;
        /* border-bottom: 2px solid #d87e79; */
         /* box-shadow: 0 2px 3px #f0150a; */
 
-        color: #f0150a;
+        /* color: #f0150a; */
     }
+
 } 

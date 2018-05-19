@@ -12,24 +12,48 @@ import PropTypes from 'prop-types';
 
 // Material UI
 import { withStyles } from 'material-ui/styles';
-import TextField from 'material-ui/TextField';
-import AppBar from 'material-ui/AppBar';
-import Tabs, { Tab } from 'material-ui/Tabs';
-import Typography from 'material-ui/Typography';
+import { AppBar, Grid, Input, InputLabel, Tab, Tabs, TextField, Typography } from 'material-ui';
+// import AppBar from 'material-ui/AppBar';
+// import Tabs, { Tab } from 'material-ui/Tabs';
+// import Typography from 'material-ui/Typography';
 
 import customCss from './EditPost.css';
 
-const styles = {
-    headline: {
-        fontSize: 24,
-        paddingTop: 16,
-        marginBottom: 12,
-        fontWeight: 400,
+// const styles = {
+//     headline: {
+//         fontSize: 24,
+//         paddingTop: 16,
+//         marginBottom: 12,
+//         fontWeight: 400,
+//     },
+// };
+
+const styles = theme => ({
+    root: {
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.paper,
     },
-    slide: {
-        padding: 10,
-    },
-};
+});
+
+
+
+const gridStyle = {
+    grid: {
+      padding: "10px 15px !important"
+    }
+  };
+  
+  function CustGridItem({ ...props }) {
+    const { classes, children, ...rest } = props;
+    return (
+      <Grid item {...rest} className={classes.grid}>
+        {children}
+      </Grid>
+    );
+  }
+  
+const GridItem = withStyles(gridStyle)(CustGridItem);
+  
 
 
 function TabContainer(props) {
@@ -44,12 +68,6 @@ TabContainer.propTypes = {
     children: PropTypes.node.isRequired,
 };
 
-const styles2 = theme => ({
-    root: {
-        flexGrow: 1,
-        backgroundColor: theme.palette.background.paper,
-    },
-});
 
 class SimpleTabs extends React.Component {
     state = {
@@ -82,58 +100,87 @@ class SimpleTabs extends React.Component {
                     </Tabs>
                 </AppBar>
                 {tabIndex === 0 && <TabContainer>
-
                     <div className={customCss.TabContent}>
-                        <div className={customCss.TabInnerCol} style={styles.slide}>
-                            <TextField
-                                id="title"
-                                helperText="A title for your post"
-                                value={post.title}
-                                onChange={this.handleValueChange('title')}
-                                fullWidth />
-                            <TextField
-                                // label="Slug"
-                                helperText="a-nice-name-without-fantasy"
-                                value={post.path}
-                                onChange={this.handleValueChange('path')}
-                                fullWidth />
-                            <TextField
-                                // fullWidth
-                                // label="Thumbnail image path"
-                                helperText="Path of a 320x240px thumbnail image"
-                                value={post.thumb}
-                                // onChange={() => onValueChanged('thumb')}
-                                onChange={this.handleValueChange('thumb')}
-                                // onChange={(event) => this.setState({ post: { ...this.state.post, thumb: event.target.value } })}
-                                fullWidth />
-                            <TextField
-                                // label="Hero image path"
-                                helperText="Path of a 800x200px hero image"
-                                value={post.hero}
-                                // onChange={() => onValueChanged('hero')}
-                                onChange={this.handleValueChange('hero')}
-                                // onChange={(event) => this.setState({ post: { ...this.state.post, hero: event.target.value } })}
-                                fullWidth />
-                            <TextField
-                                // label="Tags"
-                                helperText="For instance: News or FAQ"
-                                value={post.tags}
-                                onChange={this.handleValueChange('tags')}
-                                // onChange={() => onValueChanged('tags')}
-                                // onChange={(event) => this.setState({ post: { ...this.state.post, tags: event.target.value } })}
-                                fullWidth />
-                            <TextField
-                                // label="Description"
-                                fullWidth
-                                helperText="A short desc of your post"
-                                // multiLine={true}
-                                rows={4}
-                                rowsMax={10}
-                                onChange={this.handleValueChange('desc')}
-                                value={post.desc}
-                            // onChange={() => onValueChanged('desc')}
-                            // onChange={(event) => this.setState({ post: { ...this.state.post, desc: event.target.value } })}
-                            />
+                        <div className={[customCss.TabInnerCol, customCss.Meta].join(' ')}>
+                            <Grid container >
+                                <GridItem xs={12} sm={12} md={12}>
+                                    <TextField
+                                        className={customCss.MetaField}
+                                        id="title"
+                                        label="A title for your post"
+                                        // helperText="A title for your post"
+                                        value={post.title}
+                                        onChange={this.handleValueChange('title')}
+                                        fullWidth />
+                                </GridItem>
+                            </Grid>
+                            <Grid container >
+                                <GridItem xs={12} sm={12} md={6}>
+                                    <TextField
+                                        label="Slug (path-to-post)"
+                                        // label="a-path-to-your-post"
+                                        // helperText="a-nice-name-without-fantasy"
+                                        helperText=""
+                                        value={post.path}
+                                        onChange={this.handleValueChange('path')}
+                                        fullWidth />
+                                </GridItem>
+                                <GridItem xs={12} sm={12} md={6}>
+                                    <TextField
+                                        //label="Tags"
+                                        label="Tags: News, FAQ..."
+                                        // helperText="For instance: News or FAQ"
+                                        helperText=""
+                                        value={post.tags}
+                                        onChange={this.handleValueChange('tags')}
+                                        // onChange={() => onValueChanged('tags')}
+                                        // onChange={(event) => this.setState({ post: { ...this.state.post, tags: event.target.value } })}
+                                        fullWidth />
+                                </GridItem>
+                            </Grid>
+                            <Grid container >
+                                <GridItem xs={12} sm={12} md={6}>
+                                    <TextField
+                                        // fullWidth
+                                         label="Thumbnail image (320x240px)"
+                                        // label="Path of a 320x240px thumbnail image"
+                                        // helperText="Path of a  thumbnail image"
+                                        value={post.thumb}
+                                        onChange={this.handleValueChange('thumb')}
+                                        fullWidth />
+                                </GridItem>
+                                <GridItem xs={12} sm={12} md={6}>
+                                    <TextField
+                                         label="Hero image (800x200px)"
+                                        // label="Path to a 800x200px hero image"
+                                        // helperText="Path to a 800x200px hero image"
+                                        value={post.hero}
+                                        onChange={this.handleValueChange('hero')}
+                                        fullWidth />
+                                </GridItem>
+                            </Grid>
+                            <Grid container>
+                                
+                                <GridItem xs={12} sm={12} md={12}>
+                                    <InputLabel style={{ color: "#888888", margin:'1em 0em 0em 0em' }}>
+                                        Description
+                                    </InputLabel>
+                                </GridItem>
+                                <Grid xs={12} sm={12} md={12} >
+                                    <Input
+                                        style={{ width: '100%' }}
+                                        // autoFocus
+                                        multiline
+                                        // fullwidth
+                                        label="A short desc of your post"
+                                        value={post.desc}
+                                        onChange={this.handleValueChange('desc')}
+                                        margin="normal"
+                                        border="block"
+                                    />
+                                </Grid>
+                            </Grid>
+
                         </div>
                         <div
                             className={customCss.TabInnerCol}>
@@ -141,8 +188,6 @@ class SimpleTabs extends React.Component {
                         </div>
 
                     </div>
-
-
                 </TabContainer>}
 
                 {tabIndex === 1 && <TabContainer>
@@ -172,7 +217,7 @@ SimpleTabs.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-const EditorTabs = withStyles(styles2)(SimpleTabs);
+const EditorTabs = withStyles(styles)(SimpleTabs);
 
 
 class EditPost extends React.Component {
@@ -209,7 +254,7 @@ class EditPost extends React.Component {
         } else {
             // force initialisation of new post
             this.setState({ post: {} });
-        } 
+        }
     }
 
     postDataHandler = () => {

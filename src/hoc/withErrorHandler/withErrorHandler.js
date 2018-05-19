@@ -32,13 +32,14 @@ const withErrorHandler = (WrappedComponent, axios) => {
 
             this.resInterceptor = axios.interceptors.response.use(
                 response => {
-                    // Here we can edit response config
-                    // console.log("######## the response: ", response)
-                    this.setState({
-                        message: 'OK',
-                        isError: false,
-                        showSnack: true,
-                    });
+                    // We don't display an OK message on GET requests.
+                    if (response.config.method !== 'get'){
+                        this.setState({
+                            message: 'OK',
+                            isError: false,
+                            showSnack: true,
+                        });
+                    }
                     return response;
                 }, error => {
                     // console.log("######## the response: ", error)
@@ -82,8 +83,8 @@ const withErrorHandler = (WrappedComponent, axios) => {
                     <Snackbar
                         open={this.state.showSnack}
                         message={this.state.message}
-                        autoHideDuration={4000}
-                        onRequestClose={this.handleRequestClose}
+                        autoHideDuration={3000}
+                        onClose={this.handleRequestClose}
                     />
                 </AuxWrapper>
             );

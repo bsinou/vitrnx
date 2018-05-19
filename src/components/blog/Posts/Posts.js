@@ -81,14 +81,11 @@ class Posts extends Component {
             btns = (
                 <div className={classes.SideButtons}>
                     <Button
-                        // variant="fab"
                         color="primary"
                         aria-label="add"
                         className={classes.button}
                         onClick={this.newPostHandler}
-                        // mini="true"
-                        // style={{ marginRight: 14, marginTop: 10 }}
-                        >
+                    >
                         <Icon>add_circle</Icon>
                     </Button>
                 </div>

@@ -1,14 +1,20 @@
 .Toolbar {
     height: 36px;
     width:100%;
-    background: linear-gradient(to top right,#7070b7,#7070b7,#7070b7, #333399,#40268c);  
-    background-color: #7070b7;
+    /* background: linear-gradient(to top right,#7070b7,#7070b7,#7070b7, #333399,#40268c);   */
+    /* background-color: #7070b7; */
+    background-color: transparent;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
     box-sizing: border-box;
     z-index: 90;
+}
+
+.DrawerToggle {
+    color: transparent;
+    /* display: none; */
 }
 
 .Toolbar nav{
@@ -19,16 +25,9 @@
     .DesktopOnly{
         display: none;
     }
+
+    .DrawerToggle {
+        color: #40268c;
+        /* display: block; */
+    }
 }
-
-/* @media (min-width: 500px){
-    .Toolbar {
-        height: 112px;
-    }
-} */
-
-/* @media (min-width: 800px){
-    .Toolbar {
-        height: 56px;
-    }
-} */

@@ -99,14 +99,13 @@ class Comments extends Component {
 
         return (
             <div>
-                <h1>Comments</h1>
+                <h3>Comments</h3>
                 <div>
                     <TextField
                         fullWidth
                         helperText="Add a comment..."
                         multiLine
-                        rows={2}
-                        rowsMax={4}
+                        rowsMax="2"
                         value={this.state.newCommentBody}
                         onChange={this.handleBodyChange}
                         onKeyPress={this.handleKeyPress}

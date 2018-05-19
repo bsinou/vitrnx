@@ -4,7 +4,7 @@ import Icon from 'material-ui/Icon';
 import { withStyles } from 'material-ui/styles';
 
 // Styling
-import customClasses from './Comment.css';
+import customCss from './Comment.css';
 
 const styles = theme => ({
     button: {
@@ -26,9 +26,9 @@ const styles = theme => ({
 function editButtons(props) {
     const { classes, onEdit, onDelete } = props;
     return (
-      <div className={customClasses.AllBtnBox}>
-        <Icon style={{fontSize: '20px'}} aria-label="Edit" className={[classes.button, customClasses.SingleBtnBox].join(' ')} onClick={onEdit}>edit_circle</Icon>
-        <Icon style={{fontSize: '20px'}} aria-label="Delete" className={[classes.button, customClasses.SingleBtnBox].join(' ')} onClick={onDelete}>delete_circle</Icon>
+      <div className={customCss.AllBtnBox}>
+        <Icon style={{fontSize: '20px'}} aria-label="Edit" className={[classes.button, customCss.SingleBtnBox].join(' ')} onClick={onEdit}>edit_circle</Icon>
+        <Icon style={{fontSize: '20px'}} aria-label="Delete" className={[classes.button, customCss.SingleBtnBox].join(' ')} onClick={onDelete}>delete_circle</Icon>
       </div>
     );
   }

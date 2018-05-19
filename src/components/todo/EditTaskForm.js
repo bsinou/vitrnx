@@ -3,7 +3,7 @@ import {
     Button,
     Dialog,
     Paper,
-    TextField,
+    Input,
 } from 'material-ui';
 
 import {
@@ -47,15 +47,21 @@ export default class FormDialog extends React.Component {
                 onClose={this.handleClose}
                 aria-labelledby="form-dialog-title"
             >
+                <Paper style={{ backgroundColor: '#fff', opacity:'0.95' }}>
+
                 <DialogTitle id="form-dialog-title">Edit task</DialogTitle>
-                <Paper style={{ zIndex: 1300, backgroundColor: '#fff' }}>
                     <DialogContent>
-                        <TextField
-                            autoFocus
-                            margin="dense"
+                        <Input
                             id="desc"
-                            label="Task description"
+                            style={{minWidth:'320px'}}
+                            autoFocus
+                            multiline
                             fullWidth
+                            rows="4"
+
+                            margin="dense"
+                            label="Task description"
+
                             value={this.state.task ? this.state.task.desc : ''}
                             onChange={this.handleChange('desc')}
                             onKeyPress={this.handleKeyPress}
