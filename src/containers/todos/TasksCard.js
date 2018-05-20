@@ -16,7 +16,8 @@ import {
   TextField
 } from 'material-ui';
 
-import { VerifiedUser, Dashboard, QueueMusic, Build, LocalBar, People } from "@material-ui/icons";
+// Dashboard, 
+import { VerifiedUser, QueueMusic, Build, LocalBar, People } from "@material-ui/icons";
 
 import tasksCardStyle from "../../assets/jss/tasksCardStyle";
 
@@ -68,50 +69,40 @@ class CardLayout extends React.Component {
                   wrapper: classes.tabWrapper,
                   labelIcon: classes.labelIcon,
                   label: classes.label,
-                  // textColorInheritSelected: classes.textColorInheritSelected
                 }}
                 icon={<VerifiedUser className={classes.tabIcon} />}
-              // label={"Admin"}
               />
               <Tab
                 classes={{
                   wrapper: classes.tabWrapper,
                   labelIcon: classes.labelIcon,
                   label: classes.label,
-                  // textColorInheritSelected: classes.textColorInheritSelected
                 }}
                 icon={<QueueMusic className={classes.tabIcon} />}
-              // label={"Prog"}
               />
               <Tab
                 classes={{
                   wrapper: classes.tabWrapper,
                   labelIcon: classes.labelIcon,
                   label: classes.label,
-                  // textColorInheritSelected: classes.textColorInheritSelected
                 }}
                 icon={<Build className={classes.tabIcon} />}
-              // label={"Montage"}
               />
               <Tab
                 classes={{
                   wrapper: classes.tabWrapper,
                   labelIcon: classes.labelIcon,
                   label: classes.label,
-                  // textColorInheritSelected: classes.textColorInheritSelected
                 }}
                 icon={<LocalBar className={classes.tabIcon} />}
-              // label={"Drinks..."}
               />
               <Tab
                 classes={{
                   wrapper: classes.tabWrapper,
                   labelIcon: classes.labelIcon,
                   label: classes.label,
-                  // textColorInheritSelected: classes.textColorInheritSelected
                 }}
                 icon={<People className={classes.tabIcon} />}
-              // label={"Guests"}
               />
             </Tabs>
           }
@@ -169,10 +160,7 @@ class TasksCard extends React.Component {
   }
 
   handleSelect = (event, value) => {
-    // console.log('Here', this.state.index, value)
-
     if (this.state.index !== value) {
-      // console.log('There')
       this.props.onSelect(this.state.catIds[value]);
       this.setState({ index: value });
     }
@@ -213,10 +201,6 @@ class TasksCard extends React.Component {
       });
     console.log('Close #', task);
   }
-
-  // editTask = (task) => {
-  //   console.log('Edit #', id);
-  // }
 
   closeTask = (task) => {
     task.closeDate = Math.round(moment().valueOf() / 1000);

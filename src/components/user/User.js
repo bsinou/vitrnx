@@ -37,7 +37,6 @@ export default class User extends React.Component {
     editUserDialog: null,
   };
 
-
   componentDidMount() {
     this.loadData(false);
   }
@@ -77,7 +76,6 @@ export default class User extends React.Component {
     if (!this.state.errorMsg && !this.state.knownRoles) {
       // Retrieve role list
       axios.get('/roles', options).then(response => {
-        // console.log('Retrieved roles', response.data)
         let retrievedRoles = new Map();
         response.data.roles.map(role => {
           retrievedRoles.set(role.roleId, role.label);
@@ -171,7 +169,7 @@ export default class User extends React.Component {
     if (this.canEdit()) {
       btns = (
         <div className={classes.AllBtnBox}>
-          <ul className={classes.CommentButtons} >
+          <ul className={classes.EditUserBtns} >
             <li>
               <div className={classes.SingleBtnBox} onClick={this.deleteUser}>
                 <img src={deleteIcon} alt="delete user" />

@@ -1,4 +1,4 @@
-.CommentBox {
+/* .CommentBox {
 	position: static;
     text-align: left;
     margin: 0px;
@@ -20,7 +20,8 @@
 .CommentBody p {
     padding: 2px 0px 2px 0px; 
     margin: 2px 0px 2px 0px; 
-}
+} */
+
 
 .AllBtnBox{
     position: absolute;
@@ -29,7 +30,7 @@
     width:90%;
 }
 
-.CommentButtons {
+.EditUserBtns {
     margin: 0px 0px 0px 8px; 
     padding: 0px 16px; 
     display: flex;
@@ -42,7 +43,6 @@
 div.SingleBtnBox {
     margin: 0px 4px; 
     padding: 0px 0px; 
-
     -webkit-transition:  background .2s ease-in-out;
     -moz-transition:  background .2s ease-in-out;
     -o-transition:  background .2s ease-in-out;

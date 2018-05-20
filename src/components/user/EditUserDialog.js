@@ -1,104 +1,14 @@
 import React from 'react';
 import axios from '../../apiServer'
 
-import { withStyles } from 'material-ui/styles';
-
-
 import Switch from 'material-ui/Switch';
 import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog';
-import { FormGroup, FormControlLabel } from 'material-ui/Form';
+import { FormControlLabel } from 'material-ui/Form';
 import {Paper, TextField, Button, Divider}  from 'material-ui';
-import green from 'material-ui/colors/green';
 
 const utils = require('../../utils/helpers');
 
-const styles = {
-  switchBase: {
-    color: green[50],
-    '&$checked': {
-      color: green[500],
-      '& + $bar': {
-        backgroundColor: green[500],
-      },
-    },
-  },
-  bar: {},
-  checked: {},
-};
-
-class SwitchLabels extends React.Component {
-  state = {
-    checkedA: true,
-    checkedB: true,
-    checkedF: true,
-  };
-
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.checked });
-  };
-
-  render() {
-    const { classes } = this.props;
-
-    return (
-      <FormGroup row>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={this.state.checkedA}
-              onChange={this.handleChange('checkedA')}
-              value="checkedA"
-            />
-          }
-          label="Secondary"
-        />
-        <FormControlLabel
-          control={
-            <Switch
-              checked={this.state.checkedB}
-              onChange={this.handleChange('checkedB')}
-              value="checkedB"
-              color="primary"
-            />
-          }
-          label="Primary"
-        />
-        <FormControlLabel control={<Switch value="checkedC" />} label="Uncontrolled" />
-        <FormControlLabel disabled control={<Switch value="checkedD" />} label="Disabled" />
-        <FormControlLabel disabled control={<Switch checked value="checkedE" />} label="Disabled" />
-        <FormControlLabel
-          control={
-            <Switch
-              checked={this.state.checkedF}
-              onChange={this.handleChange('checkedF')}
-              value="checkedF"
-              classes={{
-                switchBase: classes.switchBase,
-                checked: classes.checked,
-                bar: classes.bar,
-              }}
-            />
-          }
-          label="Custom color"
-        />
-      </FormGroup>
-    );
-  }
-}
-
-const StyledSwitch = withStyles(styles)(SwitchLabels);
-
 class EditUserDialog extends React.Component {
-
-  // getRoles = (knowRoles, userRoles ) => {
-
-  // for (let )
-
-  // forEach(callbackfn: (value: V, key: K, map: ReadonlyMap<K, V>) => void, thisArg?: any): void;
-  // return roles;
-
-
-  //   };
 
   constructor(props) {
     super(props);
@@ -136,7 +46,6 @@ class EditUserDialog extends React.Component {
     };
   }
 
-
   /* UPDATE */
 
   handleCancelUpdate = () => {
@@ -165,7 +74,6 @@ class EditUserDialog extends React.Component {
         touched: "true"
       }
     };
-
     this.setState({ formFields: updatedControls, canSubmit: canSubmit });
   }
 
@@ -211,7 +119,6 @@ class EditUserDialog extends React.Component {
   };
 
 
-
   handleDoUpdate = () => {
     const options = { headers: { 'Authorization': this.props.token } };
     let onCloseFunc = this.state.onClose;
@@ -234,11 +141,6 @@ class EditUserDialog extends React.Component {
   canEditRoles = () => { // only admins
     return this.state.userRoles.includes("ADMIN") || this.state.userRoles.includes("USER_ADMIN");
   };
-
-  // handleChange = name => event => {
-  //   this.setState({ [name]: event.target.checked });
-  // };
-
 
   toggleRole = key => event => {
     if (this.state.updatedRoles) {
@@ -326,7 +228,4 @@ class EditUserDialog extends React.Component {
   }
 }
 
-export default EditUserDialog; // withStyles(styles)()
-
-
-
+export default EditUserDialog; 

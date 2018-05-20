@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import apiServer from '../../../apiServer';
+import axios from '../../../apiServer';
 
 // Import the Markdown component
 import Markdown from 'react-markdown';
 
 // Material UI
 import { withStyles } from 'material-ui/styles';
-import Card, { CardMedia, CardTitle } from 'material-ui/Card';
+import Card, { CardMedia } from 'material-ui/Card';
 import Icon from 'material-ui/Icon';
 import Button from 'material-ui/Button';
 import Divider from 'material-ui/Divider';
@@ -38,7 +38,7 @@ class Layout extends React.Component {
                     <CardMedia
                         className={classes.media}
                         image={"/imgRepo/" + post.hero}
-                        // overlay={<CardTitle>{post.title}</CardTitle>}
+                    // overlay={<CardTitle>{post.title}</CardTitle>}
                     />
                     {/* <CardTitle>{post.title}</CardTitle>  */}
                 </Card>
@@ -77,7 +77,7 @@ class Post extends Component {
         if (cId) {
             if (!this.state.loadedPost || this.state.loadedPost.path !== cId) {
                 var options = { headers: { 'Authorization': this.props.token } };
-                apiServer.get('/posts/' + cId, options).then(response => {
+                axios.get('/posts/' + cId, options).then(response => {
                     this.setState({ loadedPost: response.data.post });
                 });
             }
@@ -95,7 +95,7 @@ class Post extends Component {
     deletePostHandler = (id) => {
         if (window.confirm('Are you sure you want to completely remove this post?')) {
             var options = { headers: { 'Authorization': this.props.token } };
-            apiServer.delete('/posts/' + id, options).then(response => {
+            axios.delete('/posts/' + id, options).then(response => {
                 this.props.history.goBack();
             });
         }

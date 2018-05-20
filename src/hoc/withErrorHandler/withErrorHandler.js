@@ -26,6 +26,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
                     // this.setState({ error: null });
                     return requestConfig;
                 }, error => {
+                    console.log("##### Got an error", error)
                     return Promise.reject(error);
                 }
             );

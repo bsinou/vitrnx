@@ -5,19 +5,11 @@ import { NavLink } from 'react-router-dom';
 
 import * as actions from '../../store/actions/index';
 
-import classes from './Auth.css';
-
-
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import { red300 } from 'material-ui/colors';
+import { AppBar, Button, Grid, Paper, TextField, Typography } from 'material-ui';
 
-import { red300, red400 } from 'material-ui/colors';
-import AppBar from 'material-ui/AppBar';
-import Grid from 'material-ui/Grid';
-import Button from 'material-ui/Button';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
-import TextField from 'material-ui/TextField';
-
+import classes from './Auth.css';
 
 const theme = createMuiTheme({
     palette: {
@@ -26,7 +18,6 @@ const theme = createMuiTheme({
         },
         primary: red300,
     },
-
     paper: {
         zDepth: 0,
     },

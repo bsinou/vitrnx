@@ -25,7 +25,7 @@ import Logout from './containers/auth/Logout/Logout'
 import classes from './vitrnx.css';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import { red300 } from 'material-ui/colors';
-import { drawerWidth, transition, container } from "./assets/jss/common.jsx";
+import { transition, container } from "./assets/jss/common.jsx";
 
 
 // This replaces the textColor value on the palette

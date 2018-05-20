@@ -25,7 +25,7 @@ const styles = theme => ({
 
 
 function editButtons(props) {
-    const { classes, onSave, onCancel, onDelete, canDelete } = props;
+    const { onSave, onCancel, onDelete, canDelete } = props;
     return (
         <div className={[customClasses.AllBtnBox, customClasses.SideButtons].join(' ')}>
             <Button color="primary" onClick={onSave}>

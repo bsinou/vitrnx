@@ -33,25 +33,30 @@
 @media (max-width: 399px){
     .Header {
         height: auto;
-        padding: 8px;
     }
 
     .Logo {
         padding: 8px;
-        width: 100%;
         box-sizing: border-box;
-        text-align: center;
+        text-align: left;
     }
     
     .Logo img {
-        width: 100%;
+        width: 60%;
     }
-    
 }
 
 @media (max-width: 849px){
     .Header {
         height: 80px;
+    }
+
+    .Logo {
+        text-align: left;
+    }
+    
+    .Logo img {
+        width: 75%;
     }
 }
   

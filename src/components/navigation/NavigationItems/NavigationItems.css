@@ -4,17 +4,17 @@
     list-style: none;
     display: flex;
     flex-flow: column; 
-    align-items: center;
+    align-items: left;
     height: 100%; 
 }
 
-@media (min-width: 500px){
+/* @media (min-width: 500px){
     .NavigationItems {
         flex-flow: row wrap; 
     }
-}
+} */
 
-@media (min-width: 800px){
+@media (min-width: 850px){
     .NavigationItems {
         flex-flow: row; 
     }

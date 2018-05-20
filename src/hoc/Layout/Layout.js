@@ -6,6 +6,7 @@ import Toolbar from '../../components/navigation/Toolbar/Toolbar'
 import SideDrawer from '../../components/navigation/SideDrawer/SideDrawer'
 import Header from '../../components/ui/Header/Header'
 import Footer from '../../components/ui/Footer/Footer'
+import IsComingBox from '../../components/navigation/Toolbar/IsComing'
 
 import classes from './Layout.css';
 
@@ -30,6 +31,8 @@ class Layout extends Component {
         if (this.props.isAuthenticated) {
             return (
                 <div className={classes.Container}>
+                    {/* Add the Is Coming toggle button */}
+                    <IsComingBox />
                     <Header className={classes.Header} />
                     <Toolbar
                         className={classes.Toolbar}
