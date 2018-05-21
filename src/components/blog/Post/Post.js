@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from '../../../apiServer';
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 
 // Import the Markdown component
 import Markdown from 'react-markdown';
@@ -157,4 +158,4 @@ class Post extends Component {
     }
 }
 
-export default Post;
+export default withErrorHandler(Post, axios);

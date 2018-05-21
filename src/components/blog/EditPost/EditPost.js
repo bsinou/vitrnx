@@ -13,9 +13,6 @@ import PropTypes from 'prop-types';
 // Material UI
 import { withStyles } from 'material-ui/styles';
 import { AppBar, Grid, Input, InputLabel, Tab, Tabs, TextField, Typography } from 'material-ui';
-// import AppBar from 'material-ui/AppBar';
-// import Tabs, { Tab } from 'material-ui/Tabs';
-// import Typography from 'material-ui/Typography';
 
 import customCss from './EditPost.css';
 
@@ -34,8 +31,6 @@ const styles = theme => ({
         backgroundColor: theme.palette.background.paper,
     },
 });
-
-
 
 const gridStyle = {
     grid: {

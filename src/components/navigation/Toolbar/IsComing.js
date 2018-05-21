@@ -20,6 +20,7 @@ const styles = theme => ({
 });
 
 class Switches extends React.Component {
+
   state = {
     isDialogOpen: false,
   };
@@ -33,24 +34,31 @@ class Switches extends React.Component {
       axios.get('/usermeta/' + this.props.userId, options).then(response => {
         if (!response.data) {
           // None found but not an error, initialise the presence object
-          this.setState({ presence: { isComing: false, userId: this.props.userId} });
+          this.setState({ presence: { isComing: false, userId: this.props.userId } });
           // do nothing
         } else {
-          this.setState({ presence: {...response.data.presence} });
+          this.setState({ presence: { ...response.data.presence } });
         }
       }).catch(error => {
-          console.log(error);
-        });
+        console.log(error);
+      });
     }
   }
 
-  updatePresence(presence) {
+  updatePresence(presence, openDialogAfterUpdate) {
     var options = { headers: { 'Authorization': this.props.token } };
     console.log('About to update with obj: ', presence)
-    
+
     axios.post('/usermeta/' + this.props.userId, presence, options).then(response => {
       console.log(response);
-      this.setState({ presence: {...response.data.presence} });
+
+      if (openDialogAfterUpdate) {
+        console.log('open after update')
+        this.setState({ presence: { ...response.data.presence }, isDialogOpen: true});
+      } else {
+        this.setState({ presence: { ...response.data.presence } });
+      }
+
     }).catch(error => {
       console.log(error);
     });
@@ -66,7 +74,7 @@ class Switches extends React.Component {
 
   handleToggleComing = event => {
     // discard loading events
-    if (!event){ return; }
+    if (!event) { return; }
 
     var updatedPresence = { ...this.state.presence };
     if (!event.target.checked) {
@@ -74,7 +82,7 @@ class Switches extends React.Component {
         this.updatePresence({ ...updatedPresence, isComing: false })
       }
     } else {
-      this.updatePresence({ ...updatedPresence, isComing: true })
+      this.updatePresence({ ...updatedPresence, isComing: true}, true )
     }
   }
 
@@ -84,22 +92,20 @@ class Switches extends React.Component {
 
   handleCloseDialog = (hasChanged, presence) => {
 
-    if (hasChanged){
+    if (hasChanged) {
       // suboptimal, enhance
-      var updated = {...this.state.presence};
+      var updated = { ...this.state.presence };
       for (let p in presence) {
         updated[p] = presence[p];
       }
       updated.adultNb = parseInt(presence.adultNb, 10)
       updated.childNb = parseInt(presence.childNb, 10)
 
-
-      console.log('Dialog closed ', hasChanged, presence, updated)
       this.updatePresence(updated)
     }
     this.setState({ isDialogOpen: false });
   };
-  
+
   render() {
     const { classes } = this.props;
     console.log('Rendering, presence?', this.state.presence)
@@ -110,6 +116,7 @@ class Switches extends React.Component {
           open={this.state.isDialogOpen}
           onClose={this.handleCloseDialog}
           presence={this.state.presence}
+          isRegistered={this.props.email!=='guest@sinou.org'}
         />
         <div className={customCss.IsComingBox}>
           <div className={customCss.IsComingLabel} onClick={this.handleOpenMore}  >
@@ -137,6 +144,7 @@ class Switches extends React.Component {
 const mapStateToProps = state => {
   return {
     token: state.auth.token,
+    email: state.auth.email,
     userId: state.auth.userId,
     userRoles: state.auth.userRoles,
   };

@@ -18,6 +18,7 @@ import Dashboard from './containers/dashboard/Dashboard'
 import Register from './containers/auth/Register'
 import Login from './containers/auth/Login'
 import Logout from './containers/auth/Logout/Logout'
+import LogoutAndRegister from './containers/auth/Logout/LogoutAndRegister';
 
 
 // Styling
@@ -92,6 +93,7 @@ class App extends Component {
     if (isAuth) {
       routes = [
         (<Route path="/v/:id" component={Teaser} />),
+        (<Route path="/logout-register" component={LogoutAndRegister} />),
         (<Route path="/logout" component={Logout} />),
         (<Route path="/p/" component={Blog} />),
         (<Route path="/q/" component={Blog} />),

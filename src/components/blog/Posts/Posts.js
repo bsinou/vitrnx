@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
-import apiServer from '../../../apiServer';
+import axios from '../../../apiServer';
 
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import { withStyles } from 'material-ui/styles';
 
 
@@ -45,7 +46,7 @@ class Posts extends Component {
 
                 var options = { headers: { 'Authorization': this.props.token } };
                 var url = '/posts?tag=' + this.props.match.params.id;
-                apiServer.get(url, options)
+                axios.get(url, options)
                     .then(response => {
                         const posts = response.data.posts.slice(0, 12);
                         const updatedPosts = posts.map(
@@ -120,4 +121,4 @@ class Posts extends Component {
     }
 }
 
-export default withStyles(styles)(Posts);
+export default withErrorHandler(withStyles(styles)(Posts), axios);

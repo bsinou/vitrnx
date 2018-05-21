@@ -1,7 +1,7 @@
 .PostInfo {
     display: flex;
     flex-flow: row wrap; 
-    padding: 8px 32px 8px 0px;
+    padding: 0px 32px 12px 0px;
     text-align: left;
     cursor: pointer;
     color: #7070b7;

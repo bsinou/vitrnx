@@ -24,13 +24,3 @@ const postInfo = (props) => {
 }
 
 export default postInfo;
-
-// Stock
-/* With: 
-// import Time from 'react-time';
-
-<Time 
-        value={props.date} 
-        format="DD MMMM YYYY" 
-        locale="fr"
-/>.  */
