@@ -23,9 +23,9 @@ User
 
 ## Features
 
-- comment
+- ~~comment~~
 - chat 
-- todos
+- ~~todos~~
 - images
 - video
 - add search, enhance filtering
@@ -37,7 +37,7 @@ User
    - menu
    - become small on scrolling
 - media queries
-- video
+- ~~video~~
 - prevent breaking the layout when images are not there
 
 ## Cards

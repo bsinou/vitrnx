@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 
-import apiServer from '../../apiServer';
+import axios from '../../apiServer';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 // Material UI
 import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemText, ListItemAvatar } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import PersonIcon from '@material-ui/icons/Person';
-import blue from 'material-ui/colors/blue';
+import { red, green, blue } from 'material-ui/colors';
+// import blue from 'material-ui/colors/blue';
+// import blue from 'material-ui/colors/blue';
 
 // import Dialog, { DialogTitle } from 'material-ui/Dialog';
 // import Button from 'material-ui/Button';
@@ -15,33 +18,45 @@ import blue from 'material-ui/colors/blue';
 // import Typography from 'material-ui/Typography';
 
 const styles = {
-    avatar: {
-        backgroundColor: blue[100],
-        color: blue[600],
+    avatarRed: {
+        backgroundColor: red[100],
+        color: red[600],
+    },
+    avatarGreen: {
+        backgroundColor: green[100],
+        color: green[600],
     },
 };
 
 function User(props) {
     const { classes, user, roleStr, userSelected } = props
+    let coming = user.meta.presence && user.meta.presence.isComing;
+    let cdesc = "Does not come."
+    if (coming) {
+        cdesc = user.meta.presence.adultNb > 1 ? "Comes with " + (user.meta.presence.adultNb - 1) + " adults and " + user.meta.presence.childNb + " gnomes" : "Comes alone";
+    }
 
+    if (user.meta.commentCount && user.meta.commentCount > 0) {
+        cdesc += ", has already written " + user.meta.commentCount + " comments."
+    }
     return (
         <ListItem key={user.userId} onClick={userSelected}>
             <ListItemAvatar>
-                <Avatar className={classes.avatar}>
+                <Avatar className={coming ? classes.avatarGreen : classes.avatarRed}>
                     <PersonIcon />
                 </Avatar>
             </ListItemAvatar>
             <ListItemText
                 style={{ textAlign: 'left' }}
                 primary={user.name + ', ' + user.email + ', ' + roleStr}
-            // secondaryLines={2}
+                secondary={cdesc}
             />
         </ListItem>);
 }
 
 
 const StyledUser = withStyles(styles)(User);
-export default class UserList extends Component {
+class UserList extends Component {
 
     state = {
         users: [],
@@ -69,13 +84,14 @@ export default class UserList extends Component {
         if (!this.state.loaded && (this.state.showAll || this.state.query)) {
             var options = { headers: { 'Authorization': this.props.token } };
             var url = this.state.query ? '/users?query=' + this.state.query : '/users';
-            apiServer.get(url, options)
+            axios.get(url, options)
                 .then(response => {
-                    const users = response.data.users;
-                    const updatedPosts = users.map(
-                        user => { return { ...user }; }
-                    );
-                    this.setState({ users: updatedPosts, loaded: true });
+                    // const users = ;
+                    // const updatedPosts = users.map(
+                    //     user => { return { ...user }; }
+                    // );
+                    console.log("Retrieved user list", response.data.users)
+                    this.setState({ users: response.data.users, loaded: true });
                 }).catch(error => {
                     console.log(error);
                     this.setState({ error: true, loaded: true })
@@ -119,3 +135,4 @@ export default class UserList extends Component {
     }
 }
 
+export default withErrorHandler(UserList, axios)

@@ -2,6 +2,9 @@ import React from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import axios from '../../apiServer';
+
 import TasksCard from '../todos/TasksCard';
 import StatsCard from '../../components/dashboard/StatsCard'
 import CategoryOverview from './CategoryOverview';
@@ -10,9 +13,8 @@ import CategoryOverview from './CategoryOverview';
 import { Grid, GridListTile } from 'material-ui';
 import {
     Warning,
-    DateRange,
-    FlightTakeoff,
-    People
+    People,
+    FlightTakeoff
 } from "@material-ui/icons";
 import customCss from './Dashboard.css';
 
@@ -20,6 +22,31 @@ class Dashboard extends React.Component {
 
     state = {
         currCategoryId: 'admin',
+        hasLoadedStats: false,
+        guestsByDay: {
+            totalAdults: 0,
+            totalChildren: 0,
+        }
+    }
+
+    // presence/guestsByDay
+    loadStats() {
+        if (!this.state.hasLoadedStat) {
+            var options = { headers: { 'Authorization': this.props.token } };
+            axios.get('/presence/guestNb', options)
+                .then(response => {
+                    console.log(response)
+                    this.setState({ guestsByDay: { ...response.data.guestsByDay }, hasLoadedStats: true });
+                })
+                .catch(error => {
+                    console.log('Could not load stats', error)
+                    this.setState({ hasLoadedStats: true });
+                });
+        }
+    }
+
+    componentDidMount() {
+        this.loadStats()
     }
 
     getDaysToGo() {
@@ -34,7 +61,7 @@ class Dashboard extends React.Component {
 
     render() {
         const prefix = 'orga-';  // FIXME: less prone to collision
-
+        const { guestsByDay } = this.state
         return (
             <div className={customCss.Dashboard}>
                 <div className={customCss.DashboardCol}>
@@ -56,10 +83,10 @@ class Dashboard extends React.Component {
                             <StatsCard
                                 icon={People}
                                 iconColor="orange"
-                                title="25"
+                                title={guestsByDay.totalAdults + guestsByDay.totalChildren}
                                 description="Guests"
-                                statIcon={DateRange}
-                                statText="Last 24 Hours: -3"
+                                statIcon={People}
+                                statText={"18+: " + guestsByDay.totalAdults + ", Dwarves: " + guestsByDay.totalChildren}
                             />
                         </GridListTile>
                         {/* <GridListTile xs={4} sm={4} md={2} style={{}}>
@@ -95,4 +122,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(Dashboard);
+export default withErrorHandler(connect(mapStateToProps)(Dashboard), axios);

@@ -94,7 +94,7 @@ export default class User extends React.Component {
   deleteUser = () => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       var options = { headers: { 'Authorization': this.props.token } };
-      axios.delete('/user/' + this.state.loadedUserId, options).then(response => {
+      axios.delete('/users/' + this.state.loadedUserId, options).then(response => {
         this.onUserChange();
       });
     }

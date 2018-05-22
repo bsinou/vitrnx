@@ -1,4 +1,4 @@
-/* .CommentBox {
+ .CommentBox {
 	position: static;
     text-align: left;
     margin: 0px;
@@ -20,14 +20,14 @@
 .CommentBody p {
     padding: 2px 0px 2px 0px; 
     margin: 2px 0px 2px 0px; 
-} */
+} 
 
 
 .AllBtnBox{
     position: absolute;
     padding: 0px; 
     margin: 0px; 
-    width:90%;
+    width:100%;
 }
 
 .EditUserBtns {
