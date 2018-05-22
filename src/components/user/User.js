@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from '../../apiServer'
+import { Redirect } from 'react-router-dom'
 
 import Divider from 'material-ui/Divider';
 // import Dialog from 'material-ui/Dialog';
@@ -31,6 +32,8 @@ export default class User extends React.Component {
     // Dirty management of loaded state to avoid infinite looping
     loadedUserId: null,
     errorMsg: null,
+
+    redirect: false,
 
     // Manage dialog state
     open: false,
@@ -95,7 +98,10 @@ export default class User extends React.Component {
     if (window.confirm('Are you sure you want to delete this user?')) {
       var options = { headers: { 'Authorization': this.props.token } };
       axios.delete('/users/' + this.state.loadedUserId, options).then(response => {
-        this.onUserChange();
+        // console.log("User deleted!")
+        this.setState({ redirect: true })
+
+        // this.onUserChange();
       });
     }
   }
@@ -203,6 +209,14 @@ export default class User extends React.Component {
         <div className={classes.CommentBox} >
           {this.getEditBtn()}
           {this.state.editUserDialog}
+
+          {this.state.redirect &&
+            <Redirect to={{
+              pathname: '/u',
+              state: { from: this.state.value }
+            }} />
+          }
+
           <div>
             <div className={classes.CommentMeta}>{this.state.initialUser.name}</div>
             <div className={classes.CommentMeta}>{this.state.initialUser.email}</div>
