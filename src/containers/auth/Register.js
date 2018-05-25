@@ -74,7 +74,7 @@ class Auth extends React.Component {
                 style: { textAlign: 'left' },
                 errorText: '',
                 touched: false,
-                multiLine: true,
+                // multiLine: true,
                 rows: 1,
                 rowsMax: 8
             }

@@ -71,7 +71,7 @@ const PostCard = (props) => {
             {props.title}
           </Typography>
           {subTitle(props)}
-          <Typography component="p">
+          <Typography component="span">
             {props.desc}
           </Typography>
         </CardContent>

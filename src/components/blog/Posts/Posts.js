@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-
 import axios from '../../../apiServer';
-
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
-import { withStyles } from 'material-ui/styles';
-
 
 import PostCard from '../PostCard/PostCard';
 import AuxWrapper from '../../../hoc/AuxWrapper/AuxWrapper';
 
 
-// Material UI
+// Styling
+import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import Icon from 'material-ui/Icon'
 

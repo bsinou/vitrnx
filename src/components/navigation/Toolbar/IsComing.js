@@ -108,7 +108,7 @@ class Switches extends React.Component {
 
   render() {
     const { classes } = this.props;
-    console.log('Rendering, presence?', this.state.presence)
+    // console.log('Rendering, presence?', this.state.presence)
 
     return !this.state.presence ? null : (
       <Aux>

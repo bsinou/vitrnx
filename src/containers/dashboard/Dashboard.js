@@ -68,7 +68,7 @@ class Dashboard extends React.Component {
                     <CategoryOverview id={prefix + this.state.currCategoryId} />
                 </div>
                 <div className={customCss.DashboardCol}>
-                    <Grid container style={{ overflow: 'visible', padding: '1em', listStyle: 'none' }}>
+                    <Grid container style={{ padding: '1em', listStyle: 'none' }}>
                         <GridListTile xs={4} sm={4} md={2} style={{}}>
                             <StatsCard
                                 icon={FlightTakeoff}
@@ -86,7 +86,7 @@ class Dashboard extends React.Component {
                                 title={guestsByDay.totalAdults + guestsByDay.totalChildren}
                                 description="Guests"
                                 statIcon={People}
-                                statText={"18+: " + guestsByDay.totalAdults + ", Dwarves: " + guestsByDay.totalChildren}
+                                statText={"Elves: " + guestsByDay.totalAdults + ", Dwarves: " + guestsByDay.totalChildren}
                             />
                         </GridListTile>
                         {/* <GridListTile xs={4} sm={4} md={2} style={{}}>

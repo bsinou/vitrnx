@@ -8,14 +8,7 @@ import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemText, ListItemAvatar } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import PersonIcon from '@material-ui/icons/Person';
-import { red, green, blue } from 'material-ui/colors';
-// import blue from 'material-ui/colors/blue';
-// import blue from 'material-ui/colors/blue';
-
-// import Dialog, { DialogTitle } from 'material-ui/Dialog';
-// import Button from 'material-ui/Button';
-// import AddIcon from '@material-ui/icons/Add';
-// import Typography from 'material-ui/Typography';
+import { red, green } from 'material-ui/colors';
 
 const styles = {
     avatarRed: {
@@ -114,7 +107,6 @@ class UserList extends Component {
     }
 
     // TODO add new user component
-
     render() {
         let users = <p style={{ textAlign: 'center' }}>Something went wrong: could not load user list...</p>
         if (!this.state.error) {

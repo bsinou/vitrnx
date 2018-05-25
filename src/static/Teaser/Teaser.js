@@ -3,8 +3,13 @@ import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
 import { NavLink } from 'react-router-dom';
 
+import VideoCard from '../../components/blog/Media/VideoCard'
+
+
 import screenfull from 'screenfull'
 import ReactPlayer from 'react-player'
+
+
 
 import classes from './Teaser.css';
 
@@ -26,6 +31,14 @@ class Teaser extends Component {
         playbackRate: 1.0,
         loop: false,
 
+        video: {
+            title: 'On a le droit de rêver...',
+            desc: 'Ladies and Gentlemen, please welcome the second video of our grand contest, enjoy !',
+            thumb: 'test.jpg',
+            hero: 'Dibujo.mp4',
+        },
+
+
         knownVideos: {
             ecce: {
                 url: 'EcceHomo41.mp4',
@@ -40,9 +53,9 @@ class Teaser extends Component {
         }
     }
 
-    switchVideo(){
+    switchVideo() {
         const p = this.props.match.params.id;
-        if (this.state.currPlayed !==  p){
+        if (this.state.currPlayed !== p) {
             const q = p === 'ecce' ? 'dibu' : 'ecce';
             console.log('DID MOUNT ', p, q)
             this.setState({
@@ -51,7 +64,7 @@ class Teaser extends Component {
             });
         }
     }
-    
+
     componentDidMount() {
         this.switchVideo();
     }
@@ -99,45 +112,48 @@ class Teaser extends Component {
 
             const { currPlayed, notP, playing, volume, muted, loop, playbackRate, knownVideos } = this.state
 
-            console.log('Here', notP, knownVideos);
+            // console.log('Here', notP, knownVideos);
 
-            page = (<div className={classes.Box}>
-                <div className={classes.PlayerBox} >
-                    <h1>{knownVideos[currPlayed].title}</h1>
-                    <p>{knownVideos[currPlayed].desc}</p>
-                </div>
+            page = (
+                <div className={classes.Box}>
+                    <div className={classes.PlayerBox} >
+                        <h1>{knownVideos[currPlayed].title}</h1>
+                        <p>{knownVideos[currPlayed].desc}</p>
+                    </div>
 
-                <div className={classes.PlayerBox}>
-                    <ReactPlayer
-                        ref={this.ref}
-                        className='react-player'
-                        url={this.getVideo(currPlayed)}
-                        playing={playing}
-                        controls={true}
-                        loop={loop}
-                        playbackRate={playbackRate}
-                        volume={volume}
-                        muted={muted}
-                        onReady={() => console.log('onReady')}
-                        onStart={() => console.log('onStart')}
-                        onPlay={this.onPlay}
-                        onPause={this.onPause}
-                        onBuffer={() => console.log('onBuffer')}
-                        onSeek={e => console.log('onSeek', e)}
-                        onEnded={this.onEnded}
-                        onError={e => console.log('onError', e)}
-                        onProgress={this.onProgress}
-                        onDuration={this.onDuration}
-                    />
-                </div>
-                <div className={classes.PlayerBox} >
-                    <p> In case you missed it, check also {' '}
-                        <NavLink to={'/v/' + notP} className="TextLink">
-                            {'  ' +this.state.knownVideos[notP].title}
-                        </NavLink>
-                    </p>
-                </div>
-            </div>);
+                    <div className={classes.PlayerBox}>
+                        <ReactPlayer
+                            ref={this.ref}
+                            className='react-player'
+                            url={this.getVideo(currPlayed)}
+                            playing={playing}
+                            controls={true}
+                            loop={loop}
+                            playbackRate={playbackRate}
+                            volume={volume}
+                            muted={muted}
+                            onReady={() => console.log('onReady')}
+                            onStart={() => console.log('onStart')}
+                            onPlay={this.onPlay}
+                            onPause={this.onPause}
+                            onBuffer={() => console.log('onBuffer')}
+                            onSeek={e => console.log('onSeek', e)}
+                            onEnded={this.onEnded}
+                            onError={e => console.log('onError', e)}
+                            onProgress={this.onProgress}
+                            onDuration={this.onDuration}
+                        />
+                    </div>
+                    <div className={classes.PlayerBox} >
+                        <p> In case you missed it, check also {' '}
+                            <NavLink to={'/v/' + notP} className="TextLink">
+                                {'  ' + this.state.knownVideos[notP].title}
+                            </NavLink>
+                        </p>
+                    </div>
+
+                    <VideoCard video={this.state.video}/>
+                </div>);
         }
 
         return page

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+
 import apiServer from '../../apiServer';
 
 import Comment from './Comment'
@@ -31,7 +33,7 @@ class Comments extends Component {
             if (force || !this.state.postId || this.state.postId !== this.props.postId) {
 
                 var options = { headers: { 'Authorization': this.props.token } };
-                var url = '/posts/'+ this.props.postId+'/comments' ;
+                var url = '/posts/' + this.props.postId + '/comments';
                 apiServer.get(url, options)
                     .then(response => {
                         const currComments = response.data.comments;
@@ -55,7 +57,7 @@ class Comments extends Component {
         const options = { headers: { 'Authorization': this.props.token } };
         apiServer.post('/comments', data, options)
             .then(response => {
-                this.setState({ newCommentBody: ''});
+                this.setState({ newCommentBody: '' });
                 this.loadData(true);
             }).catch(error => {
                 console.log(error);
@@ -84,7 +86,7 @@ class Comments extends Component {
         if (!this.state.error) {
             comments = this.state.comments.map(
                 comment => {
-                    return (  
+                    return (
                         <Comment
                             key={comment.id}
                             onCommentChange={() => this.loadData(true)}
@@ -101,13 +103,21 @@ class Comments extends Component {
             <div>
                 <h3>Comments</h3>
                 <div>
-                    <TextField
-                        fullWidth
-                        helperText="Add a comment..."
-                        value={this.state.newCommentBody}
-                        onChange={this.handleBodyChange}
-                        onKeyPress={this.handleKeyPress}
-                    />
+                    {this.props.email === "guest@sinou.org" ? (
+                        <div>
+                            You are currently visiting this website anonymously as 'guest@sinou.org'.
+                        In order to be able to add comments, {' '}
+                            <NavLink to="/logout-register" className="TextLink">please register first</NavLink>.
+                        </div>
+                    ) : (
+                            <TextField
+                                fullWidth
+                                helperText="Add a comment..."
+                                value={this.state.newCommentBody}
+                                onChange={this.handleBodyChange}
+                                onKeyPress={this.handleKeyPress}
+                            />
+                        )}
                 </div>
                 <div>
                     {comments}
@@ -121,8 +131,9 @@ class Comments extends Component {
 const mapStateToProps = state => {
     return {
         token: state.auth.token,
-        userId: state.auth.userId, 
-        userRoles: state.auth.userRoles, 
+        email: state.auth.email,
+        userId: state.auth.userId,
+        userRoles: state.auth.userRoles,
     };
 };
 

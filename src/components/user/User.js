@@ -3,12 +3,8 @@ import axios from '../../apiServer'
 import { Redirect } from 'react-router-dom'
 
 import Divider from 'material-ui/Divider';
-// import Dialog from 'material-ui/Dialog';
-// import FlatButton from 'material-ui/Button';
-// import TextField from 'material-ui/TextField';
 
 import EditUserDialog from './EditUserDialog';
-
 
 // Styling
 import editIcon from '../../assets/images/edit_1x.png';
@@ -75,7 +71,6 @@ export default class User extends React.Component {
       }
     }
 
-
     if (!this.state.errorMsg && !this.state.knownRoles) {
       // Retrieve role list
       axios.get('/roles', options).then(response => {
@@ -93,21 +88,16 @@ export default class User extends React.Component {
   }
 
   /* DELETION */
-
   deleteUser = () => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       var options = { headers: { 'Authorization': this.props.token } };
       axios.delete('/users/' + this.state.loadedUserId, options).then(response => {
-        // console.log("User deleted!")
-        this.setState({ redirect: true })
-
-        // this.onUserChange();
+        this.setState({ redirect: true }) // redirect to user list
       });
     }
   }
 
   /* UPDATE */
-
   handleClose = (hasChanged) => {
     if (hasChanged) {
       this.loadData(true);
@@ -115,7 +105,6 @@ export default class User extends React.Component {
       this.setState({ editUserDialog: null });
     }
   };
-
 
   handleOpen = () => {
     let dialog = (<EditUserDialog
@@ -131,7 +120,6 @@ export default class User extends React.Component {
 
     this.setState({ editUserDialog: dialog });
   };
-
 
   handleCancelUpdate = () => {
     this.setState({ open: false, updatedUser: { ...this.state.initialUser } });
@@ -170,6 +158,8 @@ export default class User extends React.Component {
       this.props.userId === this.state.initialUser.userId;
   }
 
+  /* UI */
+
   getEditBtn = () => {
     let btns = null;
     if (this.canEdit()) {
@@ -198,7 +188,6 @@ export default class User extends React.Component {
   }
 
   render() {
-
     let user = <p style={{ textAlign: 'center' }}>No user found</p>;
     if (this.props.match.params.id) {
       user = <p style={{ textAlign: 'center' }}>Loading...</p>;
@@ -232,6 +221,4 @@ export default class User extends React.Component {
     return (user);
   }
 }
-
-
 

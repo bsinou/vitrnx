@@ -35,7 +35,7 @@ function Post (props) {
             </ListItemAvatar>
             <ListItemText
                 style={{ textAlign: 'left' }}
-                primary={post.title + ', by ' + post.author + ' on ' + dateStr+ '. ' + post.tags}
+                primary={post.title + ', by ' + post.author + ' on ' + dateStr+ ', ' + post.tags}
                 secondary={post.desc}
             />
         </ListItem>

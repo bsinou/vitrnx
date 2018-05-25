@@ -12,8 +12,9 @@ import QueryPosts from './containers/blog/QueryPosts'
 import Users from './containers/users/Users'
 
 // Static pages
-import Home from './static/Home/Home'
-import Teaser from './static/Teaser/Teaser'
+import Home from './containers/home/Home'
+import VideoPage from './components/blog/Media/VideoPage';
+// import Teaser from './static/Teaser/Teaser'
 import Dashboard from './containers/dashboard/Dashboard'
 import Register from './containers/auth/Register'
 import Login from './containers/auth/Login'
@@ -92,7 +93,7 @@ class App extends Component {
 
     if (isAuth) {
       routes = [
-        (<Route path="/v/:id" component={Teaser} />),
+        (<Route path="/v/:id" component={VideoPage} />),
         (<Route path="/logout-register" component={LogoutAndRegister} />),
         (<Route path="/logout" component={Logout} />),
         (<Route path="/p/" component={Blog} />),

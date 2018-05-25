@@ -1,0 +1,30 @@
+.Box {
+    margin: 10px;
+    padding: 10px;
+}
+
+.PlayerBox {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    width: 100%;
+    margin: auto;
+}
+
+.PlayerDesc {
+    text-align: left;
+    display: flex;
+
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: auto;
+}
+
+
+/* @media (min-width: 540px) {
+    .PlayerBox {
+        width: 500px;
+    }
+} */
