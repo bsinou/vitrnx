@@ -126,11 +126,13 @@ class Login extends React.Component {
                                         style={{ margin: 15 }}
                                         onClick={(event) => this.submitHandler(event)} >
                                         SUBMIT
-                            </Button>
+                                    </Button>
                                 </Grid>
                             </Grid>
-                            <Grid style={{ margin: 15, color: red400, fontsize: '0.8em' }}>
-                                No account yet? Please  <NavLink to="/register" >Register</NavLink>
+                            <Grid >
+                                <div style={{ margin: 15, fontColor: red400, fontsize: '0.8em' }}>
+                                No account yet? Please  <NavLink style={{ color: red400 }} to="/register" >Register</NavLink>
+                                </div>
                             </Grid>
                         </Grid>
                     </div>

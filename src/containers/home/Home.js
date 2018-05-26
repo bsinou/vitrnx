@@ -3,12 +3,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from '../../apiServer';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import Comment from '../../components/comment/Comment';
 
 import Markdown from 'react-markdown';
 
 import { Grid } from 'material-ui';
 
 import classes from './Home.css'
+import HomeTile from './HomeTile';
 
 class Home extends React.Component {
 
@@ -31,12 +33,12 @@ class Home extends React.Component {
             var options = { headers: { 'Authorization': this.props.token } };
             axios.get(url, options)
                 .then(response => {
-                    console.log('Got a post, about to set', response)
+                    // console.log('Got a post, about to set', response)
                     if (id === "homePost") {
                         this.setState({ homePost: response.data.post });
-                    } else if (id === "lastNews") this.setState({ lastNews: response.data.post });
-                    else if (id === "lastVideo") this.setState({ lastVideo: response.data.post });
-                    else if (id === "lastBand") this.setState({ lastBand: response.data.post });
+                    } else if (id === "lastNews") this.setState({ lastNews: response.data.posts[0] });
+                    else if (id === "lastVideo") this.setState({ lastVideo: response.data.posts[0] });
+                    else if (id === "lastBand") this.setState({ lastBand: response.data.posts[0] });
                 }).catch(error => {
                     console.log(error);
                 });
@@ -50,7 +52,7 @@ class Home extends React.Component {
             var url = '/comments';
             axios.get(url, options)
                 .then(response => {
-                    const cs = response.data.posts.slice(0, 48);
+                    const cs = response.data.comments.slice(0, 48);
                     this.setState({ comments: cs });
                 }).catch(error => {
                     console.log(error);
@@ -58,7 +60,13 @@ class Home extends React.Component {
         }
     }
 
-    postSelectedHandler = (path) => {
+    postSelectedHandler = (post) => {
+        let path;
+        if (post.tags.indexOf("Video") !== -1){
+            path = '/v/'+post.path;
+        } else {
+            path = '/p/'+post.path;
+        }
         this.props.history.push(path);
     };
 
@@ -82,6 +90,27 @@ class Home extends React.Component {
     render() {
 
         const { homePost, lastNews, lastVideo, lastBand, comments, addresses } = this.state;
+
+        let commentArr = [];
+
+        if (comments) {
+            commentArr = comments.map(
+                comment => {
+                    return (
+                        <Comment
+                            style={{}}
+                            key={comment.id}
+                            onCommentChange={() => this.loadData(true)}
+                            token={this.props.token}
+                            userId={this.props.userId}
+                            userRoles={this.props.userRoles}
+                            comment={comment}
+                        />
+                    );
+                });
+        }
+
+
         let page = (
             <Grid container justify="center" style={{ direction: 'row' }}>
                 <Grid className={classes.Paper} sm={12} md={8} lg={8}  >
@@ -95,7 +124,10 @@ class Home extends React.Component {
                     </Grid>
                     <Grid item sm={12}>
                         <Grid container justify="center" className={classes.Paper} xs={12} style={{ direction: 'row' }} >
-                            <Grid className={classes.Paper} xs={4} style={{}}>
+                            {!lastNews ? null : ( //, this.state.
+                                <HomeTile postSelected={this.postSelectedHandler} posts={[lastNews, lastVideo, lastBand]} />
+                            )}
+                            {/* <Grid className={classes.Paper} xs={4} style={{}}>
                                 lastNews
                             </Grid>
                             <Grid className={classes.Paper} xs={4} style={{}}>
@@ -103,13 +135,15 @@ class Home extends React.Component {
                         </Grid>
                             <Grid className={classes.Paper} xs={4} style={{}}>
                                 lastBand
+                        </Grid> */}
                         </Grid>
-                        </Grid>
-
                     </Grid>
                 </Grid>
                 <Grid className={classes.Paper} sm={12} md={3} lg={3} style={{}}>
-                    Comments
+                    <div>
+                        <h3>Recent comments:</h3>
+                    </div>
+                    <div>{commentArr.length > 0 ? commentArr : null}</div>
                 </Grid>
             </Grid>
         );

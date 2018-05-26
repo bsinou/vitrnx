@@ -83,9 +83,9 @@ class VideoPlayer extends React.Component {
         if (currPlayedPath) {
             page = (
                 <div className={classes.Box}>
-
                     <div className={classes.PlayerBox}>
                         <ReactPlayer
+                            style={{backgroundColor: '#333333'}}
                             ref={this.ref}
                             className='react-player'
                             url={this.getVideo(video.hero)}
@@ -106,13 +106,13 @@ class VideoPlayer extends React.Component {
                             onProgress={this.onProgress}
                             onDuration={this.onDuration}
                         />
-                        <div className={classes.PlayerDesc}>
-                            <div>
-                                <h1>{video.title}</h1>
-                            </div>
-                            <div style={{ paddingTop: '5px', paddingLeft: '10px', }} > {video.desc} </div>
-                            <div> {video.body} </div>
+                    </div>
+                    <div className={classes.PlayerDesc}>
+                        <div>
+                            <h1>{video.title}</h1>
                         </div>
+                        <div style={{ paddingTop: '5px', paddingLeft: '10px', }} > {video.desc} </div>
+                        <div> {video.body} </div>
                     </div>
                 </div>);
         }

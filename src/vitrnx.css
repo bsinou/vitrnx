@@ -78,7 +78,8 @@ a:active,
 a:focus {
   /* text-decoration: none; */
   outline: 0;
-  color: #40268c;
+  /* color: #40268c; */
+  color: #f0150a;
 }
 
 .linked {
