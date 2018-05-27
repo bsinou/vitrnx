@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui';
 
-import {GridList, GridListTile, GridListTileBar, ListSubheader, IconButton, InfoIcon } from 'material-ui';
+import {GridList, GridListTile, GridListTileBar, ListSubheader } from 'material-ui';
 
 const styles = theme => ({
   root: {

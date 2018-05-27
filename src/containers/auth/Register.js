@@ -234,7 +234,7 @@ class Auth extends React.Component {
 
                         </Grid>
                         <Grid style={{ margin: 15, fontsize: '0.8em' }}>
-                            Already have an account? Please  <NavLink to="/" >Sign in</NavLink>
+                            <div className={classes.FormTip}> Already have an account? Please  <NavLink to="/" >Sign in</NavLink> </div>                        
                         </Grid>
                     </Grid>
                 </div>

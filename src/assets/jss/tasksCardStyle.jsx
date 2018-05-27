@@ -6,6 +6,11 @@ import {
 } from "./common.jsx";
 
 const tasksCardStyle = theme => ({
+  // MuiButtonBase: {
+  //   // The property to apply
+  //   disableRipple: true, // No more ripple, on the whole application 💣!
+  // },
+  
   card,
   cardHeader: {
     flex: "none",
@@ -25,6 +30,7 @@ const tasksCardStyle = theme => ({
     color: "#FFFFFF"
   },
   tabWrapper: {
+    disableRipple: true,
     minWidth: "32px",
     width: "32px",
     display: "flex",
@@ -55,6 +61,8 @@ const tasksCardStyle = theme => ({
   tabsContainer: {
     marginTop: "2px",
     color: "#FFFFFF",
+    // width: "32px",
+
     // [theme.breakpoints.down("sm")]: {
     //   display: "grid"
     // }

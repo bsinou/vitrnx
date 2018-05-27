@@ -35,7 +35,7 @@ function VideoCard(props) {
     const { classes, video, onSelect } = props;
 
     return (
-        <div>
+        <div style={{marginBottom:'10px'}}>
             <Card className={classes.card} onClick={() => onSelect(video)}>
                 <CardMedia
                     className={classes.cover}

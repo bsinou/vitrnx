@@ -22,7 +22,7 @@ function StatsCard({ ...props }) {
     iconColor
   } = props;
   return (
-    <Card className={classes.card} style={{width: "160px"}}>
+    <Card className={classes.card} style={{width: "220px"}}>
       <CardHeader
         classes={{
           root: classes.cardHeader + " " + classes[iconColor + "CardHeader"],

@@ -3,14 +3,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from '../../apiServer';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-import Comment from '../../components/comment/Comment';
-
 import Markdown from 'react-markdown';
+
+import Comment from '../../components/comment/Comment';
+import HomeTile from './HomeTile';
 
 import { Grid } from 'material-ui';
 
 import classes from './Home.css'
-import HomeTile from './HomeTile';
 
 class Home extends React.Component {
 
@@ -25,9 +25,6 @@ class Home extends React.Component {
 
     loadPost(id, url, force) {
         if (!this.props.token) { return; }
-
-        console.log('Getting post:', id, url, force)
-        console.log(this.state)
 
         if (!this.state[id] || force) {
             var options = { headers: { 'Authorization': this.props.token } };
@@ -82,14 +79,9 @@ class Home extends React.Component {
         this.refreshContent(false);
     }
 
-    // componentDidUpdate() {
-    //     this.loadVideos();
-    //     this.switchVideo();
-    // }
-
     render() {
 
-        const { homePost, lastNews, lastVideo, lastBand, comments, addresses } = this.state;
+        const { homePost, lastNews, lastVideo, lastBand, comments } = this.state;
 
         let commentArr = [];
 
@@ -113,8 +105,8 @@ class Home extends React.Component {
 
         let page = (
             <Grid container justify="center" style={{ direction: 'row' }}>
-                <Grid className={classes.Paper} sm={12} md={8} lg={8}  >
-                    <Grid className={classes.Paper} sm={12} style={{}}>
+                <Grid item className={classes.Paper} sm={12} md={8} lg={8}  >
+                    <Grid item className={classes.Paper} sm={12} style={{}}>
                         {!homePost ? null : (
                             <div>
                                 <h1>{homePost.title}</h1>
@@ -123,23 +115,14 @@ class Home extends React.Component {
                         )}
                     </Grid>
                     <Grid item sm={12}>
-                        <Grid container justify="center" className={classes.Paper} xs={12} style={{ direction: 'row' }} >
+                        <Grid container justify="center" className={classes.Paper} style={{ direction: 'row' }} >
                             {!lastNews ? null : ( //, this.state.
                                 <HomeTile postSelected={this.postSelectedHandler} posts={[lastNews, lastVideo, lastBand]} />
                             )}
-                            {/* <Grid className={classes.Paper} xs={4} style={{}}>
-                                lastNews
-                            </Grid>
-                            <Grid className={classes.Paper} xs={4} style={{}}>
-                                lastVideo
-                        </Grid>
-                            <Grid className={classes.Paper} xs={4} style={{}}>
-                                lastBand
-                        </Grid> */}
-                        </Grid>
+                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid className={classes.Paper} sm={12} md={3} lg={3} style={{}}>
+                <Grid item className={classes.Paper} sm={12} md={3} lg={3} style={{}}>
                     <div>
                         <h3>Recent comments:</h3>
                     </div>

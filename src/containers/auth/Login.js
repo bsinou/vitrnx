@@ -130,8 +130,8 @@ class Login extends React.Component {
                                 </Grid>
                             </Grid>
                             <Grid >
-                                <div style={{ margin: 15, fontColor: red400, fontsize: '0.8em' }}>
-                                No account yet? Please  <NavLink style={{ color: red400 }} to="/register" >Register</NavLink>
+                                <div className={classes.FormTip} style={{ margin: 15, fontsize: '0.8em' }}>
+                                    No account yet? Please  <NavLink to="/register" >Register</NavLink>
                                 </div>
                             </Grid>
                         </Grid>

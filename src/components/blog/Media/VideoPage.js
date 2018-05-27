@@ -81,7 +81,7 @@ class VideoPage extends React.Component {
         let page = (<div></div>);
 
         if (currPlayedPath && videos.length > 0) {
-            console.log("Got a path to play", currPlayedPath)
+            // console.log("Got a path to play", currPlayedPath)
             let currPlayed = this.getVideoMeta(currPlayedPath)
 
             page = (
@@ -90,8 +90,8 @@ class VideoPage extends React.Component {
                         <VideoPlayer path={currPlayedPath} video={currPlayed} />
                     </Grid>
                     <Grid sm={12} md={4} lg={4} style={{}}>
-                        <h1>Check the other videos!</h1>
-                        <div>{videoComps}</div>
+                        <h3>Check the other videos!</h3>
+                        <div style={{padding: '10px', margin: '10px'}}>{videoComps}</div>
                     </Grid>
                     <Grid sm={12} md={12} lg={12} style={{}}>
                         <Comments postId={currPlayed.path} />

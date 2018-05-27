@@ -18,9 +18,9 @@ const boxShadow = {
 };
 
 const card = {
-  display: "inline-block",
+  // display: "inline",
   position: "relative",
-  overflow: "visible",
+  // overflow: "scroll",
   width: "100%",
   margin: "8px 8px",
   boxShadow: "0 1px 4px 0 rgba(0, 0, 0, 0.14)",
@@ -81,7 +81,7 @@ const blueCardHeader = {
   ...infoBoxShadow
 };
 const purpleCardHeader = {
-  // C'Est moche ca ...
+  // Purple background ...
   background: "linear-gradient(60deg, #ef5350, #e53935)",
   // background: "linear-gradient(60deg, #ab47bc, #8e24aa)",
   ...primaryBoxShadow

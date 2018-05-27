@@ -59,8 +59,13 @@ class VideoPlayer extends React.Component {
     }
 
     getVideo = (url) => {
-        // TODO enhance to manage generic URLs
-        return videoPrefix + url;
+        let res;
+        if (url.indexOf("http://") === 0 || url.indexOf("https://") === 0) {
+            res = url;
+        } else {
+            res = videoPrefix + url;
+        }
+        return res;
     }
 
     renderLoadButton = (video) => {
@@ -85,7 +90,7 @@ class VideoPlayer extends React.Component {
                 <div className={classes.Box}>
                     <div className={classes.PlayerBox}>
                         <ReactPlayer
-                            style={{backgroundColor: '#333333'}}
+                            style={{ backgroundColor: '#333333' }}
                             ref={this.ref}
                             className='react-player'
                             url={this.getVideo(video.hero)}
@@ -95,8 +100,8 @@ class VideoPlayer extends React.Component {
                             playbackRate={playbackRate}
                             volume={volume}
                             muted={muted}
-                            onReady={() => console.log('onReady')}
-                            onStart={() => console.log('onStart')}
+                            // onReady={() => console.log('onReady')}
+                            // onStart={() => console.log('onStart')}
                             onPlay={this.onPlay}
                             onPause={this.onPause}
                             onBuffer={() => console.log('onBuffer')}

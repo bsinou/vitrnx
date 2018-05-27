@@ -64,32 +64,38 @@ class Dashboard extends React.Component {
         const { guestsByDay } = this.state
         return (
             <div className={customCss.Dashboard}>
-                <div className={customCss.DashboardCol}>
+                {/* <div className={customCss.DashboardCol}>
                     <CategoryOverview id={prefix + this.state.currCategoryId} />
                 </div>
-                <div className={customCss.DashboardCol}>
-                    <Grid container style={{ padding: '1em', listStyle: 'none' }}>
-                        <GridListTile xs={4} sm={4} md={2} style={{}}>
-                            <StatsCard
-                                icon={FlightTakeoff}
-                                iconColor="green"
-                                title={"" + this.getDaysToGo()}
-                                description="Days To Go"
-                                statIcon={Warning}
-                                statLink={{ text: "It's coming...", href: "#doSomething" }}
-                            />
-                        </GridListTile>
-                        <GridListTile xs={4} sm={4} md={2}>
-                            <StatsCard
-                                icon={People}
-                                iconColor="orange"
-                                title={guestsByDay.totalAdults + guestsByDay.totalChildren}
-                                description="Guests"
-                                statIcon={People}
-                                statText={"Elves: " + guestsByDay.totalAdults + ", Dwarves: " + guestsByDay.totalChildren}
-                            />
-                        </GridListTile>
-                        {/* <GridListTile xs={4} sm={4} md={2} style={{}}>
+                <div className={customCss.DashboardCol}> */}
+
+                <Grid container style={{ padding: '1em' }}>
+                    <Grid xs={12} sm={12} md={6} >
+                        <CategoryOverview id={prefix + this.state.currCategoryId} />
+                    </Grid>
+                    <Grid xs={12} sm={12} md={6} >
+                        <Grid container style={{ padding: '1em' }}>
+                            <Grid xs={6} sm={6} md={6} style={{}}>
+                                <StatsCard
+                                    icon={FlightTakeoff}
+                                    iconColor="green"
+                                    title={"" + this.getDaysToGo()}
+                                    description="Days To Go"
+                                    statIcon={Warning}
+                                    statLink={{ text: "It's coming...", href: "#doSomething" }}
+                                />
+                            </Grid>
+                            <Grid xs={6} sm={6} md={6}>
+                                <StatsCard
+                                    icon={People}
+                                    iconColor="orange"
+                                    title={guestsByDay.totalAdults + guestsByDay.totalChildren}
+                                    description="Guests"
+                                    statIcon={People}
+                                    statText={"Elves: " + guestsByDay.totalAdults + ", Dwarves: " + guestsByDay.totalChildren}
+                                />
+                            </Grid>
+                            {/* <GridListTile xs={4} sm={4} md={2} style={{}}>
                             <StatsCard
                                 icon={FlightTakeoff}
                                 iconColor="red"
@@ -99,15 +105,16 @@ class Dashboard extends React.Component {
                                 statLink={{ text: "It's coming...", href: "#doSomething" }}
                             />
                         </GridListTile> */}
-                        <GridListTile xs={8} md={4}>
-                            <TasksCard
-                                isDirty={true}
-                                categoryId={this.state.currCategoryId}
-                                onSelect={this.onCategoryUpdate}
-                            />
-                        </GridListTile>
+                            <Grid xs={12} md={12}>
+                                <TasksCard
+                                    isDirty={true}
+                                    categoryId={this.state.currCategoryId}
+                                    onSelect={this.onCategoryUpdate}
+                                />
+                            </Grid>
+                        </Grid>
                     </Grid>
-                </div>
+                </Grid>
             </div>
         );
     }

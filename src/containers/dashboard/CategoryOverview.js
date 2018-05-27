@@ -56,7 +56,7 @@ class EditPost extends React.Component {
                 })
                 .catch(error => {
                     console.log('Could not load ' + this.props.id, error)
-                    this.setState({ post: { ...this.state.post }, isEditing: edit });
+                    this.setState({ post: { ...this.state.post, path:this.props.id  }, isEditing: edit });
                 });
         }
     }

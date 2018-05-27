@@ -17,7 +17,7 @@ import {
 } from 'material-ui';
 
 // Dashboard, 
-import { VerifiedUser, QueueMusic, Build, LocalBar, People } from "@material-ui/icons";
+import { VerifiedUser, QueueMusic, Build, LocalBar, People, Terrain, ChildCare, AccountBalance, Computer  } from "@material-ui/icons";
 
 import tasksCardStyle from "../../assets/jss/tasksCardStyle";
 
@@ -47,7 +47,7 @@ class CardLayout extends React.Component {
 
     return (
       <Card className={classes.card}>
-        <CardHeader
+        <CardHeader 
           classes={{
             root: classes.cardHeader,
             title: classes.cardTitle,
@@ -57,19 +57,23 @@ class CardLayout extends React.Component {
           action={
             <Tabs
               classes={{
-                flexContainer: classes.tabsContainer,
-                indicator: classes.displayNone
+              flexContainer: classes.tabsContainer,
+              //   indicator: classes.displayNone
               }}
               value={selectedTabIndex}
               onChange={onSelect}
               textColor="inherit"
+              scrollable
+              scrollButtons="on"
             >
               <Tab
+                style={{width: '32px'}}
                 classes={{
                   wrapper: classes.tabWrapper,
                   labelIcon: classes.labelIcon,
                   label: classes.label,
                 }}
+                labelStyle={{fontSiize: 15}}
                 icon={<VerifiedUser className={classes.tabIcon} />}
               />
               <Tab
@@ -78,6 +82,7 @@ class CardLayout extends React.Component {
                   labelIcon: classes.labelIcon,
                   label: classes.label,
                 }}
+
                 icon={<QueueMusic className={classes.tabIcon} />}
               />
               <Tab
@@ -102,7 +107,39 @@ class CardLayout extends React.Component {
                   labelIcon: classes.labelIcon,
                   label: classes.label,
                 }}
+                icon={<ChildCare className={classes.tabIcon} />}
+              />
+              <Tab
+                classes={{
+                  wrapper: classes.tabWrapper,
+                  labelIcon: classes.labelIcon,
+                  label: classes.label,
+                }}
                 icon={<People className={classes.tabIcon} />}
+              />
+              <Tab
+                classes={{
+                  wrapper: classes.tabWrapper,
+                  labelIcon: classes.labelIcon,
+                  label: classes.label,
+                }}
+                icon={<Terrain className={classes.tabIcon} />}
+              />
+              <Tab
+                classes={{
+                  wrapper: classes.tabWrapper,
+                  labelIcon: classes.labelIcon,
+                  label: classes.label,
+                }}
+                icon={<AccountBalance className={classes.tabIcon} />}
+              />
+              <Tab
+                classes={{
+                  wrapper: classes.tabWrapper,
+                  labelIcon: classes.labelIcon,
+                  label: classes.label,
+                }}
+                icon={<Computer className={classes.tabIcon} />}
               />
             </Tabs>
           }
@@ -136,8 +173,11 @@ class TasksCard extends React.Component {
     loaded: false,
     loadedIndex: -1,
     index: 0,
-    catIds: ['admin', 'prog', 'montage', 'drink', 'guests'],
+    catIds: ['admin', 'prog', 'montage', 'drink', 'activities', 'guests', 'camping', 'finances', 'website'],
   };
+
+  
+  
 
   loadData(force) {
     if (!this.props.token) { return; }
