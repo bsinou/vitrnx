@@ -12,11 +12,11 @@ const styles = theme => ({
       flexDirection: 'column',
     },
     content: {
-        flex: '1 0 auto',
-        width: '250px',
+        flex: '0 1 auto',
+        width: '180px',
     },
     cover: {
-      width: 200,
+      width:'180px',
       height: 140,
     },
     controls: {

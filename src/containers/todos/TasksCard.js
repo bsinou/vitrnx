@@ -5,22 +5,30 @@ import moment from 'moment';
 
 import Tasks from '../../components/todo/Tasks';
 
+import { categories } from "../../assets/conf/tasks.jsx";
+
+
+
 import {
   withStyles,
   Card,
   CardContent,
   CardHeader,
+  Icon,
+  IconButton,
   Typography,
   Tabs,
   Tab,
   TextField
 } from 'material-ui';
 
-// Dashboard, 
-import { VerifiedUser, QueueMusic, Build, LocalBar, People, Terrain, ChildCare, AccountBalance, Computer  } from "@material-ui/icons";
-
 import tasksCardStyle from "../../assets/jss/tasksCardStyle";
 
+
+// TODO enhance
+const tabStyle = { minWidth: '48px', maxWidth: '48px' };
+const btnStyle = { paddingTop: '.4em', color: 'white', opacity: '0.8' };
+const selBtnStyle = { paddingTop: '.4em', textDecoration: 'underline', color: 'black', opacity: '0.6' };
 
 class CardLayout extends React.Component {
 
@@ -42,106 +50,70 @@ class CardLayout extends React.Component {
     }
   }
 
+  handleSelected = event => {
+    this.props.toggleFlag(event);
+  }
+
   render() {
-    const { classes, selectedTabIndex, onSelect, tasks, closeTask, editTask, removeTask } = this.props;
+    const { classes, selectedTabIndex, onSelect, categories, tasks,
+      closeTask, editTask, removeTask, showClosed, showAll } = this.props;
+
+    let tabs = null;
+    if (categories.length > 0) {
+      tabs = categories.map(cat => (
+        <Tab
+          key={cat.id}
+          style={tabStyle}
+          classes={{
+            wrapper: classes.tabWrapper,
+            labelIcon: classes.labelIcon,
+            label: classes.label,
+          }}
+          icon={<Icon className={classes.tabIcon}>{cat.icon}</Icon>}
+        />
+      ));
+    }
 
     return (
       <Card className={classes.card}>
-        <CardHeader 
+        <CardHeader
           classes={{
             root: classes.cardHeader,
             title: classes.cardTitle,
             content: classes.cardHeaderContent
           }}
-          title="TODO"
+          // title="TODO"
           action={
-            <Tabs
-              classes={{
-              flexContainer: classes.tabsContainer,
-              //   indicator: classes.displayNone
-              }}
-              value={selectedTabIndex}
-              onChange={onSelect}
-              textColor="inherit"
-              scrollable
-              scrollButtons="on"
-            >
-              <Tab
-                style={{width: '32px'}}
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', color: 'inherit' }} >
+              <IconButton
+                tooltip={<span>Show closed tasks</span>}
+                style={showClosed ? selBtnStyle : btnStyle}
+                aria-label="Show closed tasks"
+                onClick={() => this.handleSelected('showClosed')}
+              >
+                <Icon>playlist_add_check</Icon>
+              </IconButton>
+              {/* <IconButton
+                onClick={() => this.handleSelected('showAll')}
+                style={showAll ? selBtnStyle : btnStyle}
+                aria-label="Show all tasks"
+              >
+                <Icon>people_outline</Icon>
+              </IconButton> */}
+              <Tabs
                 classes={{
-                  wrapper: classes.tabWrapper,
-                  labelIcon: classes.labelIcon,
-                  label: classes.label,
+                  flexContainer: classes.tabsContainer,
+                  //   indicator: classes.displayNone
                 }}
-                labelStyle={{fontSiize: 15}}
-                icon={<VerifiedUser className={classes.tabIcon} />}
-              />
-              <Tab
-                classes={{
-                  wrapper: classes.tabWrapper,
-                  labelIcon: classes.labelIcon,
-                  label: classes.label,
-                }}
-
-                icon={<QueueMusic className={classes.tabIcon} />}
-              />
-              <Tab
-                classes={{
-                  wrapper: classes.tabWrapper,
-                  labelIcon: classes.labelIcon,
-                  label: classes.label,
-                }}
-                icon={<Build className={classes.tabIcon} />}
-              />
-              <Tab
-                classes={{
-                  wrapper: classes.tabWrapper,
-                  labelIcon: classes.labelIcon,
-                  label: classes.label,
-                }}
-                icon={<LocalBar className={classes.tabIcon} />}
-              />
-              <Tab
-                classes={{
-                  wrapper: classes.tabWrapper,
-                  labelIcon: classes.labelIcon,
-                  label: classes.label,
-                }}
-                icon={<ChildCare className={classes.tabIcon} />}
-              />
-              <Tab
-                classes={{
-                  wrapper: classes.tabWrapper,
-                  labelIcon: classes.labelIcon,
-                  label: classes.label,
-                }}
-                icon={<People className={classes.tabIcon} />}
-              />
-              <Tab
-                classes={{
-                  wrapper: classes.tabWrapper,
-                  labelIcon: classes.labelIcon,
-                  label: classes.label,
-                }}
-                icon={<Terrain className={classes.tabIcon} />}
-              />
-              <Tab
-                classes={{
-                  wrapper: classes.tabWrapper,
-                  labelIcon: classes.labelIcon,
-                  label: classes.label,
-                }}
-                icon={<AccountBalance className={classes.tabIcon} />}
-              />
-              <Tab
-                classes={{
-                  wrapper: classes.tabWrapper,
-                  labelIcon: classes.labelIcon,
-                  label: classes.label,
-                }}
-                icon={<Computer className={classes.tabIcon} />}
-              />
-            </Tabs>
+                value={selectedTabIndex}
+                onChange={onSelect}
+                textColor="inherit"
+                scrollable
+              // scrollButtons="auto"
+              >
+                {tabs}
+              </Tabs>
+            </div>
           }
         />
         <CardContent>
@@ -173,20 +145,25 @@ class TasksCard extends React.Component {
     loaded: false,
     loadedIndex: -1,
     index: 0,
-    catIds: ['admin', 'prog', 'montage', 'drink', 'activities', 'guests', 'camping', 'finances', 'website'],
+    showClosed: false,
+    showAll: false,
+    categories: [],
+    catIds: [],
   };
 
-  
-  
+
+
 
   loadData(force) {
     if (!this.props.token) { return; }
 
     if (force || this.state.index !== this.state.loadedIndex) {
       var options = { headers: { 'Authorization': this.props.token } };
-      var url = '/tasks?categoryId=' + this.state.catIds[this.state.index];
+      var url = '/tasks?categoryId=' + this.state.catIds[this.state.index]
+        + '&showClosed=' + this.state.showClosed + '&showAll=' + this.state.showAll;
       axios.get(url, options)
         .then(response => {
+          console.log(response.data.tasks);
           const currTasks = response.data.tasks;
           const updatedTasks = currTasks.map(
             task => { return { ...task }; }
@@ -206,8 +183,21 @@ class TasksCard extends React.Component {
     }
   };
 
+  handleFlagToggle = (event) => {
+    let id = event;
+    this.setState({ [id]: !this.state[id] });
+  }
+
   componentDidMount() {
-    this.loadData(false);
+    var currCats = [];
+    var currCatIds = [];
+    for (let cat in categories) {
+      // Skip unauthorised categories
+      if (!this.props.userRoles.includes(categories[cat].role)) continue;
+      currCats.push(categories[cat]);
+      currCatIds.push(categories[cat].id);
+    }
+    this.setState({ categories: currCats, catIds: currCatIds });
   }
 
   componentDidUpdate() {
@@ -262,8 +252,9 @@ class TasksCard extends React.Component {
   render() {
     return (
       <StyledCard
+        categories={this.state.categories}
         selectedTabIndex={this.state.index}
-        selectedTabId={this.state.catIds[this.state.index]}
+        selectedTabId={this.state.catIds ? this.state.catIds[this.state.index] : null}
         onSelect={this.handleSelect}
         onCreateNew={this.newTaskHandler}
         onChange={() => this.loadData(true)}
@@ -271,6 +262,9 @@ class TasksCard extends React.Component {
         closeTask={this.closeTask}
         editTask={this.putTask}
         removeTask={this.removeTask}
+        toggleFlag={this.handleFlagToggle}
+        showClosed={this.state.showClosed}
+        showAll={this.state.showAll}
       />
     );
   }

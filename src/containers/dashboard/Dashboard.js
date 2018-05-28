@@ -1,10 +1,10 @@
 import React from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
-
-import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from '../../apiServer';
 
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import AuxWrapper from '../../hoc/AuxWrapper/AuxWrapper';
 import TasksCard from '../todos/TasksCard';
 import StatsCard from '../../components/dashboard/StatsCard'
 import CategoryOverview from './CategoryOverview';
@@ -17,11 +17,12 @@ import {
     FlightTakeoff
 } from "@material-ui/icons";
 import customCss from './Dashboard.css';
+import { Paper } from 'material-ui';
 
 class Dashboard extends React.Component {
 
     state = {
-        currCategoryId: 'admin',
+        currCategoryId: 'all',
         hasLoadedStats: false,
         guestsByDay: {
             totalAdults: 0,
@@ -64,55 +65,44 @@ class Dashboard extends React.Component {
         const { guestsByDay } = this.state
         return (
             <div className={customCss.Dashboard}>
-                {/* <div className={customCss.DashboardCol}>
-                    <CategoryOverview id={prefix + this.state.currCategoryId} />
-                </div>
-                <div className={customCss.DashboardCol}> */}
-
                 <Grid container style={{ padding: '1em' }}>
-                    <Grid xs={12} sm={12} md={6} >
-                        <CategoryOverview id={prefix + this.state.currCategoryId} />
-                    </Grid>
-                    <Grid xs={12} sm={12} md={6} >
+                    <Grid xs={12} sm={6} >
                         <Grid container style={{ padding: '1em' }}>
-                            <Grid xs={6} sm={6} md={6} style={{}}>
-                                <StatsCard
-                                    icon={FlightTakeoff}
-                                    iconColor="green"
-                                    title={"" + this.getDaysToGo()}
-                                    description="Days To Go"
-                                    statIcon={Warning}
-                                    statLink={{ text: "It's coming...", href: "#doSomething" }}
-                                />
-                            </Grid>
-                            <Grid xs={6} sm={6} md={6}>
-                                <StatsCard
-                                    icon={People}
-                                    iconColor="orange"
-                                    title={guestsByDay.totalAdults + guestsByDay.totalChildren}
-                                    description="Guests"
-                                    statIcon={People}
-                                    statText={"Elves: " + guestsByDay.totalAdults + ", Dwarves: " + guestsByDay.totalChildren}
-                                />
-                            </Grid>
-                            {/* <GridListTile xs={4} sm={4} md={2} style={{}}>
-                            <StatsCard
-                                icon={FlightTakeoff}
-                                iconColor="red"
-                                title={"" + this.getDaysToGo()}
-                                description="Budget"
-                                statIcon={Warning}
-                                statLink={{ text: "It's coming...", href: "#doSomething" }}
-                            />
-                        </GridListTile> */}
-                            <Grid xs={12} md={12}>
-                                <TasksCard
-                                    isDirty={true}
-                                    categoryId={this.state.currCategoryId}
-                                    onSelect={this.onCategoryUpdate}
-                                />
+                            {this.state.currCategoryId !== 'all' ? null : (
+                                <AuxWrapper>
+                                    <Grid sm={6} md={6} style={{}}>
+                                        <StatsCard
+                                            icon={FlightTakeoff}
+                                            iconColor="green"
+                                            title={"" + this.getDaysToGo()}
+                                            description="Days To Go"
+                                            statIcon={Warning}
+                                            statLink={{ text: "It's coming...", href: "#doSomething" }}
+                                        />
+                                    </Grid>
+                                    <Grid sm={6} md={6}>
+                                        <StatsCard
+                                            icon={People}
+                                            iconColor="orange"
+                                            title={guestsByDay.totalAdults + guestsByDay.totalChildren}
+                                            description="Guests"
+                                            statIcon={People}
+                                            statText={"Elves: " + guestsByDay.totalAdults + ", Dwarves: " + guestsByDay.totalChildren}
+                                        />
+                                    </Grid>
+                                </AuxWrapper>
+                            )}
+                            <Grid sm={12} md={12} >
+                                <CategoryOverview id={prefix + this.state.currCategoryId} />
                             </Grid>
                         </Grid>
+                    </Grid>
+                    <Grid xs={12} md={6} >
+                        <TasksCard
+                            isDirty={true}
+                            categoryId={this.state.currCategoryId}
+                            onSelect={this.onCategoryUpdate}
+                        />
                     </Grid>
                 </Grid>
             </div>

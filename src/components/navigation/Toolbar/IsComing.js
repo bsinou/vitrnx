@@ -47,11 +47,12 @@ class Switches extends React.Component {
 
   updatePresence(presence, openDialogAfterUpdate) {
     var options = { headers: { 'Authorization': this.props.token } };
-    console.log('About to update with obj: ', presence)
+    console.log('About to update, received: ', presence)
+    var updatedPresence = { ...presence, userId: this.props.userId };
+    console.log('About to update, data to be sent:: ', updatedPresence)
 
-    axios.post('/usermeta/' + this.props.userId, presence, options).then(response => {
+    axios.post('/usermeta/' + this.props.userId, updatedPresence, options).then(response => {
       console.log(response);
-
       if (openDialogAfterUpdate) {
         console.log('open after update')
         this.setState({ presence: { ...response.data.presence }, isDialogOpen: true});

@@ -24,10 +24,7 @@ class TaskRow extends React.Component {
 
   render() {
     const { classes, task, closeTask, editTask, removeTask } = this.props;
-
     var checked = task.closeDate && task.closeDate > 1;
-    console.log(checked)
-
     return (<TableRow key={task.id} className={classes.tableRow}>
       <TableCell className={classes.tableCell}>
         <Checkbox
