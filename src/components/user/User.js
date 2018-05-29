@@ -81,7 +81,7 @@ export default class User extends React.Component {
         this.setState({
           knownRoles: retrievedRoles,
         });
-        console.log('retrieved roles', response, retrievedRoles)
+        // console.log('retrieved roles', response, retrievedRoles)
 
       }).catch(error => {
         console.log('Could not retrieve roles', error)

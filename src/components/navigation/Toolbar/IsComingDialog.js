@@ -155,14 +155,14 @@ class FullScreenDialog extends React.Component {
                                     <AuxWrapper>
 
                                         <DialogContentText>
-                                            Don't worry, we won't tell anyone and you'll have no fine
-                                            if you finally change your plans... But anyway, here we go and thanks for your help!
+                                            Everything OK: you will have no fine if you finally change your plans...
+                                            But if you can give us some kind of good approximation, it will grealy help us, thanks.
                                         </DialogContentText>
                                         <Grid container >
                                             <GridItem xs={12} sm={12} md={12}>
                                                 {/* <Paper style={{ backgroundColor: '#cedede', opacity: '1' }}> */}
                                                 <FormControl component="fieldset">
-                                                    <FormLabel component="legend">On which day will you be there? </FormLabel>
+                                                    <FormLabel component="legend">On which day will you be there?</FormLabel>
                                                     <FormGroup row>
                                                         <FormControlLabel
                                                             control={
@@ -205,7 +205,7 @@ class FullScreenDialog extends React.Component {
                                                     <FormHelperText>
                                                         The climax of the party will be on Friday and Saturday,
                                                         but you certainly can stay until Sunday so that you can drive safely.
-                                                        You might arrive on thursday night for the 'Vorspiel'
+                                                        You might arrive on thursday night for the Vorspiel.
                                                     </FormHelperText>
                                                 </FormControl>
                                                 {/* </Paper> */}
@@ -233,7 +233,7 @@ class FullScreenDialog extends React.Component {
                                             {/* </Paper>
                             <Paper style={{ backgroundColor: '#cedede', opacity: '1' }}> */}
                                             <GridItem xs={12} sm={12} md={6}>
-                                                <FormLabel component="legend"><b>Including you</b>, how big is your crew?</FormLabel>
+                                                <FormLabel component="legend"><b>Including you</b>, how big is your crew? (For instancxe, if you come with your grand mother, correct answer is 2 :)</FormLabel>
                                                 <Grid container >
                                                     <GridItem xs={6} sm={6} md={3}>
                                                         <TextField

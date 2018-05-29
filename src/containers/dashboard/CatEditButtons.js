@@ -2,9 +2,8 @@ import React from 'react';
 
 import Aux from '../../hoc/AuxWrapper/AuxWrapper';
 
-import Button from 'material-ui/Button';
-import Icon from 'material-ui/Icon';
 import { withStyles } from 'material-ui/styles';
+import { Button, Icon, Tooltip } from 'material-ui';
 
 import customCss from './Dashboard.css';
 
@@ -31,15 +30,21 @@ function editButtons(props) {
         <div className={customCss.EditButtons}>
             {isEditing ? (
                 <Aux>
-                    <Button className={classes.button} color="primary" onClick={onSave}>
-                        <Icon className={classes.icon}>save</Icon>
-                    </Button>
-                    <Button className={classes.button} color="secondary" onClick={onSaveAndQuit}>
-                        <Icon className={classes.icon}>save</Icon>
-                    </Button>
-                    <Button className={classes.button} color="secondary" onClick={onCancel}>
-                        <Icon className={classes.icon}>cancel</Icon>
-                    </Button>
+                    <Tooltip id="tooltip-save" title="Save">
+                        <Button className={classes.button} color="primary" onClick={onSave}>
+                            <Icon className={classes.icon}>save</Icon>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip id="tooltip-saveAndBack" title="Save and stop editing">
+                        <Button className={classes.button} color="secondary" onClick={onSaveAndQuit}>
+                            <Icon className={classes.icon}>save</Icon>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip id="tooltip-cancel" title="Cancel edition">
+                        <Button className={classes.button} color="secondary" onClick={onCancel}>
+                            <Icon className={classes.icon}>cancel</Icon>
+                        </Button>
+                    </Tooltip>
                 </Aux>
             ) : (
                     <Button color="primary" onClick={onEdit}>
