@@ -87,9 +87,8 @@ class FullScreenDialog extends React.Component {
 
 
     componentDidUpdate() {
-        console.log("Did update", this.props.open, this.props.presence);
-
         if (this.state.open !== this.props.open) {
+            console.log("Did update on " + (this.props.open ? "open" : "close" )+ ", about to set state with presence.", this.props.presence);
             this.setState({ open: this.props.open, presence: { ...this.props.presence } });
         }
     }
@@ -130,7 +129,7 @@ class FullScreenDialog extends React.Component {
                     <AppBar className={classes.appBar}>
                         <Toolbar>
                             <Typography variant="title" color="inherit" className={classes.flex}>
-                                It would be if great help if you could tell us a little bit more about your plans...
+                                It would be of great help if you could tell us a little bit more about your plans...
                             </Typography>
                             <Icon aria-label="close" className={classes.icon} onClick={this.handleClose}>close</Icon>
                         </Toolbar>
@@ -141,7 +140,7 @@ class FullScreenDialog extends React.Component {
                             {!this.props.isRegistered ? (
                                 <DialogContentText>
                                     <p>
-                                        You are currently visiting this website anonymously as 'guest@sinou.org'.
+                                        You are currently visiting this website anonymously as guest@sinou.org.
                                     </p>
                                     <p>
                                         In order for us to be able to store your information, {' '}
