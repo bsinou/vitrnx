@@ -11,6 +11,7 @@
 
 ## Icons set
 
+- A [good overview on the subject of favicons](https://github.com/audreyr/favicon-cheat-sheet) 
 - https://nucleoapp.com/?ref=creativetim
 
  
