@@ -1,7 +1,6 @@
 import React from 'react';
 import Markdown from 'react-markdown';
 import Textarea from 'react-expanding-textarea';
-// import TextField from 'material-ui/TextField';
 
 import classes from './MdEditor.css'
 

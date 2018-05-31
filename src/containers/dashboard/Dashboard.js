@@ -10,14 +10,13 @@ import StatsCard from '../../components/dashboard/StatsCard'
 import CategoryOverview from './CategoryOverview';
 
 
-import { Grid } from 'material-ui';
+import { Grid } from '@material-ui/core';
 import {
     Warning,
     People,
     FlightTakeoff
 } from "@material-ui/icons";
 import customCss from './Dashboard.css';
-//  import { Paper } from 'material-ui';
 
 class Dashboard extends React.Component {
 

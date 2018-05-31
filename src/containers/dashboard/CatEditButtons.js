@@ -2,8 +2,7 @@ import React from 'react';
 
 import Aux from '../../hoc/AuxWrapper/AuxWrapper';
 
-import { withStyles } from 'material-ui/styles';
-import { Button, Icon, Tooltip } from 'material-ui';
+import { withStyles, Button, Icon, Tooltip } from '@material-ui/core';
 
 import customCss from './Dashboard.css';
 

@@ -7,9 +7,7 @@ import AuxWrapper from '../../../hoc/AuxWrapper/AuxWrapper';
 
 
 // Styling
-import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
-import Icon from 'material-ui/Icon'
+import { withStyles,  Button, Icon  } from '@material-ui/core';
 
 import classes from './Posts.css';
 
@@ -22,9 +20,9 @@ const styles = theme => ({
 class Posts extends Component {
 
     state = {
-        posts: [],
-        loadedCategory: null,
-        error: false
+        loadedCategory: '',
+        error: false,
+        posts: []
     }
 
     componentDidMount() {
@@ -41,18 +39,19 @@ class Posts extends Component {
         if (this.props.match.params.id) {
             if (!this.state.loadedCategory || this.state.loadedCategory !== this.props.match.params.id) {
 
+                var targetId = this.props.match.params.id;
                 var options = { headers: { 'Authorization': this.props.token } };
-                var url = '/posts?tag=' + this.props.match.params.id;
+                var url = '/posts?tag=' + targetId;
                 axios.get(url, options)
                     .then(response => {
                         const posts = response.data.posts.slice(0, 12);
                         const updatedPosts = posts.map(
                             post => { return { ...post }; }
                         );
-                        this.setState({ posts: updatedPosts, loadedCategory: this.props.match.params.id });
+                        this.setState({ loadedCategory: targetId, posts: updatedPosts });
                     }).catch(error => {
                         console.log(error);
-                        this.setState({ error: true, loadedCategory: this.props.match.params.id })
+                        this.setState({ error: true, loadedCategory: targetId })
                     });
             }
         }

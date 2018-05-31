@@ -4,17 +4,8 @@ import moment from 'moment';
 
 import apiServer from '../../apiServer';
 
-// Material UI
-import { withStyles } from 'material-ui/styles';
-import List, { ListItem, ListItemText, ListItemAvatar} from 'material-ui/List';
-import Avatar from 'material-ui/Avatar';
-// import Button from 'material-ui/Button';
-// import Dialog, { DialogTitle } from 'material-ui/Dialog';
-
-// import AddIcon from '@material-ui/icons/Add';
-// import Typography from 'material-ui/Typography';
-import blue from 'material-ui/colors/blue';
-
+import { withStyles, Avatar, List, ListItem, ListItemText, ListItemAvatar } from '@material-ui/core';
+import { blue } from '@material-ui/core/colors';
 
 const styles = {
     avatar: {
@@ -23,25 +14,25 @@ const styles = {
     },
 };
 
-function Post (props) {
-    const {classes, post, postSelected } = props
-   
-    let dateStr = moment(post.date*1000).format('MMMM Do YYYY');
- 
+function Post(props) {
+    const { classes, post, postSelected } = props
+
+    let dateStr = moment(post.date * 1000).format('MMMM Do YYYY');
+
     return (
-         <ListItem onClick={postSelected}>
+        <ListItem onClick={postSelected}>
             <ListItemAvatar>
                 <Avatar className={classes.avatar} src={"../imgRepo/" + post.thumb} />
             </ListItemAvatar>
             <ListItemText
                 style={{ textAlign: 'left' }}
-                primary={post.title + ', by ' + post.author + ' on ' + dateStr+ ', ' + post.tags}
+                primary={post.title + ', by ' + post.author + ' on ' + dateStr + ', ' + post.tags}
                 secondary={post.desc}
             />
         </ListItem>
     );
 }
-        
+
 const StyledPost = withStyles(styles)(Post);
 
 
@@ -67,7 +58,7 @@ class QueryPosts extends Component {
     loadData() {
         if (!this.props.token) { return; }
 
-        if (!this.state.loaded && (this.state.showAll || this.state.query) ) {
+        if (!this.state.loaded && (this.state.showAll || this.state.query)) {
 
             var options = { headers: { 'Authorization': this.props.token } };
             var url = this.state.query ? '/posts?query=' + this.state.query : '/posts';
@@ -80,7 +71,7 @@ class QueryPosts extends Component {
                     this.setState({ posts: updatedPosts, loaded: true });
                 }).catch(error => {
                     console.log(error);
-                    this.setState({ error: true, loaded: true  })
+                    this.setState({ error: true, loaded: true })
                 });
         }
     }
@@ -98,9 +89,9 @@ class QueryPosts extends Component {
         if (!this.state.error) {
             posts = this.state.posts.map(
                 post => <StyledPost
-                            key={post.path}
-postSelected={(event) => this.postSelectedHandler(event, post.path)} 
-                            post={post}/>);
+                    key={post.path}
+                    postSelected={(event) => this.postSelectedHandler(event, post.path)}
+                    post={post} />);
         }
         return (<List>{posts}</List>);
     }

@@ -1,8 +1,6 @@
 import React from 'react';
 
-import Button from 'material-ui/Button';
-import Icon from 'material-ui/Icon';
-import { withStyles } from 'material-ui/styles';
+import { withStyles,  Button, Icon} from '@material-ui/core';
 
 // Styling
 import customClasses from './EditButtons.css';

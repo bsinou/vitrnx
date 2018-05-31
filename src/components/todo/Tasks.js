@@ -12,7 +12,7 @@ import {
   TableCell,
   TableRow,
   Tooltip
-} from 'material-ui';
+} from '@material-ui/core';
 
 import { Edit, Close, Check } from "@material-ui/icons";
 

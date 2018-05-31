@@ -2,7 +2,7 @@ import React from 'react';
 import axios from '../../apiServer'
 import { Redirect } from 'react-router-dom'
 
-import Divider from 'material-ui/Divider';
+import { Divider } from '@material-ui/core';
 
 import EditUserDialog from './EditUserDialog';
 

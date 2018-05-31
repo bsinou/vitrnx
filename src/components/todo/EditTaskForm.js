@@ -2,15 +2,13 @@ import React from 'react';
 import {
     Button,
     Dialog,
-    Paper,
-    Input,
-} from 'material-ui';
-
-import {
     DialogActions,
     DialogContent,
-    DialogTitle
-} from 'material-ui/Dialog';
+    DialogTitle,
+    Paper,
+    Input,
+} from '@material-ui/core';
+
 
 export default class FormDialog extends React.Component {
     state = {

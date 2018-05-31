@@ -7,11 +7,8 @@ import Markdown from 'react-markdown';
 import EditButtons from './EditButtons';
 
 // Styling
-import Dialog, { DialogTitle, DialogActions, DialogContent } from 'material-ui/Dialog';
-import { Paper, Divider, Button } from 'material-ui';
-
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Input, Paper } from '@material-ui/core';
 import customClasses from './Comment.css';
-import { Input } from 'material-ui';
 
 export default class Comment extends React.Component {
 
@@ -101,7 +98,7 @@ export default class Comment extends React.Component {
             <DialogTitle id="edit-comment-dialog-title">Edit your comment</DialogTitle>
             <DialogContent >
               <Input
-                style={{minWidth:'320px'}}
+                style={{ minWidth: '320px' }}
                 autoFocus
                 multiline
                 fullwidth

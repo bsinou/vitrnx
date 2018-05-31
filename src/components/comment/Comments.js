@@ -6,7 +6,7 @@ import apiServer from '../../apiServer';
 
 import Comment from './Comment'
 
-import TextField from 'material-ui/TextField';
+import TextField from '@material-ui/core/TextField';
 
 class Comments extends Component {
 

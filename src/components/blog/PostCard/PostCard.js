@@ -2,11 +2,8 @@ import React from 'react';
 import moment from 'moment';
 
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-//CardActions,, CardTitle
-import Card, { CardContent, CardMedia } from 'material-ui/Card';
-import Icon from 'material-ui/Icon';
-import Typography from 'material-ui/Typography';
+
+import { withStyles , Card, CardContent, CardMedia, Icon, Typography  } from '@material-ui/core';
 
 const styles = {
   card: {

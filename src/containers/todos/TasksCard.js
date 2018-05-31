@@ -7,8 +7,6 @@ import Tasks from '../../components/todo/Tasks';
 
 import { categories } from "../../assets/conf/tasks.jsx";
 
-
-
 import {
   withStyles,
   Card,
@@ -20,10 +18,9 @@ import {
   Tabs,
   Tab,
   TextField
-} from 'material-ui';
+} from '@material-ui/core';
 
 import tasksCardStyle from "../../assets/jss/tasksCardStyle";
-
 
 // TODO enhance
 const tabStyle = { minWidth: '48px', maxWidth: '48px' };

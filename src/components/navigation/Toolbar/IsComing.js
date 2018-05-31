@@ -5,8 +5,7 @@ import axios from '../../../apiServer'
 import Aux from '../../../hoc/AuxWrapper/AuxWrapper'
 import IsComingDialog from './IsComingDialog'
 
-import { withStyles } from 'material-ui/styles';
-import { Switch } from 'material-ui';
+import { withStyles, Switch } from '@material-ui/core';
 
 // Styling
 import customCss from './Toolbar.css';

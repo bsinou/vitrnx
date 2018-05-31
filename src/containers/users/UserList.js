@@ -4,11 +4,8 @@ import axios from '../../apiServer';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 // Material UI
-import { withStyles } from 'material-ui/styles';
-import List, { ListItem, ListItemText, ListItemAvatar } from 'material-ui/List';
-import Avatar from 'material-ui/Avatar';
-import PersonIcon from '@material-ui/icons/Person';
-import { red, green } from 'material-ui/colors';
+import { withStyles, Avatar, Icon, List, ListItem, ListItemText, ListItemAvatar, PersonIcon } from '@material-ui/core';
+import { green, red } from '@material-ui/core/colors';
 
 const styles = {
     avatarRed: {
@@ -36,7 +33,7 @@ function User(props) {
         <ListItem key={user.userId} onClick={userSelected}>
             <ListItemAvatar>
                 <Avatar className={coming ? classes.avatarGreen : classes.avatarRed}>
-                    <PersonIcon />
+                <Icon className={classes.icon}>person</Icon>
                 </Avatar>
             </ListItemAvatar>
             <ListItemText

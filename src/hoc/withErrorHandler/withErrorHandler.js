@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 
 import AuxWrapper from '../AuxWrapper/AuxWrapper'
-// import Modal from '../../components/ui/Modal/Modal'
 
-import Snackbar from 'material-ui/Snackbar';
+import { Snackbar } from '@material-ui/core';
 
 const withErrorHandler = (WrappedComponent, axios) => {
     return class extends Component {
@@ -34,7 +33,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
             this.resInterceptor = axios.interceptors.response.use(
                 response => {
                     // We don't display an OK message on GET requests.
-                    if (response.config.method !== 'get'){
+                    if (response.config.method !== 'get') {
                         this.setState({
                             message: 'OK',
                             isError: false,

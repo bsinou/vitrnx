@@ -8,7 +8,7 @@ import Markdown from 'react-markdown';
 import Comment from '../../components/comment/Comment';
 import HomeTile from './HomeTile';
 
-import { Grid } from 'material-ui';
+import { Grid } from '@material-ui/core';
 
 import classes from './Home.css'
 

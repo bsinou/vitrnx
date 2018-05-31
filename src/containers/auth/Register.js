@@ -5,9 +5,9 @@ import { NavLink } from 'react-router-dom';
 
 import * as actions from '../../store/actions/index';
 
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import { red300 } from 'material-ui/colors';
-import { AppBar, Button, Grid, Paper, TextField, Typography } from 'material-ui';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { AppBar, Button, Grid, Paper, TextField, Typography } from '@material-ui/core';
+import { red300 } from '@material-ui/core/colors';
 
 import classes from './Auth.css';
 

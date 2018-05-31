@@ -25,14 +25,14 @@ import LogoutAndRegister from './containers/auth/Logout/LogoutAndRegister';
 // Styling
 // Provides default material UI css props to children components
 import classes from './vitrnx.css';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import { red300 } from 'material-ui/colors';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { red300 } from '@material-ui/core/colors';
 import { transition, container } from "./assets/jss/common.jsx";
 
 
 // This replaces the textColor value on the palette
 // and then update the keys for each component that depends on it.
-// More on Colors: http://material-ui-next.com/#/customization/colors
+// More on Colors: http://@material-ui/core-next.com/#/customization/colors
 const theme = createMuiTheme({
   root: {
     // overflow: 'hidden',

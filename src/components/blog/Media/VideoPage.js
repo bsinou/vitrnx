@@ -8,7 +8,7 @@ import Comments from '../../comment/Comments'
 import VideoPlayer from './VideoPlayer'
 import VideoCard from './VideoCard'
 
-import { Grid } from 'material-ui';
+import { Grid } from '@material-ui/core';
 
 class VideoPage extends React.Component {
 

@@ -6,14 +6,9 @@ import * as actions from '../../store/actions/index';
 
 import classes from './Auth.css';
 
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import { red300, red400 } from 'material-ui/colors';
-import AppBar from 'material-ui/AppBar';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { AppBar, Button, Grid, Paper, TextField, Typography } from '@material-ui/core';
+import { red300, red400 } from '@material-ui/core/colors';
 
 
 const theme = createMuiTheme({

@@ -1,10 +1,8 @@
 import React from 'react';
 import axios from '../../apiServer'
 
-import Switch from 'material-ui/Switch';
-import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog';
-import { FormControlLabel } from 'material-ui/Form';
-import {Paper, TextField, Button, Divider}  from 'material-ui';
+
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, FormControlLabel, Paper, Switch, TextField, } from '@material-ui/core';
 
 const utils = require('../../utils/helpers');
 

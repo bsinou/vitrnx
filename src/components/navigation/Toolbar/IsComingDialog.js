@@ -1,11 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { withStyles } from 'material-ui/styles';
 import PropTypes from 'prop-types';
 
 import AuxWrapper from '../../../hoc/AuxWrapper/AuxWrapper'
 import {
+    withStyles,
     AppBar,
     Button,
     Checkbox,
@@ -20,7 +20,7 @@ import {
     TextField,
     Toolbar,
     Typography
-} from 'material-ui';
+} from '@material-ui/core';
 
 
 const styles = {
@@ -88,7 +88,7 @@ class FullScreenDialog extends React.Component {
 
     componentDidUpdate() {
         if (this.state.open !== this.props.open) {
-            console.log("Did update on " + (this.props.open ? "open" : "close" )+ ", about to set state with presence.", this.props.presence);
+            console.log("Did update on " + (this.props.open ? "open" : "close") + ", about to set state with presence.", this.props.presence);
             this.setState({ open: this.props.open, presence: { ...this.props.presence } });
         }
     }

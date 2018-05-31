@@ -1,21 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import axios from '../../../apiServer';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
-
-// Import the Markdown component
-import Markdown from 'react-markdown';
-
-// Material UI
-import { withStyles } from 'material-ui/styles';
-import Card, { CardMedia } from 'material-ui/Card';
-import Icon from 'material-ui/Icon';
-import Button from 'material-ui/Button';
-import Divider from 'material-ui/Divider';
 
 // Own component
 import PostInfo from '../PostInfo/PostInfo';
 import Comments from '../../comment/Comments';
 import AuxWrapper from '../../../hoc/AuxWrapper/AuxWrapper';
+
+import Markdown from 'react-markdown';
+
+// Material UI
+import { withStyles } from '@material-ui/core/styles';
+import {Button , Card,  CardMedia, Divider, Icon } from '@material-ui/core';
 
 import customCss from './Post.css';
 
@@ -60,7 +56,7 @@ class Layout extends React.Component {
 
 const PostLayout = withStyles(postStyles)(Layout);
 
-class Post extends Component {
+class Post extends React.Component {
     state = {
         loadedPost: null,
     }
