@@ -2,7 +2,7 @@
 
 ## About layout
 
--a very nice [Guide to flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+- a very nice [Guide to flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
 - and its usefull brother with [common problems solved with flex box](https://philipwalton.github.io/solved-by-flexbox/)
 
 ## Cool CSS samples
@@ -11,7 +11,7 @@
 
 ## Icons set
 
-- A [good overview on the subject of favicons](https://github.com/audreyr/favicon-cheat-sheet) 
+- A [painfully obsessive cheat sheet to favicon sizes/types](https://github.com/audreyr/favicon-cheat-sheet) 
 - https://nucleoapp.com/?ref=creativetim
 
  

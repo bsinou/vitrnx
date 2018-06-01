@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { withStyles, Icon } from '@material-ui/core/';
+import { withStyles, Icon } from '@material-ui/core';
 
 // Styling
 import customCss from './Comment.css';
