@@ -17,7 +17,9 @@ class Home extends React.Component {
     state = {
         homePost: null,
         lastNews: null,
-        lastVideo: null,
+        lastVideo1: null,
+        lastVideo2: null,
+        lastVideo3: null,
         lastBand: null,
         comments: [],
         addresses: null,
@@ -34,7 +36,7 @@ class Home extends React.Component {
                     if (id === "homePost") {
                         this.setState({ homePost: response.data.post });
                     } else if (id === "lastNews") this.setState({ lastNews: response.data.posts[0] });
-                    else if (id === "lastVideo") this.setState({ lastVideo: response.data.posts[0] });
+                    else if (id === "lastVideo") this.setState({ lastVideo1: response.data.posts[0], lastVideo2: response.data.posts[1], lastVideo3: response.data.posts[2]  });
                     else if (id === "lastBand") this.setState({ lastBand: response.data.posts[0] });
                 }).catch(error => {
                     console.log(error);
@@ -70,7 +72,7 @@ class Home extends React.Component {
     refreshContent(force) {
         this.loadPost("homePost", "/posts/home", force)
         this.loadPost("lastNews", "/posts?tag=News&count=1", force)
-        this.loadPost("lastVideo", "/posts?tag=Video&count=1", force)
+        this.loadPost("lastVideo", "/posts?tag=Video", force)
         this.loadPost("lastBand", "/posts?tag=Band&count=1", force)
         this.loadComments(force)
     }

@@ -5,7 +5,7 @@ import EditTaskForm from './EditTaskForm';
 
 import {
   withStyles,
-  Checkbox,
+  Avatar,
   IconButton,
   Table,
   TableBody,
@@ -25,23 +25,37 @@ class TaskRow extends React.Component {
   render() {
     const { classes, task, closeTask, editTask, removeTask } = this.props;
     var checked = task.closeDate && task.closeDate > 1;
+    var checkedStyle = [classes.tableActionButtonIcon, checked ? classes.checkedIcon : classes.uncheckedIcon].join(' ')
+
     return (<TableRow key={task.id} className={classes.tableRow}>
       <TableCell className={classes.tableCell}>
-        <Checkbox
-          checked={checked}
-          tabIndex={-1}
-          onClick={() => closeTask(task)}
-          checkedIcon={<Check className={classes.checkedIcon} />}
-          icon={<Check className={classes.uncheckedIcon} />}
-          classes={{
-            checked: classes.checked
-          }}
-        />
+        <Tooltip
+          id="tooltip-top"
+          title={"Assigned to " + task.manager}
+          placement="top"
+          classes={{ tooltip: classes.tooltip }}
+        >
+          <Avatar className={classes.orangeAvatar}>{task.manager.charAt(0)}</Avatar>
+        </Tooltip>
       </TableCell>
       <TableCell style={{ maxWidth: '480px' }} className={classes.tableCell} dense="true">
         {task.desc}
       </TableCell>
       <TableCell className={classes.tableActions} >
+        <Tooltip
+          id="tooltip-top"
+          title="Mark task as done"
+          placement="top"
+          classes={{ tooltip: classes.tooltip }}
+        >
+          <IconButton
+            aria-label="Complete"
+            className={classes.tableActionButton}
+            onClick={() => closeTask(task)}
+          >
+            <Check className={checkedStyle} />
+          </IconButton>
+        </Tooltip>
         <Tooltip
           id="tooltip-top"
           title="Edit Task"

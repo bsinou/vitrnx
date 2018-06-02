@@ -1,5 +1,5 @@
 
-import { defaultFont, primaryColor, dangerColor } from "./common.jsx";
+import { defaultFont, primaryColor, secondaryColor, roseColor, dangerColor } from "./common.jsx";
 
 const tasksStyle = {
   table: {
@@ -43,20 +43,53 @@ const tasksStyle = {
     boxShadow: "none"
   },
   checked: {
-    color: primaryColor
+    width: "17px",
+    height: "17px",
+    color: secondaryColor
+  },
+  avatarRed: {
+    backgroundColor: primaryColor,
+    color: "#ffffff",
+  },
+  avatarAssignee: {
+    margin: 10,
+    width: 32,
+    height: 32,
+    fontSize: 16,
+    backgroundColor: roseColor,
+    textAlign: "center",
+    fontFamily: 'sans-serif',
+    color: "#ffffff",
+  },
+  orangeAvatar: {
+    margin: 10,
+    color: '#fff',
+    width: 32,
+    height: 32,
+    backgroundColor: "#f39c12",
+  },
+  avatarCategory: {
+    margin: 10,
+    width: 32,
+    height: 32,
+    fontSize: 16,
+    backgroundColor: roseColor,
+    textAlign: "center",
+    fontFamily: '"Helvetica Neue",Helvetica,Arial,sans-serif',
+    color: "#ffffff",
   },
   checkedIcon: {
-    width: "20px",
-    height: "20px",
+    width: "14px",
+    height: "14px",
     border: "1px solid rgba(0, 0, 0, .54)",
-    borderRadius: "3px"
+    borderRadius: "2px"
   },
   uncheckedIcon: {
     width: "0px",
     height: "0px",
-    padding: "10px",
+    padding: "7px",
     border: "1px solid rgba(0, 0, 0, .54)",
-    borderRadius: "3px"
+    borderRadius: "2px"
   },
   tooltip: {
     padding: "10px 15px",

@@ -33,7 +33,7 @@ function User(props) {
         <ListItem key={user.userId} onClick={userSelected}>
             <ListItemAvatar>
                 <Avatar className={coming ? classes.avatarGreen : classes.avatarRed}>
-                <Icon className={classes.icon}>person</Icon>
+                    <Icon className={classes.icon}>person</Icon>
                 </Avatar>
             </ListItemAvatar>
             <ListItemText
