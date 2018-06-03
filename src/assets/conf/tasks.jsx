@@ -1,76 +1,83 @@
+const FLAG_URGENT = parseInt("10", 2);
+const FLAG_IMPORTANT = parseInt("01", 2);
+const FLAG_UNI = FLAG_URGENT | FLAG_IMPORTANT;
+
 var categories = {
-    all : {
-        id: "all", 
+    all: {
+        id: "all",
         label: "All",
         icon: "public",
         postUrl: "orga-all",
-        role: "VOLUNTEER",        
+        role: "VOLUNTEER",
     },
-    prog : {
-        id: "prog", 
+    prog: {
+        id: "prog",
         label: "Programmation",
         icon: "queue_music",
         postUrl: "orga-prog",
-        role: "VOLUNTEER",        
+        role: "VOLUNTEER",
     },
-    montage : {
-        id: "montage", 
+    montage: {
+        id: "montage",
         label: "Montage",
         icon: "build",
         postUrl: "orga-montage",
-        role: "VOLUNTEER",        
+        role: "VOLUNTEER",
     },
-    drink : {
-        id: "drink", 
+    drink: {
+        id: "drink",
         label: "Food & Drinks",
         icon: "local_bar",
         postUrl: "orga-drink",
-        role: "VOLUNTEER",        
+        role: "VOLUNTEER",
     },
-    camping : {
-        id: "camping", 
+    camping: {
+        id: "camping",
         label: "Camping",
         icon: "terrain",
         postUrl: "orga-camping",
-        role: "VOLUNTEER",        
+        role: "VOLUNTEER",
     },
-    activities : {
-        id: "activities", 
+    activities: {
+        id: "activities",
         label: "Activities",
         icon: "child_care",
         postUrl: "orga-activities",
-        role: "VOLUNTEER",        
+        role: "VOLUNTEER",
     },
-    guests : {
-        id: "guests", 
+    guests: {
+        id: "guests",
         label: "Volunteers & Guests",
         icon: "people",
         postUrl: "orga-guests",
-        role: "VOLUNTEER",        
+        role: "VOLUNTEER",
     },
-    admin : {
-        id: "admin", 
+    admin: {
+        id: "admin",
         label: "Admin Stuff",
         icon: "account_balance",
         postUrl: "orga-admin",
-        role: "MANAGER",        
+        role: "MANAGER",
     },
-    finances : {
-        id: "finances", 
+    finances: {
+        id: "finances",
         label: "Finances",
         icon: "attach_money",
         postUrl: "orga-finances",
-        role: "MANAGER",        
+        role: "MANAGER",
     },
-    website : {
-        id: "website", 
+    website: {
+        id: "website",
         label: "Website",
         icon: "computer",
         postUrl: "orga-website",
-        role: "VOLUNTEER",        
+        role: "VOLUNTEER",
     },
 }
 
 module.exports = {
+    FLAG_URGENT,
+    FLAG_IMPORTANT,
+    FLAG_UNI,
     categories,
 };

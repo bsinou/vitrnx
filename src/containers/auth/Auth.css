@@ -6,7 +6,6 @@
     min-height: 100vh;
 
     background: url(/imgRepo/tract-4.6.jpg) no-repeat center center fixed; 
-    /* background: url(https://40.sinou.org/imgRepo/tract-4.6.jpg) no-repeat center center fixed;  */
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -33,22 +32,13 @@
 
 .Form {
     background-color: #f5f5ff;
+    padding: 0.5em;
 }
 
 .OuterBox {
     display: table;
     margin: 6em auto;
 }
-/* 
-.LeftCol {
-    display: table-cell;
-    width: 50%;
-}
-.RightCol {
-    display: table-cell;
-    width: 50%;
-    align-content: center;
-} */
 
 .RegisterForm {
     height: auto;
@@ -56,15 +46,7 @@
 	margin: auto;
 	background: rgb(243, 243, 243);
 }
-/*     
-    border: 1px solid #FFCDD2;
-box-shadow: 0 2px 3px #EF9A9A;
-    min-width: 320px;
-    box-shadow: 0 2px 3px #EF9A9A;
-    background: #F1F8E9;
-    border: 1px solid #FFCDD2;
 
-*/
 .AuthForm {
     min-width: 320px;
     margin: auto;
@@ -73,7 +55,6 @@ box-shadow: 0 2px 3px #EF9A9A;
 .FormHeader {
     padding: 1em;
 }
-
 
 @media (min-height: 500px) {
     .OuterBox {

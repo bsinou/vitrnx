@@ -28,55 +28,63 @@ class Auth extends React.Component {
         fields: {
             name: {
                 type: 'name',
-                helperText: 'We will call you so...',
                 label: 'Name',
+                helperText: 'We will call you so...',
+                helperMsg: 'We will call you so...',
                 value: '',
                 validation: {
                     required: true,
                     minLength: 5,
                 },
-                errorText: '',
                 touched: false
             },
             email: {
                 type: 'email',
-                helperText: 'Enter your Email',
                 label: 'Email',
+                helperText: 'Enter your Email',
+                helperMsg: 'Enter your Email',
                 value: '',
                 validation: {
                     required: true,
                     regexp: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
                 },
-                errorText: '',
                 touched: false
             },
             password: {
                 type: 'password',
-                helperText: 'Enter your Password',
                 label: 'Password',
+                helperText: 'Enter your Password',
+                helperMsg: 'Enter your Password',
                 value: '',
                 validation: {
                     required: true,
                     minLength: 8,
                 },
-                errorText: '',
                 touched: false
+            },
+            password2: {
+                type: 'password',
+                label: 'Re-enter your Password',
+                helperText: 'Confirm your Password',
+                helperMsg: 'Confirm your Password',
+                value: '',
+                validation: {
+                    shouldEquals: 'password',
+                },
+                touched: false,
             },
             address: {
                 type: 'address',
-                helperText: 'Enter here your dream address :)',
                 label: 'Address of your dreams',
+                helperText: 'Enter here your dream address :)',
+                helperMsg: 'Enter here your dream address :)',
                 value: '',
                 validation: {
                     required: true,
                     minLength: 8,
                 },
                 style: { textAlign: 'left' },
-                errorText: '',
                 touched: false,
-                // multiLine: true,
-                rows: 1,
-                rowsMax: 8
             }
 
         },
@@ -91,7 +99,7 @@ class Auth extends React.Component {
     }
 
     isFieldValid(field) {
-        if (field.errorText !== '') return false;
+        if (field.error) return false;
         if (field.validation.required === true && !field.touched) return false;
         return true;
     }
@@ -110,7 +118,7 @@ class Auth extends React.Component {
             return 'Too short';
         }
 
-        if (rules.maxLength && value.length > rules.minLength) {
+        if (rules.maxLength && value.length > rules.maxLength) {
             return 'Too long';
         }
 
@@ -118,12 +126,30 @@ class Auth extends React.Component {
             return 'Invalid format';
         }
 
+        if (rules.shouldEquals && this.state.fields[rules.shouldEquals].value !== value){
+            return 'Passwords do not match'
+        }
+
         return ''
     }
 
     handleChange = name => event => {
         let errMsg = this.checkValidity(event.target.value, this.state.fields[name].validation)
-        let canRegister = errMsg === '';
+        let hasError = errMsg !== '';
+
+        // Prepare updated props
+        let old = {...this.state.fields[name]};
+        old.value= event.target.value;
+        old.touched = true;
+        if (hasError){
+            old.error = true;
+            old.helperText = errMsg;
+        } else {
+            old.error = false;
+            old.helperText = old.helperMsg;        
+        }
+
+        let canRegister = !hasError;
         if (canRegister) {
             for (let key in this.state.fields) {
                 if (key !== name && !this.isFieldValid(this.state.fields[key])) {
@@ -135,12 +161,7 @@ class Auth extends React.Component {
 
         const updatedControls = {
             ...this.state.fields,
-            [name]: {
-                ...this.state.fields[name],
-                value: event.target.value,
-                errorText: errMsg,
-                touched: true
-            }
+            [name]: old, 
         };
 
         this.setState({ fields: updatedControls, canRegister: canRegister });
@@ -181,6 +202,7 @@ class Auth extends React.Component {
                 justify="center">
                 {fields}
                 <Button
+                    disabled={!this.state.canRegister}
                     label="Submit"
                     variant="raised"
                     color="secondary"

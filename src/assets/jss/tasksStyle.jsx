@@ -1,5 +1,13 @@
 
-import { defaultFont, primaryColor, secondaryColor, roseColor, dangerColor } from "./common.jsx";
+import { defaultFont, primaryColor, secondaryColor, dangerColor } from "./common.jsx";
+
+const taskAvatar = {
+  margin: 10,
+  width: 32,
+  height: 32,
+  textAlign: "center",
+  color: '#fff',
+};
 
 const tasksStyle = {
   table: {
@@ -52,31 +60,15 @@ const tasksStyle = {
     color: "#ffffff",
   },
   avatarAssignee: {
-    margin: 10,
-    width: 32,
-    height: 32,
+    ...taskAvatar,
     fontSize: 16,
-    backgroundColor: roseColor,
-    textAlign: "center",
+    fontWeight: "500",
     fontFamily: 'sans-serif',
-    color: "#ffffff",
-  },
-  orangeAvatar: {
-    margin: 10,
-    color: '#fff',
-    width: 32,
-    height: 32,
-    backgroundColor: "#f39c12",
   },
   avatarCategory: {
-    margin: 10,
-    width: 32,
-    height: 32,
+    ...taskAvatar,
     fontSize: 16,
-    backgroundColor: roseColor,
-    textAlign: "center",
-    fontFamily: '"Helvetica Neue",Helvetica,Arial,sans-serif',
-    color: "#ffffff",
+    fontFamily: 'sans-serif',
   },
   checkedIcon: {
     width: "14px",

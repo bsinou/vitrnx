@@ -4,7 +4,7 @@ import axios from '../../apiServer';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 // Material UI
-import { withStyles, Avatar, Icon, List, ListItem, ListItemText, ListItemAvatar, PersonIcon } from '@material-ui/core';
+import { withStyles, Avatar, Icon, List, ListItem, ListItemText, ListItemAvatar } from '@material-ui/core';
 import { green, red } from '@material-ui/core/colors';
 
 const styles = {
@@ -21,9 +21,19 @@ const styles = {
 function User(props) {
     const { classes, user, roleStr, userSelected } = props
     let coming = user.meta.presence && user.meta.presence.isComing;
+    const p =  user.meta.presence;
     let cdesc = "Does not come."
     if (coming) {
-        cdesc = user.meta.presence.adultNb > 1 ? "Comes with " + (user.meta.presence.adultNb - 1) + " adults and " + user.meta.presence.childNb + " gnomes" : "Comes alone";
+        if (p.adultNb > 1){
+            cdesc = "Comes with " + (p.adultNb - 1) + " adults and " + p.childNb + " gnomes";
+        } else if ( p.adultNb === 1){
+            if (p.childNb > 0) cdesc = "Comes with " + p.childNb + " gnomes";
+            else cdesc = "Comes alone";
+        } else if (p.childNb > 1){
+            cdesc = "Comes with " + (p.childNb -1) + " fellow dwarves";
+        } else {
+            cdesc = "Comes alone";
+        }
     }
 
     if (user.meta.commentCount && user.meta.commentCount > 0) {

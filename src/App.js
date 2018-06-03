@@ -14,7 +14,6 @@ import Users from './containers/users/Users'
 // Static pages
 import Home from './containers/home/Home'
 import VideoPage from './components/blog/Media/VideoPage';
-// import Teaser from './static/Teaser/Teaser'
 import Dashboard from './containers/dashboard/Dashboard'
 import Register from './containers/auth/Register'
 import Login from './containers/auth/Login'
@@ -112,8 +111,6 @@ class App extends Component {
         (<Route path="/dashboard" component={Dashboard} />)
         ]
       }
-
-      
 
       if (this.props.userRoles && (this.props.userRoles.includes("ADMIN") || this.props.userRoles.includes("USER_ADMIN"))) {
         routes = [...routes,

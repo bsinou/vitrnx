@@ -17,7 +17,8 @@ import {
   Typography,
   Tabs,
   Tab,
-  TextField
+  TextField,
+  Tooltip
 } from '@material-ui/core';
 
 import tasksCardStyle from "../../assets/jss/tasksCardStyle";
@@ -52,7 +53,7 @@ class CardLayout extends React.Component {
   }
 
   render() {
-    const { classes, selectedTabIndex, onSelect, categories, tasks,
+    const { classes, selectedTabIndex, onSelect, categories, tasks, knownGroups,
       closeTask, editTask, removeTask, showClosed, showAll } = this.props;
 
     let tabs = null;
@@ -82,21 +83,34 @@ class CardLayout extends React.Component {
           // title="TODO"
           action={
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', color: 'inherit' }} >
-              <IconButton
-                tooltip={<span>Show closed tasks</span>}
-                style={showClosed ? selBtnStyle : btnStyle}
-                aria-label="Show closed tasks"
-                onClick={() => this.handleSelected('showClosed')}
+              <Tooltip
+                id="tooltip-top"
+                title="Show closed tasks"
+                placement="top"
+                classes={{ tooltip: classes.tooltip }}
               >
-                <Icon>playlist_add_check</Icon>
-              </IconButton>
-              {/* <IconButton
-                onClick={() => this.handleSelected('showAll')}
-                style={showAll ? selBtnStyle : btnStyle}
-                aria-label="Show all tasks"
+                <IconButton
+                  style={showClosed ? selBtnStyle : btnStyle}
+                  aria-label="Show closed tasks"
+                  onClick={() => this.handleSelected('showClosed')}
+                >
+                  <Icon>playlist_add_check</Icon>
+                </IconButton>
+              </Tooltip>
+              <Tooltip
+                id="tooltip-top"
+                title={showAll ? "Show only tasks that are assigned to me or my groups" : "Show all tasks"}
+                placement="top"
+                classes={{ tooltip: classes.tooltip }}
               >
-                <Icon>people_outline</Icon>
-              </IconButton> */}
+                <IconButton
+                  onClick={() => this.handleSelected('showAll')}
+                  style={showAll ? selBtnStyle : btnStyle}
+                  aria-label="Show all tasks"
+                >
+                  <Icon>people_outline</Icon>
+                </IconButton>
+              </Tooltip>
               <Tabs
                 classes={{
                   flexContainer: classes.tabsContainer,
@@ -125,7 +139,7 @@ class CardLayout extends React.Component {
           />
           <Typography component="div">
             {!tasks ? null : (
-              <Tasks tasks={tasks} closeTask={closeTask} editTask={editTask} removeTask={removeTask} />
+              <Tasks tasks={tasks} knownGroups={knownGroups} closeTask={closeTask} editTask={editTask} removeTask={removeTask} />
             )}
           </Typography>
         </CardContent>
@@ -146,16 +160,16 @@ class TasksCard extends React.Component {
     showAll: false,
     categories: [],
     catIds: [],
+    knownGroups: null,
   };
-
-
 
 
   loadData(force) {
     if (!this.props.token) { return; }
 
+    var options = { headers: { 'Authorization': this.props.token } };
+
     if (force || this.state.index !== this.state.loadedIndex) {
-      var options = { headers: { 'Authorization': this.props.token } };
       var url = '/tasks?categoryId=' + this.state.catIds[this.state.index]
         + '&showClosed=' + this.state.showClosed + '&showAll=' + this.state.showAll;
       axios.get(url, options)
@@ -171,6 +185,16 @@ class TasksCard extends React.Component {
           this.setState({ error: true, loadedIndex: this.state.index })
         });
     }
+
+    if (!this.state.knownGroups) {
+      axios.get('/groups?includeUsers=true', options).then(response => {
+        this.setState({
+          knownGroups: response.data.groups,
+        });
+      }).catch(error => {
+        console.log('Could not retrieve roles', error)
+      });
+    }
   }
 
   handleSelect = (event, value) => {
@@ -182,7 +206,11 @@ class TasksCard extends React.Component {
 
   handleFlagToggle = (event) => {
     let id = event;
-    this.setState({ [id]: !this.state[id] });
+    this.setState({ [id]: !this.state[id] }, this.forceRefresh);
+  }
+
+  forceRefresh = () => {
+    this.loadData(true);
   }
 
   componentDidMount() {
@@ -226,7 +254,7 @@ class TasksCard extends React.Component {
         console.log(error);
         this.setState({ error: true });
       });
-    console.log('Close #', task);
+    // console.log('Close #', task);
   }
 
   closeTask = (task) => {
@@ -262,6 +290,7 @@ class TasksCard extends React.Component {
         toggleFlag={this.handleFlagToggle}
         showClosed={this.state.showClosed}
         showAll={this.state.showAll}
+        knownGroups={this.state.knownGroups}
       />
     );
   }

@@ -3,6 +3,8 @@ import React from 'react';
 import Aux from '../../hoc/AuxWrapper/AuxWrapper';
 import EditTaskForm from './EditTaskForm';
 
+
+
 import {
   withStyles,
   Avatar,
@@ -20,6 +22,9 @@ import PropTypes from "prop-types";
 
 import tasksStyle from "../../assets/jss/tasksStyle.jsx";
 
+const utils = require('../../utils/helpers');
+
+
 class TaskRow extends React.Component {
 
   render() {
@@ -35,7 +40,7 @@ class TaskRow extends React.Component {
           placement="top"
           classes={{ tooltip: classes.tooltip }}
         >
-          <Avatar className={classes.orangeAvatar}>{task.manager.charAt(0)}</Avatar>
+          <Avatar style={{backgroundColor: utils.getImportanceColor(task.flags)}}className={classes.avatarAssignee}>{task.manager.charAt(0)}</Avatar>
         </Tooltip>
       </TableCell>
       <TableCell style={{ maxWidth: '480px' }} className={classes.tableCell} dense="true">
@@ -119,7 +124,7 @@ class Tasks extends React.Component {
   }
 
   render() {
-    const { classes, tasks, closeTask, removeTask } = this.props;
+    const { classes, tasks, knownGroups, closeTask, removeTask } = this.props;
 
     return (
       <Aux>
@@ -128,6 +133,7 @@ class Tasks extends React.Component {
             open={this.state.openEdit}
             onClose={this.onClose}
             task={this.state.editedTask}
+            knownGroups={knownGroups}
             aria-labelledby="form-dialog-title"
           />
         )}
