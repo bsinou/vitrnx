@@ -3,7 +3,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from '../../apiServer';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-import Markdown from 'react-markdown';
+import * as actions from '../../store/actions/index';
+
+// import Markdown from 'react-markdown';
 
 import Comment from '../../components/comment/Comment';
 import HomeTile from './HomeTile';
@@ -12,18 +14,47 @@ import { Grid } from '@material-ui/core';
 
 import classes from './Home.css'
 
+const radioTile = {
+    path: '/play-the-game',
+    type: 'soundPlayer',
+    thumb: 'test.jpg',
+    title: 'A test',
+    author: 'Myself'
+}
+
+const comingTile = {
+    path: '/you-better-click-and-fill',
+    type: 'comingForm',
+    thumb: 'test.jpg',
+    title: 'U tell when U come => UR the best!',
+    author: 'The wonderful orga team a.k.a CLICK ICI POUR T\'INSCRIRE :) '
+}
+
+const AddressPanel = (props) => {
+    const componentClasses = [classes.Address];
+    if (props.show) { componentClasses.push(classes.Show); }
+
+    return (
+        <div className={componentClasses.join(' ')}>{props.address}</div>
+    );
+};
 class Home extends React.Component {
 
     state = {
         homePost: null,
-        lastNews: null,
+        lastNews1: null,
+        lastNews2: null,
+        lastNews3: null,
         lastVideo1: null,
         lastVideo2: null,
-        lastVideo3: null,
+        lastTeaser: null,
         lastBand: null,
         comments: [],
-        addresses: null,
+        addresses: [],
+        currAddIndex: 0,
+        currAddShow: false,
     }
+
 
     loadPost(id, url, force) {
         if (!this.props.token) { return; }
@@ -35,8 +66,9 @@ class Home extends React.Component {
                     // console.log('Got a post, about to set', response)
                     if (id === "homePost") {
                         this.setState({ homePost: response.data.post });
-                    } else if (id === "lastNews") this.setState({ lastNews: response.data.posts[0] });
-                    else if (id === "lastVideo") this.setState({ lastVideo1: response.data.posts[0], lastVideo2: response.data.posts[1], lastVideo3: response.data.posts[2]  });
+                    } else if (id === "lastNews") this.setState({ lastNews1: response.data.posts[0], lastNews2: response.data.posts[1], lastNews3: response.data.posts[2] });
+                    else if (id === "lastVideo") this.setState({ lastVideo1: response.data.posts[0], lastVideo2: response.data.posts[1] });
+                    else if (id === "lastTeaser") this.setState({ lastTeaser: response.data.post });
                     else if (id === "lastBand") this.setState({ lastBand: response.data.posts[0] });
                 }).catch(error => {
                     console.log(error);
@@ -59,31 +91,127 @@ class Home extends React.Component {
         }
     }
 
+    loadDreamAddresses(force) {
+        if (!this.props.token) { return; }
+        if (force || this.state.addresses.length === 0) {
+            var options = { headers: { 'Authorization': this.props.token } };
+            var url = '/dreamAddresses';
+            axios.get(url, options)
+                .then(response => {
+                    let cs = [];
+                    let j = 0;
+                    for (let i = 0; i < response.data.addresses.length; i++) {
+                        let currAd = response.data.addresses[i];
+                        if (currAd.length > 0) {
+                            cs[j] = currAd;
+                            j++;
+                        }
+                    }
+                    let startIndex = Date.now() % cs.length;
+                    this.setState({ addresses: cs, currAddIndex: startIndex });
+                }).catch(error => {
+                    console.log(error);
+                });
+        }
+    }
+
+    // Manage Routing here
     postSelectedHandler = (post) => {
         let path;
-        if (post.tags.indexOf("Video") !== -1){
-            path = '/v/'+post.path;
-        } else {
-            path = '/p/'+post.path;
+        if (post.type === "soundPlayer") { // Do nothing
+            return;
+        } else if (post.type === "comingForm") {// If open coming dialog 
+            // Call redux and returns
+            this.props.onOpenComingDialog();
+            return;
+        }
+
+        // if playlist
+        if (post.type === "radio") {
+            // Whatever maybe do something....
+
+            // or not
+            return;
+        }
+
+        // Video
+        if (post.tags.indexOf("Video") !== -1) {
+            path = '/v/' + post.path;
+        } else { // Default: post
+            path = '/p/' + post.path;
         }
         this.props.history.push(path);
     };
 
     refreshContent(force) {
-        this.loadPost("homePost", "/posts/home", force)
-        this.loadPost("lastNews", "/posts?tag=News&count=1", force)
-        this.loadPost("lastVideo", "/posts?tag=Video", force)
-        this.loadPost("lastBand", "/posts?tag=Band&count=1", force)
-        this.loadComments(force)
+        this.loadPost("homePost", "/posts/home", force);
+        this.loadPost("lastNews", "/posts?tag=News", force);
+        this.loadPost("lastVideo", "/posts?tag=Video", force);
+        this.loadPost("lastTeaser", "/posts/dibu", force);
+        this.loadPost("lastBand", "/posts?tag=Band&count=1", force);
+        this.loadComments(force);
+        this.loadDreamAddresses(force);
+    }
+
+    tick() {
+        this.setState((prevState, props) => {
+            if (prevState.currAddShow){
+                return ({
+                    currAddShow: false,
+                });
+            } else {
+                return ({
+                    currAddShow: true,
+                    currAddIndex: (prevState.currAddIndex + 1) % prevState.addresses.length
+                });
+            }
+        });
     }
 
     componentDidMount() {
         this.refreshContent(false);
+        this.timerID = setInterval(
+            () => this.tick(),
+            3000
+        );
     }
+
+    componentWillUnmount() {
+        clearInterval(this.timerID);
+    }
+
+
+    postSelectedFromComment = (path) => {
+        this.props.history.push('/p/' + path);
+    };
 
     render() {
 
-        const { homePost, lastNews, lastVideo, lastBand, comments } = this.state;
+        const { // homePost, 
+            lastNews1,
+            lastNews2,
+            lastNews3,
+            lastTeaser,
+            lastVideo1,
+            lastVideo2,
+            lastBand,
+            comments,
+            addresses,
+            currAddIndex,
+            currAddShow
+        } = this.state;
+
+
+        let postArray = [
+            radioTile,
+            comingTile,
+            lastNews1,
+            lastBand ? lastBand : lastTeaser,
+            lastVideo1,
+            lastVideo2,
+            lastNews2,
+            lastBand ? lastTeaser : lastNews3
+        ];
 
         let commentArr = [];
 
@@ -91,42 +219,52 @@ class Home extends React.Component {
             commentArr = comments.map(
                 comment => {
                     return (
-                        <Comment
-                            style={{}}
-                            key={comment.id}
-                            onCommentChange={() => this.loadData(true)}
-                            token={this.props.token}
-                            userId={this.props.userId}
-                            userRoles={this.props.userRoles}
-                            comment={comment}
-                        />
+                        <div onClick={() => { this.postSelectedFromComment(comment.parentId) }}>
+                            <Comment
+                                style={{}}
+                                key={comment.id}
+                                onCommentChange={() => this.loadData(true)}
+                                token={this.props.token}
+                                userId={this.props.userId}
+                                userRoles={this.props.userRoles}
+                                comment={comment}
+                            />
+                        </div>
                     );
                 });
         }
 
-
         let page = (
             <Grid container justify="center" style={{ direction: 'row' }}>
                 <Grid item className={classes.Paper} sm={12} md={8} lg={8}  >
-                    <Grid item className={classes.Paper} sm={12} style={{}}>
+                    {/* <Grid item className={classes.Paper} sm={12} style={{}}>
                         {!homePost ? null : (
                             <div>
                                 <h1>{homePost.title}</h1>
                                 <Markdown className={classes.Body} escapeHtml={true} source={homePost.body} />
                             </div>
                         )}
-                    </Grid>
+                    </Grid> */}
                     <Grid item sm={12}>
                         <Grid container justify="center" className={classes.Paper} style={{ direction: 'row' }} >
-                            {!lastNews ? null : ( //, this.state.
-                                <HomeTile postSelected={this.postSelectedHandler} posts={[lastNews, lastVideo, lastBand]} />
+                            {!lastNews1 ? null : (
+                                <HomeTile
+                                    postSelected={this.postSelectedHandler}
+                                    posts={postArray}
+                                />
                             )}
-                         </Grid>
+                        </Grid>
                     </Grid>
                 </Grid>
                 <Grid item className={classes.Paper} sm={12} md={3} lg={3} style={{}}>
-                    <div>
-                        <h3>Recent comments:</h3>
+                    {addresses.length === 0 ? null : (
+                        <div style={{ marginLeft: '.5em' }}>
+                            <div><br />You come to Montchenu, super.<br />But what is your dream address?!?</div>
+                            <AddressPanel show={currAddShow} address={addresses[currAddIndex]} />
+                        </div>
+                    )}
+                    <div style={{ marginLeft: '.5em' }}>
+                        <h4>Yeah... they talk!</h4>
                     </div>
                     <div>{commentArr.length > 0 ? commentArr : null}</div>
                 </Grid>
@@ -143,4 +281,11 @@ const mapStateToProps = state => {
     };
 };
 
-export default withErrorHandler(connect(mapStateToProps)(Home), axios);
+const mapDispatchToProps = dispatch => {
+    return {
+        onOpenComingDialog: () => dispatch(actions.openComingDialog()),
+    };
+};
+
+
+export default withErrorHandler(connect(mapStateToProps, mapDispatchToProps)(Home), axios);

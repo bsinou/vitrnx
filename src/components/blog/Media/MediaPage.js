@@ -6,45 +6,48 @@ import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 
 import Comments from '../../comment/Comments'
 import VideoPlayer from './VideoPlayer'
-import VideoCard from './VideoCard'
+import MediaCard from './MediaCard'
 
 import { Grid } from '@material-ui/core';
 
-class VideoPage extends React.Component {
+class MediaPage extends React.Component {
 
     state = {
         currPlayedPath: null,
-        videos: [],
+        medias: [],
     }
 
-    loadVideos() {
+    loadMedia() {
         if (!this.props.token) { return; }
 
-        if (this.state.videos.length === 0) {
+        if (this.state.medias.length === 0) {
             var options = { headers: { 'Authorization': this.props.token } };
-            var url = '/posts?tag=Video';
+            var url = '/posts?tag=Media';
             axios.get(url, options)
                 .then(response => {
                     const posts = response.data.posts.slice(0, 12);
                     const updatedPosts = posts.map(
                         post => { return { ...post }; }
                     );
-                    this.setState({ videos: updatedPosts });
+                    if (updatedPosts.length > 0 ){
+                        this.setState({ medias: updatedPosts });
+
+                    }
                 }).catch(error => {
                     console.log(error);
                 });
         }
     }
 
-    switchVideo() {
+    switchMedia() {
         const cId = this.props.match.params.id;
         if (cId && (!this.state.currPlayedPath || this.state.currPlayedPath !== cId)) {
             this.setState({ currPlayedPath: cId });
         }
     }
 
-    getVideoMeta(path) {
-        const vidz = this.state.videos;
+    getMediaMeta(path) {
+        const vidz = this.state.medias;
         for (let i in vidz) {
             if (vidz[i].path === path) return vidz[i];
         }
@@ -54,47 +57,55 @@ class VideoPage extends React.Component {
         this.props.history.push('/v/' + path);
     };
 
-    handleVideoSelected = (video) => {
-        this.postSelectedHandler(video.path)
+    handleMediaSelected = (media) => {
+        this.postSelectedHandler(media.path)
     }
 
     componentDidMount() {
-        this.loadVideos();
-        this.switchVideo();
+        this.loadMedia();
+        this.switchMedia();
     }
 
     componentDidUpdate() {
-        this.loadVideos();
-        this.switchVideo();
+        this.loadMedia();
+        this.switchMedia();
     }
 
     render() {
 
-        const { currPlayedPath, videos } = this.state
+        const { currPlayedPath, medias } = this.state
 
-        let videoComps = videos.map(video => {
-            return video.path === currPlayedPath ? null : (
-                <VideoCard key={video.path} video={video} onSelect={this.handleVideoSelected}/>
+        let mediaComps = medias.map(media => {
+            return media.path === currPlayedPath ? null : (
+                <MediaCard key={media.path} media={media} onSelect={this.handleMediaSelected} />
             );
         });
 
         let page = (<div></div>);
 
-        if (currPlayedPath && videos.length > 0) {
+        if (currPlayedPath && medias.length > 0) {
             // console.log("Got a path to play", currPlayedPath)
-            let currPlayed = this.getVideoMeta(currPlayedPath)
+            let currPlayed = this.getMediaMeta(currPlayedPath)
+            // console.log("Got a media", currPlayed)
+
+            // style={{}}
 
             page = (
                 <Grid container style={{ padding: '1em', listStyle: 'none' }}>
-                    <Grid s={12} md={8} lg={8} style={{}}>
+                    <Grid item s={12} md={8} lg={8} >
+                        {/* If video  */}
                         <VideoPlayer path={currPlayedPath} video={currPlayed} />
+                        {/* else if audio  */}
+                        {/* else null  */}
+
                     </Grid>
-                    <Grid sm={12} md={4} lg={4} style={{}}>
+                    <Grid item sm={12} md={4} lg={4} >
                         <h3>Check the other videos!</h3>
-                        <div style={{padding: '10px', margin: '10px'}}>{videoComps}</div>
+                        <div style={{ padding: '10px', margin: '10px' }}>{mediaComps}</div>
                     </Grid>
-                    <Grid sm={12} md={12} lg={12} style={{}}>
-                        <Comments postId={currPlayed.path} />
+                    <Grid item sm={12} md={12} lg={12} >
+                        {!currPlayed ? <div>currplayed is undefined</div> :
+                            <Comments postId={currPlayed.path} />}
                     </Grid>
                 </Grid>
             );
@@ -111,4 +122,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default withErrorHandler(connect(mapStateToProps)(VideoPage), axios);
+export default withErrorHandler(connect(mapStateToProps)(MediaPage), axios);

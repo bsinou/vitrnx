@@ -76,4 +76,4 @@ typings/
 .env.test.local
 .env.production.local
 public/videoRepo/*.mp4
-public/musicRepo/*.mp3
+public/musicRepo/*

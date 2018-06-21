@@ -4,6 +4,10 @@ import ReactPlayer from 'react-player'
 import screenfull from 'screenfull'
 import { findDOMNode } from 'react-dom'
 
+// Redux
+import { connect } from 'react-redux';
+import * as actions from '../../../store/actions/index';
+
 
 import classes from './Media.css';
 
@@ -42,20 +46,21 @@ class VideoPlayer extends React.Component {
     }
 
     playPause = () => {
-        this.setState({ playing: !this.state.playing })
+        this.setState({ playing: !this.state.playing });
     }
 
     onPlay = () => {
-        this.setState({ playing: true })
+        this.props.onStartVideo();
+        this.setState({ playing: true });
     }
     onPause = () => {
-        console.log('onPause')
-        this.setState({ playing: false })
+        console.log('onPause');
+        this.setState({ playing: false });
     }
 
     onClickFullscreen = () => {
-        screenfull.request(findDOMNode(this.player))
-        this.setState({ playing: true })
+        screenfull.request(findDOMNode(this.player));
+        this.setState({ playing: true });
     }
 
     getVideo = (url) => {
@@ -77,13 +82,13 @@ class VideoPlayer extends React.Component {
     }
 
     ref = player => {
-        this.player = player
+        this.player = player;
     }
 
     render() {
         let page = (<div></div>);
 
-        const { currPlayedPath, video, playing, volume, muted, loop, playbackRate } = this.state
+        const { currPlayedPath, video, playing, volume, muted, loop, playbackRate } = this.state;
 
         if (currPlayedPath) {
             page = (
@@ -121,8 +126,24 @@ class VideoPlayer extends React.Component {
                     </div>
                 </div>);
         }
-        return page
+        return page;
     }
 }
 
-export default VideoPlayer;
+// const mapStateToProps = state => {
+//     return {
+//         isAuth: state.auth.token != null,
+//         userRoles: state.auth.userRoles,
+//         dname: state.auth.displayName,
+//         currTrack: state.audio.currTrack,
+//         status: state.audio.playing,
+//     };
+// };
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onStartVideo: () => dispatch(actions.forcePause()),
+    };
+};
+
+export default connect(null, mapDispatchToProps)(VideoPlayer);

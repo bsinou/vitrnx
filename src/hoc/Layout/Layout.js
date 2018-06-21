@@ -10,7 +10,6 @@ import IsComingBox from '../../components/navigation/Toolbar/IsComing'
 
 import classes from './Layout.css';
 
-
 class Layout extends Component {
 
     // The side drawer is hidden after init
@@ -28,20 +27,24 @@ class Layout extends Component {
 
     render() {
 
-        if (this.props.isAuthenticated) {
+        const { isAuth, userRoles, } = this.props
+
+
+        if (isAuth) {
             return (
                 <div className={classes.Container}>
                     {/* Add the Is Coming toggle button */}
                     <IsComingBox />
+
                     <Header className={classes.Header} />
                     <Toolbar
                         className={classes.Toolbar}
-                        isAuth={this.props.isAuthenticated}
-                        userRoles={this.props.userRoles}
+                        isAuth={isAuth}
+                        userRoles={userRoles}
                         drawerToggleClicked={this.sideDrawerToggleHandler} />
                     <SideDrawer
-                        isAuth={this.props.isAuthenticated}
-                        userRoles={this.props.userRoles}
+                        isAuth={isAuth}
+                        userRoles={userRoles}
                         open={this.state.showSideDrawer}
                         closed={this.sideDrawerClosedHandler} />
                     <div className={classes.Content}>
@@ -49,7 +52,7 @@ class Layout extends Component {
                     </div>
                     <Footer
                         className={classes.Footer}
-                        isAuth={this.props.isAuthenticated}
+                        isAuth={isAuth}
                     />
                 </div>
             );
@@ -69,9 +72,17 @@ class Layout extends Component {
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.auth.token !== null,
-        userRoles: state.auth.userRoles
+        isAuth: state.auth.token !== null,
+        userRoles: state.auth.userRoles,
     };
 };
 
+
+// const mapDispatchToProps = dispatch => {
+//     return {
+//       onToggleStatus: () => dispatch(actions.togglePlayingStatus()),
+//     };
+// };  
+
 export default connect(mapStateToProps)(Layout);
+// export default connect(mapStateToProps, mapDispatchToProps)(Layout);

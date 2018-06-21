@@ -4,7 +4,6 @@ import Autosuggest from '../ui/Select/SimpleSelect'
 
 import { FLAG_URGENT, FLAG_IMPORTANT } from "../../assets/conf/tasks";
 
-
 import {
     withStyles,
     Button,
@@ -41,7 +40,7 @@ class FormDialog extends React.Component {
     };
 
     handleKeyPress = (event) => {
-        if (event.key === 'Enter') {
+        if (event.ctrlKey && event.key === 'Enter') {
             event.stopPropagation();
             event.preventDefault();
             this.handleClose()

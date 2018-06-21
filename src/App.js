@@ -1,29 +1,41 @@
 import React, { Component } from 'react';
-// Routing
-import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 // Redux
 import { connect } from 'react-redux';
 import * as actions from './store/actions/index';
 
+// Routing
+// import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+
+
+// Playing sound
+import Sound from 'react-sound';
+
 // Vitrnx specific components
-import Layout from './hoc/Layout/Layout'
-import Blog from './containers/blog/Blog'
-import QueryPosts from './containers/blog/QueryPosts'
-import Users from './containers/users/Users'
+import MyRoutes from './Routes'
+import AuxWrapper from './hoc/AuxWrapper/AuxWrapper';
 
-// Static pages
-import Home from './containers/home/Home'
-import VideoPage from './components/blog/Media/VideoPage';
-import Dashboard from './containers/dashboard/Dashboard'
-import Register from './containers/auth/Register'
-import Login from './containers/auth/Login'
-import Logout from './containers/auth/Logout/Logout'
-import LogoutAndRegister from './containers/auth/Logout/LogoutAndRegister';
 
+// // Vitrnx specific components
+// import Layout from './hoc/Layout/Layout'
+// import Blog from './containers/blog/Blog'
+// import QueryPosts from './containers/blog/QueryPosts'
+// import Users from './containers/users/Users'
+
+
+// // Static pages
+// import Home from './containers/home/Home'
+// import VideoPage from './components/blog/Media/MediaPage';
+// import Dashboard from './containers/dashboard/Dashboard'
+// import Register from './containers/auth/Register'
+// import Login from './containers/auth/Login'
+// import Logout from './containers/auth/Logout/Logout'
+// import LogoutAndRegister from './containers/auth/Logout/LogoutAndRegister';
+
+// import classes from './vitrnx.css';
 
 // Styling
 // Provides default material UI css props to children components
-import classes from './vitrnx.css';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { red300 } from '@material-ui/core/colors';
 import { transition, container } from "./assets/jss/common.jsx";
@@ -71,6 +83,23 @@ const theme = createMuiTheme({
   }
 });
 
+// Manage audio at top level to leave music on when navigating within the site
+class Player extends React.Component {
+
+  render() {
+    const { url, status, onFinishedPlaying } = this.props
+
+    return <Sound
+      url={url}
+      playStatus={status}
+      playFromPosition={30  /* in milliseconds */}
+      onLoading={this.handleSongLoading}
+      onPlaying={this.handleSongPlaying}
+      onFinishedPlaying={onFinishedPlaying}
+    />
+  }
+}
+
 class App extends Component {
 
   constructor(props) {
@@ -83,75 +112,43 @@ class App extends Component {
   }
 
   render() {
-    const isAuth = this.props.isAuthenticated;
-
-    let routes = [
-      <Route path="/register" component={Register} />,
-      <Route path="/" component={Login} />,
-    ];
-
-    if (isAuth) {
-      routes = [
-        (<Route path="/v/:id" component={VideoPage} />),
-        (<Route path="/logout-register" component={LogoutAndRegister} />),
-        (<Route path="/logout" component={Logout} />),
-        (<Route path="/p/" component={Blog} />),
-        (<Route path="/q/" component={Blog} />),
-        (<Route path="/" exact component={Home} />)
-      ]
-
-      if (this.props.userRoles && this.props.userRoles.includes("EDITOR")) {
-        routes = [...routes,
-        (<Route path="/all/" component={QueryPosts} />)
-        ]
-      }
-
-      if (this.props.userRoles && (this.props.userRoles.includes("VOLUNTEER") || this.props.userRoles.includes("ORGANISATION") )) {
-        routes = [...routes,
-        (<Route path="/dashboard" component={Dashboard} />)
-        ]
-      }
-
-      if (this.props.userRoles && (this.props.userRoles.includes("ADMIN") || this.props.userRoles.includes("USER_ADMIN"))) {
-        routes = [...routes,
-        (<Route path="/u/" component={Users} />)
-        ]
-      }
-    }
-
-    routes = [...routes, (<Redirect to="/" />)]
+    const { isAuth, userRoles, currTrack, status, onNextTrack } = this.props
 
     return (
-      isAuth ?
-        (<MuiThemeProvider theme={theme}>
-          <Layout className={classes.Container}>
-            <Switch>
-              {/* Spread operator does not work here, WHY??  */}
-              {routes.map(element => element)}
-            </Switch>
-          </Layout>
-        </MuiThemeProvider>)
-        : (<MuiThemeProvider theme={theme}>
-          <Switch>
-            {routes.map(element => element)}
-          </Switch>
-        </MuiThemeProvider>)
+      <AuxWrapper>
+        {/* Global audio player*/}
+        <Player
+          url={currTrack.url}
+          status={status ? Sound.status.PLAYING : Sound.status.PAUSED}
+          preloadType="auto"
+          onFinishedPlaying={() => onNextTrack()}
+        />
+        <Router>
+          <MuiThemeProvider theme={theme}>
+            <MyRoutes isAuth={isAuth} userRoles={userRoles} props={this.props} />
+          </MuiThemeProvider>
+        </Router>
+      </AuxWrapper>
     );
   }
 }
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.token != null,
+    isAuth: state.auth.token != null,
     userRoles: state.auth.userRoles,
-    dname: state.auth.displayName
+    dname: state.auth.displayName,
+    currTrack: state.audio.currTrack,
+    status: state.audio.playing,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onTryAutoSignup: () => dispatch(actions.authCheckState())
+    onTryAutoSignup: () => dispatch(actions.authCheckState()),
+    onToggleStatus: () => dispatch(actions.togglePlayingStatus()),
+    onNextTrack: () => dispatch(actions.skipTrack(1))
   };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default connect(mapStateToProps, mapDispatchToProps)(App);

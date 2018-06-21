@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import axios from '../../../apiServer'
+import * as actions from '../../../store/actions/index';
 
 import Aux from '../../../hoc/AuxWrapper/AuxWrapper'
 import IsComingDialog from './IsComingDialog'
@@ -21,7 +22,7 @@ const styles = theme => ({
 class Switches extends React.Component {
 
   state = {
-    isDialogOpen: false,
+    // isDialogOpen: false,
   };
 
   loadData(force) {
@@ -46,15 +47,16 @@ class Switches extends React.Component {
 
   updatePresence(presence, openDialogAfterUpdate) {
     var options = { headers: { 'Authorization': this.props.token } };
-    console.log('About to update, received: ', presence)
+    // console.log('About to update, received: ', presence)
     var updatedPresence = { ...presence, userId: this.props.userId };
-    console.log('About to update, data to be sent:: ', updatedPresence)
+    // console.log('About to update, data to be sent:: ', updatedPresence)
 
     axios.post('/usermeta/' + this.props.userId, updatedPresence, options).then(response => {
-      console.log(response);
+      // console.log(response);
       if (openDialogAfterUpdate) {
-        console.log('open after update')
-        this.setState({ presence: { ...response.data.presence }, isDialogOpen: true});
+        // console.log('open after update')
+        this.setState({ presence: { ...response.data.presence }, isDialogOpen: true });
+        this.props.onOpenDialog();
       } else {
         this.setState({ presence: { ...response.data.presence } });
       }
@@ -82,12 +84,15 @@ class Switches extends React.Component {
         this.updatePresence({ ...updatedPresence, isComing: false })
       }
     } else {
-      this.updatePresence({ ...updatedPresence, isComing: true}, true )
+      this.updatePresence({ ...updatedPresence, isComing: true }, true)
     }
   }
 
   handleOpenMore = event => {
-    this.setState({ isDialogOpen: true });
+
+    // USE REDUX ACTION
+    //this.setState({ isDialogOpen: true });
+    this.props.onOpenDialog();
   };
 
   handleCloseDialog = (hasChanged, presence) => {
@@ -103,7 +108,10 @@ class Switches extends React.Component {
 
       this.updatePresence(updated)
     }
-    this.setState({ isDialogOpen: false });
+
+    // USE REDUX ACTION
+    this.props.onCloseDialog();
+    //    this.setState({ isDialogOpen: false });
   };
 
   render() {
@@ -113,10 +121,10 @@ class Switches extends React.Component {
     return !this.state.presence ? null : (
       <Aux>
         <IsComingDialog
-          open={this.state.isDialogOpen}
+          open={this.props.isOpen}
           onClose={this.handleCloseDialog}
           presence={this.state.presence}
-          isRegistered={this.props.email!=='guest@sinou.org'}
+          isRegistered={this.props.email !== 'guest@sinou.org'}
         />
         <div className={customCss.IsComingBox}>
           <div className={customCss.IsComingLabel} onClick={this.handleOpenMore}  >
@@ -140,14 +148,21 @@ class Switches extends React.Component {
   }
 }
 
-
 const mapStateToProps = state => {
   return {
     token: state.auth.token,
     email: state.auth.email,
     userId: state.auth.userId,
     userRoles: state.auth.userRoles,
+    isOpen: state.ui.comingDialogOpen,
   };
 };
 
-export default connect(mapStateToProps)(withStyles(styles)(Switches));
+const mapDispatchToProps = dispatch => {
+  return {
+    onOpenDialog: () => dispatch(actions.openComingDialog()),
+    onCloseDialog: () => dispatch(actions.closeComingDialog())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Switches));

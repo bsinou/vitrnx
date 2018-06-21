@@ -13,22 +13,19 @@ class EditUserDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // Current user that own the session
       token: props.token,
       userId: props.userId,
       userRoles: props.userRoles,
 
-      // Currently edited user
       loadedUserId: props.editedUser.userId,
+      knownRoles: props.knownRoles,
+      knownRoleArr: [...props.knownRoleArr],
       initialUser: { ...props.editedUser },
       initialRoles: [...props.editedUserRoles],
       updatedRoles: [...props.editedUserRoles],
 
-      // Meta info
       onClose: props.onClose,
-      knownRoles: props.knownRoles,
 
-      // Form
       formFields: {
         name: {
           label: 'Name',
@@ -102,8 +99,8 @@ class EditUserDialog extends React.Component {
 
   haveRolesChanged() {
     if (this.state.updatedRoles.length !== this.state.initialRoles.length) return true;
-    for (var currRole in this.state.updatedRoles) {
-      if (!this.state.initialRoles.includes(currRole)) return true;
+    for (var currRoleId in this.state.updatedRoles) {
+      if (!this.state.initialRoles.includes(currRoleId)) return true;
     }
     return false;
   }
@@ -111,7 +108,7 @@ class EditUserDialog extends React.Component {
   getUpdateRoleRequest(options) {
     let request = null;
     if (this.haveRolesChanged) {
-      const roles = this.state.updatedRoles.map(role => role.roleId);
+      const roles = [...this.state.updatedRoles];
       request = axios.patch('/users/' + this.state.initialUser.userId + '/roles', roles, options)
     }
     return request;
@@ -145,51 +142,54 @@ class EditUserDialog extends React.Component {
     return this.state.userRoles.includes("ADMIN") || this.state.userRoles.includes("USER_ADMIN");
   };
 
-  toggleRole = (role) => {
-    if (!this.canEditRoles()) return;
+  toggleRole = key => event => {
+    this.toggleListRole(key)
+  }
 
-    console.log('Toggle role for ', role)
+  toggleListRole = (key) => {
+
+    console.log('Toggle role for ', key)
     if (this.state.updatedRoles) {
       const updated = [...this.state.updatedRoles]
-      var index = updated.indexOf(role);
+      var index = updated.indexOf(key);
       if (index !== -1) { // remove...
         updated.splice(index, 1);
       } else { // add
-        updated.push(role)
+        updated.push(key)
       }
       this.setState({ updatedRoles: [...updated] });
     }
   }
 
-  // getRolesToggleList() {
-  //   let list = [];
-  //   if (!this.canEditRoles()) { return list; }
+  getRolesToggleList() {
+    let list = [];
+    if (!this.canEditRoles()) { return list; }
 
-  //   this.state.knownRoles.forEach((value, key, map) => {
-  //     list = [...list,
-  //     (
-  //       <FormControlLabel
-  //         key={key}
-  //         label={value}
-  //         control={
-  //           <Switch
-  //             checked={this.state.updatedRoles && this.state.updatedRoles.includes(key)}
-  //             onChange={this.toggleRole(key)}
-  //             value="checkedB"
-  //             style={{ toggle: { marginBottom: 16 } }}
-  //             color="primary"
-  //           />
-  //         }
-  //       />
-  //     )]
-  //   });
+    this.state.knownRoles.forEach((value, key, map) => {
+      list = [...list,
+      (
+        <FormControlLabel
+          key={key}
+          label={value}
+          control={
+            <Switch
+              checked={this.state.updatedRoles && this.state.updatedRoles.includes(key)}
+              onChange={this.toggleRole(key)}
+              value="checkedB"
+              style={{ toggle: { marginBottom: 16 } }}
+              color="primary"
+            />
+          }
+        />
+      )]
+    });
 
-  //   return (
-  //     <div style={{ marginTop: '2em', block: { maxWidth: 250 }, display: 'flex', flexDirection: 'column', padding: '4px 8px' }}>
-  //       {list}
-  //     </div>
-  //   );
-  // }
+    return (
+      <div style={{ marginTop: '2em', block: { maxWidth: 250 }, display: 'flex', flexDirection: 'column', padding: '4px 8px' }}>
+        {list}
+      </div>
+    );
+  }
 
   render() {
 
@@ -214,23 +214,27 @@ class EditUserDialog extends React.Component {
         open={this.state.open}
         onClose={this.handleCancelUpdate}
         aria-labelledby="form-dialog-title">
-        <Paper style={{ zIndex: 1300, backgroundColor: '#fff', minHeight: '400px' }}>
+        <Paper style={{ zIndex: 1300, backgroundColor: '#fff' }}>
 
           <DialogTitle id="edit-user-dialog-title">{'Editing ' + this.state.formFields.name.value}</DialogTitle>
-          <DialogContent style={{ minHeight: '400px' }}>
+          <DialogContent>
             {fields}
             <Divider />
-            {(!this.state.knownRoles || !this.state.initialRoles) ? null :
+            {!this.state.knownRoles || !this.state.initialRoles ? null :
               <RoleList
                 idKey="roleId"
                 idLabel="label"
                 defaultListedItems={this.state.initialRoles}
-                suggestions={this.state.knownRoles}
+                defaultSelectedItem={this.state.initialRoles}
+                onSelect={this.handleManagerSelected}
+                suggestions={this.state.knownRoleArr}
+                onAdd={this.toggleListRole}
+                onRemove={this.toggleListRole}
                 label="User's roles"
                 helperText="Choose a role to add"
-                onToggle={this.toggleRole}
               />
             }
+            {!this.state.knownRoles ? null : this.getRolesToggleList()}
           </DialogContent>
           <DialogActions>
             <Button color="primary" onClick={this.handleCancelUpdate} >Cancel</Button>,

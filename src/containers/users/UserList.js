@@ -37,8 +37,13 @@ function User(props) {
     }
 
     if (user.meta.commentCount && user.meta.commentCount > 0) {
-        cdesc += ", has already written " + user.meta.commentCount + " comments."
+        cdesc += ", has already written " + user.meta.commentCount + " comments"
     }
+
+    if (user.meta.presence && user.meta.presence.comments.length > 0) {
+        cdesc += ". Message: " + user.meta.presence.comments + "."
+    }
+
     return (
         <ListItem key={user.userId} onClick={userSelected}>
             <ListItemAvatar>
@@ -86,11 +91,7 @@ class UserList extends Component {
             var url = this.state.query ? '/users?query=' + this.state.query : '/users';
             axios.get(url, options)
                 .then(response => {
-                    // const users = ;
-                    // const updatedPosts = users.map(
-                    //     user => { return { ...user }; }
-                    // );
-                    console.log("Retrieved user list", response.data.users)
+                    // console.log("Retrieved user list", response.data.users)
                     this.setState({ users: response.data.users, loaded: true });
                 }).catch(error => {
                     console.log(error);
@@ -104,7 +105,6 @@ class UserList extends Component {
         event.preventDefault();
         this.props.history.push('/u/' + userId);
     };
-
 
     getRoleString(roles) {
         if (!roles) {

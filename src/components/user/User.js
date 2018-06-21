@@ -20,8 +20,7 @@ export default class User extends React.Component {
     initialUser: null,
     updatedUser: null,
 
-    knownRoles: null,
-
+    knownRoles: [],
     initialRoles: [],
     updatedRoles: [],
 
@@ -51,12 +50,14 @@ export default class User extends React.Component {
     if (cId) {
       if (force || !this.state.loadedUserId || this.state.loadedUserId !== cId) {
         axios.get('/users/' + cId, options).then(response => {
-          // console.log('Retrieved from REST', response.data)
+          console.log('Retrieved from REST', response.data)
+          // console.log('## Roles from REST', response.data.user.roles)
+
           this.setState({
             initialUser: { ...response.data.user },
             updatedUser: { ...response.data.user },
-            initialRoles: [...response.data.user.userRoles],
-            updatedRoles: [...response.data.user.userRoles],
+            initialRoles: [...response.data.user.roles],
+            updatedRoles: [...response.data.user.roles],
             loadedUserId: cId,
             editUserDialog: null,
             errorMsg: null,
@@ -71,18 +72,13 @@ export default class User extends React.Component {
       }
     }
 
-    if (!this.state.errorMsg && !this.state.knownRoles) {
+    if (!this.state.errorMsg && (!this.state.knownRoles || this.state.knownRoles.length < 1 ))  {
       // Retrieve role list
       axios.get('/roles', options).then(response => {
-        let retrievedRoles = new Map();
-        response.data.roles.map(role => {
-          retrievedRoles.set(role.roleId, role.label);
-        })
         this.setState({
-          knownRoles: retrievedRoles,
+          knownRoles: response.data.roles,
         });
         // console.log('retrieved roles', response, retrievedRoles)
-
       }).catch(error => {
         console.log('Could not retrieve roles', error)
       });
@@ -114,9 +110,8 @@ export default class User extends React.Component {
       userId={this.props.userId}
       userRoles={this.props.userRoles}
       editedUser={this.state.initialUser}
-      editedUserRoles={this.state.initialUser.userRoles}
+      editedUserRoles={this.state.initialUser.roles}
       knownRoles={this.state.knownRoles}
-
       onClose={this.handleClose}
     />);
 
@@ -161,7 +156,6 @@ export default class User extends React.Component {
   }
 
   /* UI */
-
   getEditBtn = () => {
     let btns = null;
     if (this.canEdit()) {
@@ -186,7 +180,8 @@ export default class User extends React.Component {
   }
 
   getRoleString(roles) {
-    return roles.map(role => this.state.knownRoles.get(role)).join(', ');
+    // return roles.map(role => { console.log('Getting role string for', role.roleId); return role.label }).join(', ');
+    return roles.map(role => role.label).join(', ');
   }
 
   render() {
@@ -195,7 +190,10 @@ export default class User extends React.Component {
       user = <p style={{ textAlign: 'center' }}>Loading...</p>;
     }
 
+
+
     if (this.state.initialUser) {
+      console.log('### retrieved a user...', this.state.initialUser)
       user = (
         <div className={classes.CommentBox} >
           {this.getEditBtn()}
@@ -211,9 +209,7 @@ export default class User extends React.Component {
           <div>
             <div className={classes.CommentMeta}>{this.state.initialUser.name}</div>
             <div className={classes.CommentMeta}>{this.state.initialUser.email}</div>
-            {!this.state.knownRoles ? null : (
-              <div className={classes.CommentMeta}>{this.getRoleString(this.state.initialUser.userRoles)}</div>
-            )}
+            <div className={classes.CommentMeta}>{this.getRoleString(this.state.initialUser.roles)}</div>
           </div>
           <Divider />
           {/* TODO add for instance the list of the comments entered by this user... */}

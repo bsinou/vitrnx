@@ -6,4 +6,29 @@
 .Paper {
   padding: 0px;
 }
- 
+
+
+.Address {
+  font-size: 1.5em;
+  color: #40268c;
+  text-align: left;
+  margin-top: 1em;
+  margin-left: 1em;
+
+  -webkit-transition: 3s;
+  -moz-transition: 3s;
+  -o-transition: 3s;
+  transition: 3s;
+  opacity: 0;
+  visibility: hidden; 
+
+    /* -webkit-transition: opacity 3s ease-in-out;
+  -moz-transition: opacity 3s ease-in-out;
+  -ms-transition: opacity 3s ease-in-out;
+  -o-transition: opacity 3s ease-in-out; */
+}
+
+.Show {
+  opacity: 1;
+  visibility: visible; 
+}
