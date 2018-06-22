@@ -20,6 +20,7 @@ const authStart = ( state, action ) => {
 const authSuccess = (state, action) => {
     return updateObject( state, { 
         token: action.token,
+        refreshToken: action.refreshToken,
         userId: action.userId,
         email: action.email,
         displayName: action.displayName,
@@ -42,6 +43,7 @@ const authFail = (state, action) => {
 const authLogout = (state, action) => {
     return updateObject(state, { 
         token: null, 
+        refreshToken: null,
         userId: null,
         email: 'anonymous', 
         displayName: 'anonymous',

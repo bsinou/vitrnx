@@ -6,7 +6,7 @@ var PLTracks = [
     {
         url: getURI('JingleHirsute.ogg'),
         artist: 'Some music from the 4.0 Artists. Enjoy!',
-        title: 'The return of the MFP - 109.9 FM'
+        title: 'MFP - 109.9 FM'
     },
     {
         url: getURI('Schubert HipHop - King Charles.mp3'),
@@ -14,29 +14,29 @@ var PLTracks = [
         title: 'Schubert HipHop'
     },
     {
+        url: getURI('One Note Dub.mp3'),
+        artist: 'Alma',
+        title: 'One Note Dub'
+    },
+    {
         url: getURI('Drowning Breaks.mp3'),
         artist: 'DJ Drowning (Berlin)',
         title: 'Drowning Breaks - An introductory mix'
     },
     {
-        url: getURI('Zart aber fair - Budi Brudis.mp3'),
-        artist: 'Budi Brudis',
-        title: 'Zart aber fair'
-    },
-    {
-        url: getURI('Nya Trip - A Man Was Killed.mp3'),
-        artist: 'Von Spiel & Alma',
-        title: 'Nya Trip - A Man Was Killed'
-    },
-    {
         url: getURI('RadioScan.ogg'),
-        artist: 'Marcello brings some other pépites to your ears right now...',
+        artist: 'With Marcello & friends, the sound never stops...',
         title: 'You want more?? Stay tune!'
     },
     {
         url: getURI('Corbac Dub.mp3'),
         artist: 'Von Spiel & Alma',
         title: 'Corbac Dub'
+    },
+    {
+        url: getURI('Zart aber fair - Budi Brudis.mp3'),
+        artist: 'Budi Brudis',
+        title: 'Zart aber fair'
     },
     {
         url: getURI('Nox Dolorosa.mp3'),
@@ -49,15 +49,16 @@ var PLTracks = [
         title: 'Nouveau Départ'
     },
     {
+        url: getURI('Nya Trip - A Man Was Killed.mp3'),
+        artist: 'Von Spiel & Alma',
+        title: 'Nya Trip - A Man Was Killed'
+    },
+    {
         url: getURI('Afrux2B (aka vive la drogue).mp3'),
         artist: 'Von Spiel & Alma',
         title: 'Afrux 2B - demo'
     },
-    {
-        url: getURI('One Note Dub.mp3'),
-        artist: 'Alma',
-        title: 'One Note Dub'
-    },
+   
     {
         url: getURI('Tu sers à rien.mp3'),
         artist: 'Un homme seul',

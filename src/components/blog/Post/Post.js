@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from '../../../apiServer';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+import { Redirect} from 'react-router-dom';
 
 // Own component
 import PostInfo from '../PostInfo/PostInfo';
@@ -14,6 +15,7 @@ import { withStyles } from '@material-ui/core/styles';
 import {Button , Card,  CardMedia, Divider, Icon } from '@material-ui/core';
 
 import customCss from './Post.css';
+// import MediaPage from '../Media/MediaPage';
 
 const postStyles = theme => ({
     root: {
@@ -143,12 +145,19 @@ class Post extends React.Component {
             post = <p style={{ textAlign: 'center' }}>Loading...</p>;
         }
         if (this.state.loadedPost) {
-            post = (
-                <AuxWrapper>
-                    {this.getEditBtns(this.state.loadedPost.path)}
-                    <PostLayout post={this.state.loadedPost} />
-                </AuxWrapper>
-            );
+            if (this.state.loadedPost.tags.indexOf("Video") !== -1) {
+                
+                // TODO transmit correct adress via navigate to
+                post = <Redirect to={"/v/"+this.props.match.params.id} />;
+            } else { 
+                post = (
+                    <AuxWrapper>
+                        {this.getEditBtns(this.state.loadedPost.path)}
+                        <PostLayout post={this.state.loadedPost} />
+                    </AuxWrapper>
+                );
+    
+            }
         }
         return post;
     }

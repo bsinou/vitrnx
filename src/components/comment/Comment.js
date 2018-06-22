@@ -27,7 +27,7 @@ export default class Comment extends React.Component {
   }
 
   canEdit() {
-    return this.props.userRoles.includes("MODERATOR") || this.props.userId === this.props.comment.authorId;
+    return (this.props.userRoles && this.props.userRoles.includes("MODERATOR")) || this.props.userId === this.props.comment.authorId;
   }
 
   /* UPDATE */

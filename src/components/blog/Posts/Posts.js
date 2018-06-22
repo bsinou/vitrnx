@@ -68,7 +68,7 @@ class Posts extends Component {
 
 
     canCreatePost = () => {
-        return this.props.userRoles.includes("EDITOR") || this.props.userRoles.includes("MODERATOR");
+        return this.props.userRoles && (this.props.userRoles.includes("EDITOR") || this.props.userRoles.includes("MODERATOR"));
     }
 
 

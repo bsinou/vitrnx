@@ -1,6 +1,7 @@
 export {
     fbRegister,
     fbAuth,
+    refreshFbToken,
     logout,
     setAuthRedirectPath,
     authCheckState

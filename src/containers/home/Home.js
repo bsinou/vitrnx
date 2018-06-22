@@ -66,9 +66,10 @@ class Home extends React.Component {
                     // console.log('Got a post, about to set', response)
                     if (id === "homePost") {
                         this.setState({ homePost: response.data.post });
-                    } else if (id === "lastNews") this.setState({ lastNews1: response.data.posts[0], lastNews2: response.data.posts[1], lastNews3: response.data.posts[2] });
+                    } else if (id === "lastNews") this.setState({ lastNews1: response.data.posts[0], lastNews2: response.data.posts[1], lastNews3: response.data.posts[2], lastNews4: response.data.posts[3] });
                     else if (id === "lastVideo") this.setState({ lastVideo1: response.data.posts[0], lastVideo2: response.data.posts[1] });
                     else if (id === "lastTeaser") this.setState({ lastTeaser: response.data.post });
+                    else if (id === "lastFaq") this.setState({ lastFaq: response.data.posts[0] });
                     else if (id === "lastBand") this.setState({ lastBand: response.data.posts[0] });
                 }).catch(error => {
                     console.log(error);
@@ -129,7 +130,6 @@ class Home extends React.Component {
         // if playlist
         if (post.type === "radio") {
             // Whatever maybe do something....
-
             // or not
             return;
         }
@@ -143,8 +143,14 @@ class Home extends React.Component {
         this.props.history.push(path);
     };
 
+    postSelectedFromComment = (path) => {
+        this.props.history.push('/p/' + path);
+    };
+
+
     refreshContent(force) {
         this.loadPost("homePost", "/posts/home", force);
+        this.loadPost("lastFaqs", "/posts?tag=FAQ", force);
         this.loadPost("lastNews", "/posts?tag=News", force);
         this.loadPost("lastVideo", "/posts?tag=Video", force);
         this.loadPost("lastTeaser", "/posts/dibu", force);
@@ -155,7 +161,7 @@ class Home extends React.Component {
 
     tick() {
         this.setState((prevState, props) => {
-            if (prevState.currAddShow){
+            if (prevState.currAddShow) {
                 return ({
                     currAddShow: false,
                 });
@@ -181,9 +187,6 @@ class Home extends React.Component {
     }
 
 
-    postSelectedFromComment = (path) => {
-        this.props.history.push('/p/' + path);
-    };
 
     render() {
 
@@ -191,6 +194,8 @@ class Home extends React.Component {
             lastNews1,
             lastNews2,
             lastNews3,
+            lastNews4,
+            lastFaq,
             lastTeaser,
             lastVideo1,
             lastVideo2,
@@ -203,14 +208,17 @@ class Home extends React.Component {
 
 
         let postArray = [
-            radioTile,
-            comingTile,
             lastNews1,
+            lastNews2,
+            lastFaq,
             lastBand ? lastBand : lastTeaser,
+            radioTile,
+            // Make this optionnal
+            comingTile,
+            lastNews3,
             lastVideo1,
             lastVideo2,
-            lastNews2,
-            lastBand ? lastTeaser : lastNews3
+            lastBand ? lastTeaser : lastNews4
         ];
 
         let commentArr = [];
@@ -258,8 +266,8 @@ class Home extends React.Component {
                 </Grid>
                 <Grid item className={classes.Paper} sm={12} md={3} lg={3} style={{}}>
                     {addresses.length === 0 ? null : (
-                        <div style={{ marginLeft: '.5em' }}>
-                            <div><br />You come to Montchenu, super.<br />But what is your dream address?!?</div>
+                        <div className={classes.AddressBox}>
+                            <div><i>You come to Montchenu, super. But what is your dream address?!?</i></div>
                             <AddressPanel show={currAddShow} address={addresses[currAddIndex]} />
                         </div>
                     )}

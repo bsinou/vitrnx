@@ -8,6 +8,8 @@ import axios from '../../apiServer';
 
 
 const apiPrefix = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/';
+const secureTokenApiPrefix = 'https://securetoken.googleapis.com/v1/token?';
+
 var apiKey = 'AIzaSyBTPRFJmUcdrezg4goOtBSVBt5JEJINm1Y'
 // var apiKey='A valid firebase API key'
 
@@ -17,10 +19,11 @@ export const authStart = () => {
     };
 };
 
-export const authSuccess = (token, userId, email, displayName, userRoles) => {
+export const authSuccess = (token, refreshToken, userId, email, displayName, userRoles) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         token: token,
+        refreshToken: refreshToken,
         userId: userId,
         email: email,
         displayName: displayName,
@@ -37,6 +40,7 @@ export const authFail = (error) => {
 
 export const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
     localStorage.removeItem('expirationDate');
     localStorage.removeItem('userId');
     return {
@@ -44,12 +48,13 @@ export const logout = () => {
     };
 };
 
-export const registerAuthTimeout = (expirationTime) => {
+export const registerAuthTimeout = (refreshToken, email, expirationTime) => {
     return dispatch => {
         setTimeout(() => {
-            dispatch(logout());
-        }, expirationTime * 1000);
+            dispatch(refreshFbToken((expirationTime - 500) * 1000, email));
+        }, 10 * 1000);
     };
+    //         dispatch(logout());
 };
 
 export const fbRegister = (name, email, password, address) => {
@@ -61,15 +66,14 @@ export const fbRegister = (name, email, password, address) => {
             returnSecureToken: true
         };
 
-        // console.log('About to send auth request', url);
         let url = apiPrefix + 'signupNewUser?key=' + apiKey;
         fbaxios.post(url, authData)
             .then(response => {
-                dispatch(updateLocalStorage(response.data.idToken, response.data.localId, response.data.expiresIn))
-                dispatch(registerAuthTimeout(response.data.expiresIn));
+                dispatch(updateLocalStorage(response.data.idToken, response.data.refreshToken, response.data.localId, response.data.expiresIn))
+                dispatch(registerAuthTimeout(response.data.refreshToken, response.data.expiresIn));
 
                 dispatch(userCreate(response.data.idToken, response.data.localId, name, email, address));
-                dispatch(authSuccess(response.data.idToken, response.data.localId, email, name, ["GUEST"]));
+                dispatch(authSuccess(response.data.idToken, response.data.refreshToken, response.data.localId, email, name, ["GUEST"]));
             })
             .catch(err => {
                 console.log(err);
@@ -91,10 +95,12 @@ export const fbAuth = (email, password) => {
         let url = apiPrefix + 'verifyPassword?key=' + apiKey;
         fbaxios.post(url, authData)
             .then(response => {
-                dispatch(updateLocalStorage(response.data.idToken, response.data.localId, response.data.expiresIn))
-                dispatch(registerAuthTimeout(response.data.expiresIn));
 
-                dispatch(userMeta(response.data.idToken, response.data.localId, email));
+                console.log('Auth success', response.data)
+                dispatch(updateLocalStorage(response.data.idToken, response.data.refreshToken, response.data.localId, response.data.expiresIn))
+                dispatch(registerAuthTimeout(response.data.refreshToken, response.data.expiresIn));
+
+                dispatch(userMeta(response.data.idToken, response.data.refreshToken, response.data.localId));
             })
             .catch(err => {
                 console.log(err);
@@ -103,7 +109,32 @@ export const fbAuth = (email, password) => {
     };
 };
 
+export const refreshFbToken = (refreshToken) => {
+    return dispatch => {
+        if (!refreshToken || refreshToken.length < 5)
+            return; // INvalid refresh token, do nothing
+        const authData = {
+        };
+        var options = {};
+        let url = secureTokenApiPrefix + 'key=' + apiKey
+            + '&grant_type=refresh_token&refresh_token=' + refreshToken;
+
+        axios.post(url, authData, options)
+            .then(response => {
+                dispatch(updateLocalStorage(response.data.id_token, response.data.refresh_token, response.data.user_id, response.data.expires_in))
+                dispatch(registerAuthTimeout(response.data.refresh_token, response.data.expires_in));
+                dispatch(userMeta(response.data.id_token, response.data.refresh_token, response.data.user_id));
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
+};
+
+
 export const authCheckState = () => {
+
+    // TODO: Also add refresh token mechanism
     return dispatch => {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -120,7 +151,7 @@ export const authCheckState = () => {
     };
 };
 
-export const userMeta = (idToken, localId) => {
+export const userMeta = (idToken, refreshToken, localId) => {
     return dispatch => {
         const authData = {
         };
@@ -129,7 +160,7 @@ export const userMeta = (idToken, localId) => {
         var options = { headers: { 'Authorization': idToken } };
         axios.post(url, authData, options)
             .then(response => {
-                dispatch(authSuccess(idToken, localId, response.data.userMeta.email, response.data.userMeta.displayName, response.data.userMeta.userRoles));
+                dispatch(authSuccess(idToken, refreshToken, localId, response.data.userMeta.email, response.data.userMeta.displayName, response.data.userMeta.userRoles));
             })
             .catch(err => {
                 console.log(err);
@@ -145,11 +176,12 @@ export const setAuthRedirectPath = (path) => {
     };
 };
 
-export const updateLocalStorage = (token, userId, expiresIn) => {
+export const updateLocalStorage = (token, refreshToken, userId, expiresIn) => {
     return dispatch => {
         localStorage.setItem('token', token);
+        localStorage.setItem('refreshToken', token);
         localStorage.setItem('userId', userId);
-        const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+        const expirationDate = new Date(new Date().getTime() + (expiresIn - 300) * 1000);
         localStorage.setItem('expirationDate', expirationDate);
     };
 };
