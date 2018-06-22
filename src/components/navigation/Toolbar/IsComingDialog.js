@@ -232,7 +232,7 @@ class FullScreenDialog extends React.Component {
                                             {/* </Paper>
                             <Paper style={{ backgroundColor: '#cedede', opacity: '1' }}> */}
                                             <GridItem xs={12} sm={12} md={6}>
-                                                <FormLabel component="legend"><b>Including you</b>, how big is your crew? (For instancxe, if you come with your grand mother, correct answer is 2 :)</FormLabel>
+                                                <FormLabel component="legend"><b>Including you</b>, how big is your crew? (For instance, if you come with your grand mother, correct answer is 2 :)</FormLabel>
                                                 <Grid container >
                                                     <GridItem xs={6} sm={6} md={3}>
                                                         <TextField
