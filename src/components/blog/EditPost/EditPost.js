@@ -177,10 +177,10 @@ class SimpleTabs extends React.Component {
                             </Grid>
 
                         </div>
-                        <div
+                        {/* <div
                             className={customCss.TabInnerCol}>
                             TODO: Show Pictures
-                        </div>
+                        </div> */}
 
                     </div>
                 </TabContainer>}

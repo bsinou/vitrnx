@@ -14,6 +14,11 @@ var PLTracks = [
         title: 'Schubert HipHop'
     },
     {
+        url: getURI('HesitationBlues.mp3'),
+        artist: 'A cordes et à cris',
+        title: 'Hesitation Blues'
+    },
+    {
         url: getURI('One Note Dub.mp3'),
         artist: 'Alma',
         title: 'One Note Dub'
@@ -32,6 +37,11 @@ var PLTracks = [
         url: getURI('Corbac Dub.mp3'),
         artist: 'Von Spiel & Alma',
         title: 'Corbac Dub'
+    },
+    {
+        url: getURI('IfYouCare.mp3'),
+        artist: 'A cordes et à cris',
+        title: 'If you care fort ss rev breath'
     },
     {
         url: getURI('Zart aber fair - Budi Brudis.mp3'),

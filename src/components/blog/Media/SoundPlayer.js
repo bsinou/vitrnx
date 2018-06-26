@@ -50,7 +50,7 @@ function MediaControlCard(props) {
         <CardMedia
           className={classes.cover}
           image="/imgRepo/prog-hero.jpg"
-          title="Live from space album cover"
+          title="Radio Alma, la radio où le son ne s'arrête jamais."
         />
 
         <div className={classes.details}>
@@ -61,6 +61,7 @@ function MediaControlCard(props) {
               {currTrack.artist}
             </Typography>
           </CardContent>
+
           <div className={classes.controls}>
             <IconButton aria-label="Previous" onClick={onPreviousTrack}>
               {theme.direction === 'rtl' ? <SkipNextIcon /> : <SkipPreviousIcon />}
@@ -71,35 +72,35 @@ function MediaControlCard(props) {
             <IconButton aria-label="Next" onClick={onNextTrack}>
               {theme.direction === 'rtl' ? <SkipPreviousIcon /> : <SkipNextIcon />}
             </IconButton>
-
-            </div>
           </div>
-        </Card>
-      </div>
-    );
-  }
 
-  MediaControlCard.propTypes = {
-    classes: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+MediaControlCard.propTypes = {
+  classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = state => {
+  return {
+    currTrack: state.audio.currTrack,
+    status: state.audio.playing,
   };
+};
 
-  const mapStateToProps = state => {
-    return {
-      currTrack: state.audio.currTrack,
-      status: state.audio.playing,
-    };
+const mapDispatchToProps = dispatch => {
+  return {
+    onToggleStatus: () => dispatch(actions.togglePlayingStatus()),
+    onPreviousTrack: () => dispatch(actions.skipTrack(-1)),
+    onNextTrack: () => dispatch(actions.skipTrack(1))
   };
-
-  const mapDispatchToProps = dispatch => {
-    return {
-      onToggleStatus: () => dispatch(actions.togglePlayingStatus()),
-      onPreviousTrack: () => dispatch(actions.skipTrack(-1)),
-      onNextTrack: () => dispatch(actions.skipTrack(1))
-    };
-  };
+};
 
 
-  export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles, { withTheme: true })(MediaControlCard));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles, { withTheme: true })(MediaControlCard));
 
 

@@ -5,10 +5,8 @@ import axios from '../../apiServer';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import * as actions from '../../store/actions/index';
 
-// import Markdown from 'react-markdown';
-
 import Comment from '../../components/comment/Comment';
-import HomeTile from './HomeTile';
+import HomeTiles from './HomeTiles';
 
 import { Grid } from '@material-ui/core';
 
@@ -18,7 +16,7 @@ const radioTile = {
     path: '/play-the-game',
     type: 'soundPlayer',
     thumb: 'test.jpg',
-    title: 'A test',
+    // title: 'TODO remove',
     author: 'Myself'
 }
 
@@ -27,7 +25,7 @@ const comingTile = {
     type: 'comingForm',
     thumb: 'test.jpg',
     title: 'U tell when U come => UR the best!',
-    author: 'The wonderful orga team a.k.a CLICK ICI POUR T\'INSCRIRE :) '
+    author: 'The wonderful orga team a.k.a CLIQUE ICI POUR T\'INSCRIRE :) '
 }
 
 const AddressPanel = (props) => {
@@ -49,6 +47,11 @@ class Home extends React.Component {
         lastVideo2: null,
         lastTeaser: null,
         lastBand: null,
+        posts: [
+            radioTile,
+            // Make this optionnal
+            comingTile
+        ],
         comments: [],
         addresses: [],
         currAddIndex: 0,
@@ -56,7 +59,7 @@ class Home extends React.Component {
     }
 
 
-    loadPost(id, url, force) {
+    loadPost(id, url, force, multi) {
         if (!this.props.token) { return; }
 
         if (!this.state[id] || force) {
@@ -64,13 +67,41 @@ class Home extends React.Component {
             axios.get(url, options)
                 .then(response => {
                     // console.log('Got a post, about to set', response)
-                    if (id === "homePost") {
-                        this.setState({ homePost: response.data.post });
-                    } else if (id === "lastNews") this.setState({ lastNews1: response.data.posts[0], lastNews2: response.data.posts[1], lastNews3: response.data.posts[2], lastNews4: response.data.posts[3] });
-                    else if (id === "lastVideo") this.setState({ lastVideo1: response.data.posts[0], lastVideo2: response.data.posts[1] });
-                    else if (id === "lastTeaser") this.setState({ lastTeaser: response.data.post });
-                    else if (id === "lastFaq") this.setState({ lastFaq: response.data.posts[0] });
-                    else if (id === "lastBand") this.setState({ lastBand: response.data.posts[0] });
+                    // if (id === "homePost") {
+                    //     this.setState({ homePost: response.data.post });
+                    // } else
+                    this.setState((prevState, props) => {
+                        let updatedArr = [...prevState.posts];
+                        let nps = response.data.posts;
+
+                        // Sanity check
+                        if (multi){
+                            if (!nps||nps.length===0) return;
+                        } else if (!response.data.post) return;
+                        
+                        switch (id) {
+                            case "lastNews":
+                                updatedArr.splice(0, 0, nps[0]);
+                                updatedArr.splice(4, 0, nps[1], nps[2]);
+                                updatedArr.push(nps[3], nps[4], nps[5]);
+                                break;
+                            case "lastTeaser":
+                                updatedArr.splice(3, 0, response.data.post);
+                                break;
+                            case "lastVideo":
+                            case "lastBand":
+                                updatedArr.splice(3, 0, nps[0]);
+                                updatedArr.push(nps[1]);
+                                break;
+                            case "lastFaq":
+                                updatedArr.push(nps[0]);
+                                break;
+                            default:
+                            // Do nothing
+                        }
+                        return { posts: updatedArr };
+                    }
+                    )
                 }).catch(error => {
                     console.log(error);
                 });
@@ -150,11 +181,11 @@ class Home extends React.Component {
 
     refreshContent(force) {
         this.loadPost("homePost", "/posts/home", force);
-        this.loadPost("lastFaqs", "/posts?tag=FAQ", force);
-        this.loadPost("lastNews", "/posts?tag=News", force);
-        this.loadPost("lastVideo", "/posts?tag=Video", force);
+        this.loadPost("lastFaqs", "/posts?tag=FAQ", force, true);
+        this.loadPost("lastNews", "/posts?tag=News", force, true);
+        this.loadPost("lastVideo", "/posts?tag=Video", force, true);
         this.loadPost("lastTeaser", "/posts/dibu", force);
-        this.loadPost("lastBand", "/posts?tag=Band&count=1", force);
+        this.loadPost("lastBand", "/posts?tag=Band", force, true);
         this.loadComments(force);
         this.loadDreamAddresses(force);
     }
@@ -186,20 +217,10 @@ class Home extends React.Component {
         clearInterval(this.timerID);
     }
 
-
-
     render() {
 
         const { // homePost, 
-            lastNews1,
-            lastNews2,
-            lastNews3,
-            lastNews4,
-            lastFaq,
-            lastTeaser,
-            lastVideo1,
-            lastVideo2,
-            lastBand,
+            posts,
             comments,
             addresses,
             currAddIndex,
@@ -207,19 +228,19 @@ class Home extends React.Component {
         } = this.state;
 
 
-        let postArray = [
-            lastNews1,
-            lastNews2,
-            lastFaq,
-            lastBand ? lastBand : lastTeaser,
-            radioTile,
-            // Make this optionnal
-            comingTile,
-            lastNews3,
-            lastVideo1,
-            lastVideo2,
-            lastBand ? lastTeaser : lastNews4
-        ];
+        // let postArray = [
+        //     lastNews1,
+        //     lastNews2,
+        //     lastFaq,
+        //     lastBand ? lastBand : lastTeaser,
+        //     radioTile,
+        //     // Make this optionnal
+        //     comingTile,
+        //     lastNews3,
+        //     lastVideo1,
+        //     lastVideo2,
+        //     lastBand ? lastTeaser : lastNews4
+        // ];
 
         let commentArr = [];
 
@@ -245,22 +266,12 @@ class Home extends React.Component {
         let page = (
             <Grid container justify="center" style={{ direction: 'row' }}>
                 <Grid item className={classes.Paper} sm={12} md={8} lg={8}  >
-                    {/* <Grid item className={classes.Paper} sm={12} style={{}}>
-                        {!homePost ? null : (
-                            <div>
-                                <h1>{homePost.title}</h1>
-                                <Markdown className={classes.Body} escapeHtml={true} source={homePost.body} />
-                            </div>
-                        )}
-                    </Grid> */}
                     <Grid item sm={12}>
                         <Grid container justify="center" className={classes.Paper} style={{ direction: 'row' }} >
-                            {!lastNews1 ? null : (
-                                <HomeTile
+                            <HomeTiles
                                     postSelected={this.postSelectedHandler}
-                                    posts={postArray}
+                                    posts={posts}
                                 />
-                            )}
                         </Grid>
                     </Grid>
                 </Grid>
@@ -297,3 +308,16 @@ const mapDispatchToProps = dispatch => {
 
 
 export default withErrorHandler(connect(mapStateToProps, mapDispatchToProps)(Home), axios);
+
+
+
+// STOCK 
+
+/* <Grid item className={classes.Paper} sm={12} style={{}}>
+                        {!homePost ? null : (
+                            <div>
+                                <h1>{homePost.title}</h1>
+                                <Markdown className={classes.Body} escapeHtml={true} source={homePost.body} />
+                            </div>
+                        )}
+                    </Grid> */
