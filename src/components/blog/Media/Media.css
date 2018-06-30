@@ -14,17 +14,13 @@
 .PlayerDesc {
     text-align: left;
     display: flex;
-
-    flex-flow: row wrap;
+    flex-flow: column;
     justify-content: center;
     align-items: center;
     width: 100%;
     margin: auto;
 }
 
-
-/* @media (min-width: 540px) {
-    .PlayerBox {
-        width: 500px;
-    }
-} */
+.Body {
+    text-align: left;  
+}  

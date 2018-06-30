@@ -29,7 +29,7 @@ class MediaPage extends React.Component {
                     const updatedPosts = posts.map(
                         post => { return { ...post }; }
                     );
-                    if (updatedPosts.length > 0 ){
+                    if (updatedPosts.length > 0) {
                         this.setState({ medias: updatedPosts });
 
                     }
@@ -87,8 +87,6 @@ class MediaPage extends React.Component {
             // console.log("Got a path to play", currPlayedPath)
             let currPlayed = this.getMediaMeta(currPlayedPath)
             // console.log("Got a media", currPlayed)
-
-            // style={{}}
 
             page = (
                 <Grid container style={{ padding: '1em', listStyle: 'none' }}>

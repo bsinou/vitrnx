@@ -4,6 +4,9 @@ import ReactPlayer from 'react-player'
 import screenfull from 'screenfull'
 import { findDOMNode } from 'react-dom'
 
+import Markdown from 'react-markdown';
+
+
 // Redux
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
@@ -122,7 +125,8 @@ class VideoPlayer extends React.Component {
                             <h1>{video.title}</h1>
                         </div>
                         <div style={{ paddingTop: '5px', paddingLeft: '10px', }} > {video.desc} </div>
-                        <div> {video.body} </div>
+                        {/* <div> {video.body} </div> */}
+                        <Markdown className={classes.Body} escapeHtml={true} source={video.body} />
                     </div>
                 </div>);
         }

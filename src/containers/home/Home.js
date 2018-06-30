@@ -39,14 +39,14 @@ const AddressPanel = (props) => {
 class Home extends React.Component {
 
     state = {
-        homePost: null,
-        lastNews1: null,
-        lastNews2: null,
-        lastNews3: null,
-        lastVideo1: null,
-        lastVideo2: null,
-        lastTeaser: null,
-        lastBand: null,
+        // homePost: null,
+        // lastNews1: null,
+        // lastNews2: null,
+        // lastNews3: null,
+        // lastVideo1: null,
+        // lastVideo2: null,
+        // lastTeaser: null,
+        // lastBand: null,
         posts: [
             radioTile,
             // Make this optionnal
@@ -83,7 +83,7 @@ class Home extends React.Component {
                             case "lastNews":
                                 updatedArr.splice(0, 0, nps[0]);
                                 updatedArr.splice(4, 0, nps[1], nps[2]);
-                                updatedArr.push(nps[3], nps[4], nps[5]);
+                                updatedArr.push(nps[3], nps[4], nps[5], nps[6]);
                                 break;
                             case "lastTeaser":
                                 updatedArr.splice(3, 0, response.data.post);
@@ -93,9 +93,10 @@ class Home extends React.Component {
                                 updatedArr.splice(3, 0, nps[0]);
                                 updatedArr.push(nps[1]);
                                 break;
-                            case "lastFaq":
-                                updatedArr.push(nps[0]);
-                                break;
+                            case "lastFaqs":
+                            updatedArr.splice(2, 0, nps[0]);
+                            updatedArr.push(nps[1]);
+                            break;
                             default:
                             // Do nothing
                         }
@@ -180,12 +181,12 @@ class Home extends React.Component {
 
 
     refreshContent(force) {
-        this.loadPost("homePost", "/posts/home", force);
-        this.loadPost("lastFaqs", "/posts?tag=FAQ", force, true);
+        // this.loadPost("static", "/posts/home", force);
         this.loadPost("lastNews", "/posts?tag=News", force, true);
         this.loadPost("lastVideo", "/posts?tag=Video", force, true);
         this.loadPost("lastTeaser", "/posts/dibu", force);
         this.loadPost("lastBand", "/posts?tag=Band", force, true);
+        this.loadPost("lastFaqs", "/posts?tag=FAQ", force, true);
         this.loadComments(force);
         this.loadDreamAddresses(force);
     }
@@ -219,28 +220,13 @@ class Home extends React.Component {
 
     render() {
 
-        const { // homePost, 
+        const { 
             posts,
             comments,
             addresses,
             currAddIndex,
             currAddShow
         } = this.state;
-
-
-        // let postArray = [
-        //     lastNews1,
-        //     lastNews2,
-        //     lastFaq,
-        //     lastBand ? lastBand : lastTeaser,
-        //     radioTile,
-        //     // Make this optionnal
-        //     comingTile,
-        //     lastNews3,
-        //     lastVideo1,
-        //     lastVideo2,
-        //     lastBand ? lastTeaser : lastNews4
-        // ];
 
         let commentArr = [];
 
@@ -283,7 +269,7 @@ class Home extends React.Component {
                         </div>
                     )}
                     <div style={{ marginLeft: '.5em' }}>
-                        <h4>Yeah... they talk!</h4>
+                        <h4>Pendant ce temps là...</h4>
                     </div>
                     <div>{commentArr.length > 0 ? commentArr : null}</div>
                 </Grid>

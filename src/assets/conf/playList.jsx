@@ -30,8 +30,8 @@ var PLTracks = [
     },
     {
         url: getURI('RadioScan.ogg'),
-        artist: 'With Marcello & friends, the sound never stops...',
-        title: 'You want more?? Stay tune!'
+        artist: 'A montchenu si tu veux manger des bonnes pizzas, tu vas chez Don Vito...',
+        title: 'Stay tuned!'
     },
     {
         url: getURI('Corbac Dub.mp3'),
