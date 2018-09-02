@@ -77,3 +77,4 @@ typings/
 .env.production.local
 public/videoRepo/*.mp4
 public/musicRepo/*
+package-lock.json
