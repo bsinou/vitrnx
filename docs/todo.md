@@ -4,38 +4,37 @@
 
 - ~~enhance list and single post page layout~~
 
-User 
+User
 
 - ~~Enhance labels in auth page (use register rather than sign up)~~
-- ~~Add fields in register form~~ 
+- ~~Add fields in register form~~
 - ~~Claims~~
 - add sync with firebase
 - add artist page
 
-
 ## Bugs
 
-- ~~main date is broken on post~~ 
+- ~~main date is broken on post~~
 - ~~finalise post dao -> ID issue~~
 - ~~implement corresponding tests~~
-- ~~update, delete, list,~~ tags 
+- ~~update, delete, list,~~ tags
 - full select on double click
 
 ## Features
 
 - ~~comment~~
-- chat 
+- chat
 - ~~todos~~
 - images
 - video
 - add search, enhance filtering
 - better management of the session time out
 
-## Layout 
+## Layout
 
 - top header
-   - menu
-   - become small on scrolling
+  - menu
+  - become small on scrolling
 - media queries
 - ~~video~~
 - prevent breaking the layout when images are not there
@@ -45,19 +44,19 @@ User
 - ~~enhance list and single post page layout~~
 - First, check the [doc](https://material.io/guidelines/components/cards.html#cards-behavior)
 - manage images
-- ~~add comments~~ 
+- ~~add comments~~
 - limit desc size
 
-## Hover buttons 
+## Hover buttons
 
 - ~~Cancel in card edit~~
 - auto save
 - tooltips
 - ~~snackbars for error and save feedback to user~~
 - Enhance snack bar:
-   - differenciate errors and OK
-   - retrieve relevant message
-   - queue multiple message 
+  - differenciate errors and OK
+  - retrieve relevant message
+  - queue multiple message
 
 ## Edition
 
@@ -77,24 +76,23 @@ User
 
 Markdown editor
 
-- maximize usable space, 
-- stable layout 
-- media query 
+- maximize usable space
+- stable layout
+- media query
 
-## Dev Ops 
+## Dev Ops
 
-- Downgrad react version.
-- Stabilise distribution 
-- define deployment 
+- Downgrad react version
+- Stabilise distribution
+- define deployment
 - make CLI command for ~~start~~, backup and import posts
 
 ## Users
 
-- Settings update 
+- Settings update
 - User management
-- ~~claims, display or not~~ 
+- ~~claims, display or not~~
 - Add tests to check claims on post & delete
-
 
 ## Backend
 

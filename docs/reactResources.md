@@ -4,7 +4,7 @@
 
 - [React / Markdown Integration](https://github.com/rexxars/react-markdown/)
 
-## Example apps 
+## Example apps
 
 - [React Most Wanted](): Tarik has made a great job to bootstrap a new font end client app. Fork, hack and enjoy!
 - [Firebase Tutorial: Real-time Chat](https://www.raywenderlich.com/140836/firebase-tutorial-real-time-chat-2)
@@ -17,11 +17,10 @@
 - [Customise theme](http://www.material-ui.com/#/customization/themes)
 - [The color palette tool](https://material.io/color/#!/?view.left=0&view.right=0&primary.color=2E7D32&secondary.color=0D47A1)
 
-
 ### About cards
 
-- [Main concepts and some online examples](https://material.io/guidelines/components/cards.html) 
-- [Examples with code](http://www.material-ui.com/#/components/card) 
+- [Main concepts and some online examples](https://material.io/guidelines/components/cards.html)
+- [Examples with code](http://www.material-ui.com/#/components/card)
 - [More examples](http://bashooka.com/coding/cool-css-card-ui-examples/)
 
 ### Layout
