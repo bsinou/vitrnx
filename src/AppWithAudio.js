@@ -2,9 +2,18 @@ import React, { Component } from 'react';
 // Redux
 import { connect } from 'react-redux';
 import * as actions from './store/actions/index';
+
 // Routing
 import { BrowserRouter as Router } from 'react-router-dom';
-import MyRoutes from './specific/upala/Routes'
+
+
+// Playing sound
+import Sound from 'react-sound';
+
+// Vitrnx specific components
+import MyRoutes from './Routes'
+import AuxWrapper from './hoc/AuxWrapper/AuxWrapper';
+
 
 // Styling
 
@@ -55,6 +64,23 @@ const theme = createMuiTheme({
   }
 });
 
+// Manage audio at top level to leave music on when navigating within the site
+class Player extends React.Component {
+
+  render() {
+    const { url, status, onFinishedPlaying } = this.props
+
+    return <Sound
+      url={url}
+      playStatus={status}
+      playFromPosition={30  /* in milliseconds */}
+      onLoading={this.handleSongLoading}
+      onPlaying={this.handleSongPlaying}
+      onFinishedPlaying={onFinishedPlaying}
+    />
+  }
+}
+
 class App extends Component {
 
   constructor(props) {
@@ -67,14 +93,23 @@ class App extends Component {
   }
 
   render() {
-    const { isAuth, userRoles} = this.props
+    const { isAuth, userRoles, currTrack, status, onNextTrack } = this.props
 
     return (
-      <Router>
-        <MuiThemeProvider theme={theme}>
-          <MyRoutes isAuth={isAuth} userRoles={userRoles} props={this.props} />
-        </MuiThemeProvider>
-      </Router>
+      <AuxWrapper>
+        {/* Global audio player*/}
+        <Player
+          url={currTrack.url}
+          status={status ? Sound.status.PLAYING : Sound.status.PAUSED}
+          preloadType="auto"
+          onFinishedPlaying={() => onNextTrack()}
+        />
+        <Router>
+          <MuiThemeProvider theme={theme}>
+            <MyRoutes isAuth={isAuth} userRoles={userRoles} props={this.props} />
+          </MuiThemeProvider>
+        </Router>
+      </AuxWrapper>
     );
   }
 }
@@ -84,12 +119,16 @@ const mapStateToProps = state => {
     isAuth: state.auth.token != null,
     userRoles: state.auth.userRoles,
     dname: state.auth.displayName,
+    currTrack: state.audio.currTrack,
+    status: state.audio.playing,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onTryAutoSignup: () => dispatch(actions.authCheckState()),
+    onToggleStatus: () => dispatch(actions.togglePlayingStatus()),
+    onNextTrack: () => dispatch(actions.skipTrack(1))
   };
 };
 

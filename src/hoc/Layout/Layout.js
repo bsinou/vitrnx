@@ -25,6 +25,39 @@ class Layout extends Component {
         this.setState((prevState) => { return { showSideDrawer: !prevState.showSideDrawer } });
     }
 
+    getMenuItems() {
+        let items = [
+            { url: '/', label: 'Home' },
+            { url: '/v/dibu', label: 'Videos' },
+            { url: '/q/News', label: 'News' },
+            { url: '/q/FAQ', label: 'FAQ' },
+        ]
+
+        if (this.props.userRoles && this.props.userRoles.includes("EDITOR")) {
+            items = [...items,
+            { url: '/all', label: 'All' },
+            ]
+        }
+        
+        if (this.props.userRoles && (this.props.userRoles.includes("VOLUNTEER") || this.props.userRoles.includes("ORGANISATION") )) {
+            items = [...items,
+            { url: '/dashboard', label: 'Dashboard' },
+            ]
+        }
+
+        if (this.props.userRoles && this.props.userRoles.includes("ADMIN")) {
+            items = [...items,
+            { url: '/u', label: 'Users' },
+            ]
+        }
+
+        // For now, always true when we reach this point
+        // if (isAuthenticated){
+        items = [...items, { url: '/logout', label: 'Ciao!' }]
+
+        return items;
+    }
+
     render() {
 
         const { isAuth, userRoles, } = this.props
@@ -41,10 +74,12 @@ class Layout extends Component {
                         className={classes.Toolbar}
                         isAuth={isAuth}
                         userRoles={userRoles}
+                        navItems={this.getMenuItems()}
                         drawerToggleClicked={this.sideDrawerToggleHandler} />
                     <SideDrawer
                         isAuth={isAuth}
                         userRoles={userRoles}
+                        navItems={this.getMenuItems()}
                         open={this.state.showSideDrawer}
                         closed={this.sideDrawerClosedHandler} />
                     <div className={classes.Content}>

@@ -6,42 +6,13 @@ import classes from './NavigationItems.css';
 
 export default class NavigationItems extends React.Component {
 
-    getMenuItems() {
-        let items = [
-            { url: '/', label: 'Home' },
-            { url: '/v/dibu', label: 'Videos' },
-            { url: '/q/News', label: 'News' },
-            { url: '/q/FAQ', label: 'FAQ' },
-        ]
-
-        if (this.props.userRoles && this.props.userRoles.includes("EDITOR")) {
-            items = [...items,
-            { url: '/all', label: 'All' },
-            ]
-        }
-        
-        if (this.props.userRoles && (this.props.userRoles.includes("VOLUNTEER") || this.props.userRoles.includes("ORGANISATION") )) {
-            items = [...items,
-            { url: '/dashboard', label: 'Dashboard' },
-            ]
-        }
-
-        if (this.props.userRoles && this.props.userRoles.includes("ADMIN")) {
-            items = [...items,
-            { url: '/u', label: 'Users' },
-            ]
-        }
-
-        // For now, always true when we reach this point
-        // if (isAuthenticated){
-        items = [...items, { url: '/logout', label: 'Ciao!' }]
-
-        return items;
-    }
-
     render() {
 
-        var links = this.getMenuItems().map(
+        if (typeof this.props.navItems === "undefined") {
+            return null;
+        }
+
+        var links = this.props.navItems.map(
             item => (<NavigationItem key={item.url} link={item.url}>{item.label}</NavigationItem>)
         );
 

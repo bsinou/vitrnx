@@ -10,14 +10,9 @@ import QueryPosts from './containers/blog/QueryPosts'
 import Users from './containers/users/Users'
 
 // Static pages
-// Public
-import Home from './specific/upala/pages/Home'
-import PrivateHome from './containers/home/Home'
+import Home from './containers/home/Home'
 import VideoPage from './components/blog/Media/MediaPage';
-
-// Private
 import Dashboard from './containers/dashboard/Dashboard'
-
 import Register from './containers/auth/Register'
 import Login from './containers/auth/Login'
 import Logout from './containers/auth/Logout/Logout'
@@ -26,15 +21,14 @@ import LogoutAndRegister from './containers/auth/Logout/LogoutAndRegister';
 // Styling
 import classes from './vitrnx.css';
 
-class Routes extends Component {
+class Routes40 extends Component {
 
   render() {
     const { isAuth, userRoles } = this.props
 
     let routes = [
       <Route path="/register" component={Register} />,
-      <Route path="/login" component={Login} />,
-      <Route path="/" exact component={Home} />,
+      <Route path="/" component={Login} />,
     ];
 
     if (isAuth) {
@@ -44,7 +38,7 @@ class Routes extends Component {
         (<Route path="/logout" component={Logout} />),
         (<Route path="/p/" component={Blog} />),
         (<Route path="/q/" component={Blog} />),
-        (<Route path="/" exact component={PrivateHome} />)
+        (<Route path="/" exact component={Home} />)
       ]
 
       if (userRoles && userRoles.includes("EDITOR")) {
@@ -85,4 +79,4 @@ class Routes extends Component {
   }
 }
 
-export default withRouter(Routes);
+export default withRouter(Routes40);

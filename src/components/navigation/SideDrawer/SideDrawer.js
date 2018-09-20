@@ -20,6 +20,7 @@ const sideDrawer = (props ) => {
                     <NavigationItems 
                         isAuth={props.isAuth} 
                         userRoles={props.userRoles}
+                        navItems={props.navItems}
                     />
                 </nav>
             </div>

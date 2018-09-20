@@ -38,7 +38,7 @@ const toolbar = (props) => (
         {/* <DrawerToggle clicked={props.drawerToggleClicked} /> */}
         <StyledBtn clicked={props.drawerToggleClicked} />
         <nav className={customCss.DesktopOnly}>
-            <NavigationItems isAuth={props.isAuth} userRoles={props.userRoles} />
+            <NavigationItems isAuth={props.isAuth} userRoles={props.userRoles} navItems={props.navItems} />
         </nav>
     </header>
 );

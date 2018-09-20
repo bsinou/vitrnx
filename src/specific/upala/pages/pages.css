@@ -1,0 +1,74 @@
+.PageContainer {
+  margin-top: 20px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  width: 80%;
+  padding: 32px;
+  margin: auto;
+}
+
+.Page {
+  width: 600px;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+
+.PageTitle {
+  color: #a94c40;
+  font-size: 1.5em;
+}
+
+.PageSubtitle {
+  font-size: 1.2em;
+  font-style: italic;
+}
+
+.PageBody {
+  text-align: left;
+}
+
+/* Home */ 
+
+.Intro {
+  width: 600px;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;  
+}
+
+.IntroBody {
+  text-align: left;  
+}
+
+/** BLOG STYLING */
+
+.Posts {
+  /*border-top: 1px solid  #d87e79;*/
+  margin-top: 40px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  width: 80%;
+  padding: 32px;
+  margin: auto;
+}
+
+.Post {
+  width: 600px;
+  padding: 4px 8px 8px 20px;
+  border: 1px solid  #d87e79;
+  box-shadow: 0 2px 3px #a94c40;
+  margin: 10px;
+  box-sizing: border-box;
+  cursor: pointer;
+  text-align: left;
+} 
+
+.PostTitle, .IntroTitle {
+  color: #a94c40;
+  font-size: 1.5em; 
+}
+
+
