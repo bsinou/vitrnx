@@ -3,14 +3,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    height: 100%;
+    margin: auto;
+    /* min-height: 100vh; */
 
-    background: url(/imgRepo/tract-4.6.jpg) no-repeat center center fixed; 
+    /* background: url(/imgRepo/tract-4.6.jpg) no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;
-  
+    background-size: cover; */
 }
 
 .FormTip,
@@ -20,7 +21,7 @@
 .FormTip a:active,
 .FormTip a:focus {
   outline: 0;
-  color: #e72368;
+  color: #a94c40;
 }
 
 .FormBox {
@@ -28,6 +29,7 @@
     opacity: 0.8;
     margin: auto;
     padding: 1em;
+    margin: 4em 2em 2em 2em;
 }
 
 .Form {
@@ -37,7 +39,7 @@
 
 .OuterBox {
     display: table;
-    margin: 6em auto;
+    margin: 2em auto;
 }
 
 .RegisterForm {
@@ -58,16 +60,15 @@
 
 @media (min-height: 500px) {
     .OuterBox {
-        padding: 2em 2em 0em 0em;
+        padding: .5em 2em 0em 0em;
     }
 }
 
 @media (min-height: 600px) {
     .OuterBox {
-        padding: 3em 2em 0em 0em;
+        padding: .5em 2em 0em 0em;
     }
 }
-
 
 @media (max-width: 475px) {
     .AuthForm {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import apiServer from '../../apiServer';
+import apiServer, { publicServer } from '../../apiServer';
 
 import { withStyles, Avatar, List, ListItem, ListItemText, ListItemAvatar } from '@material-ui/core';
 import { blue } from '@material-ui/core/colors';
@@ -60,19 +60,34 @@ class QueryPosts extends Component {
 
         if (!this.state.loaded && (this.state.showAll || this.state.query)) {
 
-            var options = { headers: { 'Authorization': this.props.token } };
             var url = this.state.query ? '/posts?query=' + this.state.query : '/posts';
-            apiServer.get(url, options)
-                .then(response => {
-                    const posts = response.data.posts;
-                    const updatedPosts = posts.map(
-                        post => { return { ...post }; }
-                    );
-                    this.setState({ posts: updatedPosts, loaded: true });
-                }).catch(error => {
-                    console.log(error);
-                    this.setState({ error: true, loaded: true })
-                });
+
+            if (this.props.isAuth) {
+                var options = { headers: { 'Authorization': this.props.token } };
+                apiServer.get(url, options)
+                    .then(response => {
+                        const posts = response.data.posts;
+                        const updatedPosts = posts.map(
+                            post => { return { ...post }; }
+                        );
+                        this.setState({ posts: updatedPosts, loaded: true });
+                    }).catch(error => {
+                        console.log(error);
+                        this.setState({ error: true, loaded: true })
+                    });
+            } else {
+                publicServer.get(url, options)
+                    .then(response => {
+                        const posts = response.data.posts;
+                        const updatedPosts = posts.map(
+                            post => { return { ...post }; }
+                        );
+                        this.setState({ posts: updatedPosts, loaded: true });
+                    }).catch(error => {
+                        console.log(error);
+                        this.setState({ error: true, loaded: true })
+                    });
+            }
         }
     }
 

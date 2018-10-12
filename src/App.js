@@ -10,7 +10,7 @@ import MyRoutes from './specific/upala/Routes'
 
 // Provides default material UI css props to children components
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { red300 } from '@material-ui/core/colors';
+import { green200, red300, blue400 } from '@material-ui/core/colors';
 import { transition, container } from "./assets/jss/common.jsx";
 
 // This replaces the textColor value in the palette
@@ -24,7 +24,8 @@ const theme = createMuiTheme({
     background: {
       paper: red300
     },
-    primary: red300,
+    primary: green200,
+    secondary: blue400, 
   },
 
   wrapper: {
@@ -33,9 +34,6 @@ const theme = createMuiTheme({
     height: "100vh"
   },
   mainPanel: {
-    // [theme.breakpoints.up("md")]: {
-    //   width: `calc(100% - ${drawerWidth}px)`
-    // },
     overflow: "auto",
     position: "relative",
     float: "right",

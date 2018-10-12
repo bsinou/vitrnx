@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from '../../../apiServer';
+import apiServer, { publicServer } from '../../../apiServer';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 
 import PostCard from '../PostCard/PostCard';
@@ -7,7 +7,7 @@ import AuxWrapper from '../../../hoc/AuxWrapper/AuxWrapper';
 
 
 // Styling
-import { withStyles,  Button, Icon  } from '@material-ui/core';
+import { withStyles, Button, Icon } from '@material-ui/core';
 
 import classes from './Posts.css';
 
@@ -34,25 +34,41 @@ class Posts extends Component {
     }
 
     loadData() {
-        if (!this.props.token) { return; }
+        // We yet handle anonymous requests
+        // if (!this.props.token) { return; }
 
         if (this.props.match.params.id) {
             if (!this.state.loadedCategory || this.state.loadedCategory !== this.props.match.params.id) {
 
                 var targetId = this.props.match.params.id;
-                var options = { headers: { 'Authorization': this.props.token } };
                 var url = '/posts?tag=' + targetId;
-                axios.get(url, options)
-                    .then(response => {
-                        const posts = response.data.posts.slice(0, 12);
-                        const updatedPosts = posts.map(
-                            post => { return { ...post }; }
-                        );
-                        this.setState({ loadedCategory: targetId, posts: updatedPosts });
-                    }).catch(error => {
-                        console.log(error);
-                        this.setState({ error: true, loadedCategory: targetId })
-                    });
+
+                if (this.props.isAuth) {
+                    var options = { headers: { 'Authorization': this.props.token } };
+                    apiServer.get(url, options)
+                        .then(response => {
+                            const posts = response.data.posts.slice(0, 12);
+                            const updatedPosts = posts.map(
+                                post => { return { ...post }; }
+                            );
+                            this.setState({ loadedCategory: targetId, posts: updatedPosts });
+                        }).catch(error => {
+                            console.log(error);
+                            this.setState({ error: true, loadedCategory: targetId })
+                        });
+                } else {
+                    publicServer.get(url, options)
+                        .then(response => {
+                            const posts = response.data.posts.slice(0, 12);
+                            const updatedPosts = posts.map(
+                                post => { return { ...post }; }
+                            );
+                            this.setState({ loadedCategory: targetId, posts: updatedPosts });
+                        }).catch(error => {
+                            console.log(error);
+                            this.setState({ error: true, loadedCategory: targetId })
+                        });
+                }
             }
         }
     }
@@ -117,4 +133,4 @@ class Posts extends Component {
     }
 }
 
-export default withErrorHandler(withStyles(styles)(Posts), axios);
+export default withErrorHandler(withStyles(styles)(Posts), apiServer);

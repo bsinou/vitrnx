@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from '../../apiServer'
+import apiServer from '../../apiServer'
 import { Redirect } from 'react-router-dom'
 
 import { Divider } from '@material-ui/core';
@@ -49,7 +49,7 @@ export default class User extends React.Component {
     const cId = this.props.match.params.id;
     if (cId) {
       if (force || !this.state.loadedUserId || this.state.loadedUserId !== cId) {
-        axios.get('/users/' + cId, options).then(response => {
+        apiServer.get('/users/' + cId, options).then(response => {
           console.log('Retrieved from REST', response.data)
           // console.log('## Roles from REST', response.data.user.roles)
 
@@ -74,7 +74,7 @@ export default class User extends React.Component {
 
     if (!this.state.errorMsg && (!this.state.knownRoles || this.state.knownRoles.length < 1 ))  {
       // Retrieve role list
-      axios.get('/roles', options).then(response => {
+      apiServer.get('/roles', options).then(response => {
         this.setState({
           knownRoles: response.data.roles,
         });
@@ -89,7 +89,7 @@ export default class User extends React.Component {
   deleteUser = () => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       var options = { headers: { 'Authorization': this.props.token } };
-      axios.delete('/users/' + this.state.loadedUserId, options).then(response => {
+      apiServer.delete('/users/' + this.state.loadedUserId, options).then(response => {
         this.setState({ redirect: true }) // redirect to user list
       });
     }
@@ -132,7 +132,7 @@ export default class User extends React.Component {
       userRoles: { ...this.state.updatedUser.userRoles },
     };
     const options = { headers: { 'Authorization': this.props.token } };
-    axios.post('/users', data, options)
+    apiServer.post('/users', data, options)
       .then(response => {
         this.setState({ open: false, initialUser: { ...this.state.updatedUser, userRoles: { ...this.state.updatedUser.userRoles } } });
         this.props.onUserChange();

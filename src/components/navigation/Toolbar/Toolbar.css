@@ -13,6 +13,21 @@
     z-index: 90;
 }
 
+.PrivMenuBox {
+    position: absolute;
+    right: 20px;
+    top: 5px;
+    padding: 0.2em;
+}
+
+.PrivMenuLinks {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+
 .DrawerToggle {
     color: transparent;
     /* display: none; */

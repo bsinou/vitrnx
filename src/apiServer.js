@@ -1,8 +1,13 @@
 import axios from 'axios';
 
-const apiServer = axios.create({
-   // baseURL: 'https://41.sinou.org/api',
-   baseURL: 'http://localhost:8888/api',
-});
+// const prefix = 'https://41.sinou.org/api'
+const prefix = 'http://localhost:8888/'
 
-export default apiServer;
+export const publicServer = axios.create({
+    baseURL: prefix + 'pub',
+ });
+const apiServer = axios.create({
+    baseURL: prefix + 'api',
+});
+  
+export default apiServer

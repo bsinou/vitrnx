@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from '../../../apiServer';
+import apiServer, {publicServer} from '../../../apiServer';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import { Redirect} from 'react-router-dom';
 
@@ -75,10 +75,20 @@ class Post extends React.Component {
         const cId = this.props.match.params.id;
         if (cId) {
             if (!this.state.loadedPost || this.state.loadedPost.path !== cId) {
-                var options = { headers: { 'Authorization': this.props.token } };
-                axios.get('/posts/' + cId, options).then(response => {
-                    this.setState({ loadedPost: response.data.post });
-                });
+                
+                if (this.props.isAuth){
+                    var options = { headers: { 'Authorization': this.props.token } };
+                    apiServer.get('/posts/' + cId, options).then(response => {
+                        this.setState({ loadedPost: response.data.post });
+                    });
+    
+                } else {
+                    var options = {};
+                    publicServer.get('/posts/' + cId, options).then(response => {
+                        this.setState({ loadedPost: response.data.post });
+                    });
+    
+                }
             }
         }
     }
@@ -94,7 +104,7 @@ class Post extends React.Component {
     deletePostHandler = (id) => {
         if (window.confirm('Are you sure you want to completely remove this post?')) {
             var options = { headers: { 'Authorization': this.props.token } };
-            axios.delete('/posts/' + id, options).then(response => {
+            apiServer.delete('/posts/' + id, options).then(response => {
                 this.props.history.goBack();
             });
         }
@@ -163,4 +173,4 @@ class Post extends React.Component {
     }
 }
 
-export default withErrorHandler(Post, axios);
+export default withErrorHandler(Post, apiServer);

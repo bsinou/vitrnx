@@ -8,15 +8,16 @@ import classes from './Auth.css';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { AppBar, Button, Grid, Paper, TextField, Typography } from '@material-ui/core';
-import { red300, red400 } from '@material-ui/core/colors';
+import { red300, red400 , blue400 } from '@material-ui/core/colors';
 
 
 const theme = createMuiTheme({
     palette: {
         background: {
-            paper: red300
+            paper:  blue400
         },
-        primary: red300,
+        primary:  blue400,
+        secondary: blue400,
     },
 
     paper: {
@@ -70,14 +71,15 @@ class Login extends React.Component {
         }
 
         return (
+            // justify="center"
+
             <MuiThemeProvider theme={theme}>
                 <div className={classes.Container}>
                     <div className={classes.AnonBody}>
                         <Grid className={classes.FormBox}
                             container
                             alignItems="center"
-                            direction="column"
-                            justify="center">
+                            direction="column">
                             <Grid className={classes.AuthForm} >
                                 <AppBar position="static" color="secondary" >
                                     <Paper>
@@ -86,8 +88,8 @@ class Login extends React.Component {
                                             height="60"
                                             variant="title"
                                             color="inherit" >
-                                            Festival 4.0
-                            </Typography>
+                                            Please log in
+                                        </Typography>
                                     </Paper>
                                 </AppBar>
                                 <Grid className={classes.Form}

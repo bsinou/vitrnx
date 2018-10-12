@@ -11,5 +11,6 @@
 
 ## Icons set
 
+- To simply generate a set of favicons from a png on-line, you (can use this tool)[http://www.favicomatic.com]
 - A [painfully obsessive cheat sheet to favicon sizes/types](https://github.com/audreyr/favicon-cheat-sheet)
 - https://nucleoapp.com/?ref=creativetim
