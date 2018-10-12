@@ -26,34 +26,31 @@ class UpalaRoutes extends Component {
   render() {
     const { isAuth, userRoles } = this.props
 
+    // Default routes 
     let routes = [
       <Route path="/s" component={StaticPage} />,
-      <Route path="/register" component={Register} />,
-      <Route path="/login" component={Login} />,
-      <Route path="/p/" component={Blog} />,
+      <Route path="/p" component={Blog} />,
+      <Route path="/q" component={Blog} />,
       <Route path="/" exact component={Home} />,
     ];
 
+    // Login management
     if (isAuth) {
-      routes = [
-        (<Route path="/logout" component={Logout} />),
-        (<Route path="/p/" component={Blog} />),
-        (<Route path="/q/" component={Blog} />),
-        (<Route path="/" exact component={PrivateHome} />)
+      routes = [...routes, (<Route path="/logout" component={Logout} />)];
+    } else {
+      routes = [...routes, (<Route path="/register" component={Register} />), (<Route path="/login" component={Login} />)];
+    }
+
+    // Private routes
+    if (userRoles && (userRoles.includes("ADMIN") || userRoles.includes("EDITOR"))) {
+      routes = [...routes, (<Route path="/all/" component={QueryPosts} />)];
+    }
+
+    if (userRoles && (userRoles.includes("ADMIN") || userRoles.includes("USER_ADMIN"))) {
+      routes = [...routes,
+      (<Route path="/dashboard" component={Dashboard} />),
+      (<Route path="/u/" component={Users} />)
       ]
-
-      if (userRoles && (userRoles.includes("ADMIN") || userRoles.includes("EDITOR"))) {
-        routes = [...routes,
-        (<Route path="/all/" component={QueryPosts} />)
-        ]
-      }
-
-      if (userRoles && (userRoles.includes("ADMIN") || userRoles.includes("USER_ADMIN"))) {
-        routes = [...routes,
-          (<Route path="/dashboard" component={Dashboard} />),
-          (<Route path="/u/" component={Users} />)
-        ]
-      }
     }
 
     routes = [...routes, (<Redirect to="/" />)]
@@ -64,7 +61,7 @@ class UpalaRoutes extends Component {
           {/* Spread operator does not work here, WHY??  */}
           {routes.map(element => element)}
         </Switch>
-      </Layout>
+      </Layout >
     );
   }
 }

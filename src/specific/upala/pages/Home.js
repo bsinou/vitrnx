@@ -31,8 +31,8 @@ class Home extends Component {
                             <p>Des propositions sont faites ici pour accompagner chacun au fil des jours, pas à pas.</p>
                         </div>
                     </div>
-                </div>
-                <div className={classes.Posts}>
+                {/* </div>
+                <div className={classes.Posts}> */}
                     <div className={classes.Post}>
                         <p className={classes.PostTitle}>Vivement le printemps...</p>
                         <div className={classes.PostBody}>

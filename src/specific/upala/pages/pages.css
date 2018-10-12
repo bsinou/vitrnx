@@ -4,7 +4,7 @@
   flex-flow: row wrap;
   justify-content: center;
   width: 80%;
-  padding: 32px;
+  padding: 1em;
   margin: auto;
 }
 
@@ -46,7 +46,7 @@
 
 .Posts {
   /*border-top: 1px solid  #d87e79;*/
-  margin-top: 40px;
+  margin-top: 1em;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
@@ -70,5 +70,3 @@
   color: #a94c40;
   font-size: 1.5em; 
 }
-
-

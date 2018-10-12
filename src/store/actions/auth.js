@@ -10,7 +10,7 @@ import axios from '../../apiServer';
 const apiPrefix = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/';
 const secureTokenApiPrefix = 'https://securetoken.googleapis.com/v1/token?';
 
-var apiKey = 'AIzaSyBTPRFJmUcdrezg4goOtBSVBt5JEJINm1Y'
+var apiKey = 'AIzaSyDCILPYnBaNiZ2BEInEMPpUZ4AZSuLQ1v8'
 // var apiKey='A valid firebase API key'
 
 export const authStart = () => {
