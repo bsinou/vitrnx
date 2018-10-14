@@ -18,20 +18,9 @@
 .UnusedStyleToShowColors {
   /* Simple trick so that we can directly have an overview of the various 
   colors we use in the IDE */
-  background: linear-gradient(to top right,
-    #333399,
-    #40268c,
-    #4d1a80, 
-    #490d73, 
-    #410066,
-    #7070b7,
-    #f5f5ff,
-    #f1d923,
-    #f0150a,
-    #9c27b0     
-  );  
+  background: linear-gradient(to top right, #333399, #40268c, #4d1a80, #490d73, #410066, #7070b7, #f5f5ff, #f1d923, #f0150a, #9c27b0);
 }
-  
+
 /* html { 
   background: url(https://41.sinou.org/imgRepo/tract-4.6.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
@@ -47,34 +36,33 @@ html * {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body, h1, h2, h3, h4, h5, h6 {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 500;
+  line-height: 1.2em;
+}
+
 body {
   background-color: #ffffff;
+  font-size: 20px;
   color: #3C4858;
   margin: 0;
   padding: 0;
-  font-family: Roboto, Helvetica, Arial, sans-serif;
-  font-weight: 300;
-  line-height: 1em;
 }
 
-
 .App-title {
-  margin-top: 16px;  
-  padding: 2px;
+  margin-top: 1.4em;
+  padding: 0.2em;
   font-weight: bolder;
   font-size: 2em;
 }
-  
+
 .App-subtitle {
-    padding: 2px;
-    font-size: 1.5em;
+  padding: 0.2em;
+  font-size: 1.5em;
 }
 
-a:link,
-a:visited,
-a:hover,
-a:active,
-a:focus {
+a:link, a:visited, a:hover, a:active, a:focus {
   outline: 0;
   color: #573c56;
 }
@@ -84,16 +72,15 @@ a:focus {
   z-index: 10;
 }
 
-:global .TextLink {
-    color: #f1d923;
+/* :global .TextLink {
+  color: #f1d923;
 }
-  
-:global .TextLink a:hover,
-:global .TextLink a:active {
+
+:global .TextLink a:hover, :global .TextLink a:active {
   color: red;
   text-decoration: underline;
-}
-  
+} */
+
 h1 {
   font-size: 1.4em;
   line-height: 1.4em;
@@ -101,12 +88,13 @@ h1 {
 
 h2 {
   font-size: 1.3em;
+  line-height: 1.3em;
 }
 
 h3 {
   font-size: 1.2em;
   line-height: 1.2em;
-  }
+}
 
 h4 {
   font-size: 1.1em;
@@ -114,32 +102,22 @@ h4 {
   text-transform: uppercase;
 }
 
-
-body, h1, h2, h3, h4, h5, h6 {
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 300;
-  line-height: 1.2em;
-}
-
-
 @media (max-width: 991px) {
-  body,
-  html {
-      position: relative;
-      overflow-x: hidden;
+  body, html {
+    position: relative;
+    overflow-x: hidden;
   }
 
   #bodyClick {
-      height: 100%;
-      width: 100%;
-      position: fixed;
-      opacity: 0;
-      top: 0;
-      left: auto;
-      right: 260px;
-      content: "";
-      z-index: 9999;
-      overflow-x: hidden;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    opacity: 0;
+    top: 0;
+    left: auto;
+    right: 260px;
+    content: "";
+    z-index: 9999;
+    overflow-x: hidden;
   }
 }
-

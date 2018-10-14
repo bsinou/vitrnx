@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-// Redux
 import { connect } from 'react-redux';
 import * as actions from './store/actions/index';
-// Routing
-import { BrowserRouter as Router } from 'react-router-dom';
-import MyRoutes from './specific/upala/Routes'
 
-// Styling
+// **Hack here to switch to specific routes.**
+import MyRoutes from './specific/upala/Routes'
+import { BrowserRouter as Router } from 'react-router-dom';
 
 // Provides default material UI css props to children components
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
