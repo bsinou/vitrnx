@@ -31,6 +31,12 @@
 
 /*, html, overflow-x: hidden;*/
 
+
+:global(:root) {
+  --highlight-color: #a94c40;
+  --text-color: #3C4858;
+}
+
 html * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -45,7 +51,7 @@ body, h1, h2, h3, h4, h5, h6 {
 body {
   background-color: #ffffff;
   font-size: 20px;
-  color: #3C4858;
+  color: var(--text-color);
   margin: 0;
   padding: 0;
 }

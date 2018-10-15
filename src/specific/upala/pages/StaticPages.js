@@ -11,8 +11,8 @@ class Pages extends Component {
     getItwPage() {
         return (
             <div className={classes.Page}>
-                <p className={classes.PageTitle}>Entretien individuel</p>
-                <p className={classes.PageSubtitle}>Prendre le temps et se poser. Ecouter... l'histoire d'une maladie, d'une angoisse, de soucis familiaux ou professionnels.</p>
+                <div className={classes.PageTitle}>Entretien individuel</div>
+                <div className={classes.PageSubtitle}>Prendre le temps et se poser. Ecouter... <br/>L'histoire d'une maladie, d'une angoisse, de soucis familiaux ou professionnels.</div>
                 <div className={classes.PageBody}>
                     <p>Entendre la parole dite, les questions posées et celles qui affleurent.</p>
                     <p>Avec bienveillance et respect, ensemble chercher à comprendre, à renouer les liens, à donner un sens à ce qui est dit et à ce qui a été vécu.</p>
@@ -38,10 +38,11 @@ class Pages extends Component {
     getWorkshopPage() {
         return (
             <div className={classes.Page}>
-                <p className={classes.PageTitle}>ATELIERS DE PEINTURE - ATELIERS DE REFLEXION</p>
-                <p className={classes.PageSubtitle}>en co-animation avec Anne-Noëlle Bissuel, artiste et art-thérapeute, nous mettons en commun nos compétences d'artiste et de thérapeute</p>
+                <div className={classes.PageTitle}>Ateliers de peinture, ateliers de réflexion</div >
+                <div className={classes.PageSubtitle}>En co-animation avec Anne-Noëlle Bissuel, artiste et art-thérapeute, nous mettons en commun nos compétences d'artiste et de thérapeute</div>
                 <div className={classes.PageBody}>
-                    <p>Plus d'information sur les prochains ateliers bientôt, n'hésitez pas à revenir.</p>
+                    <p>Plus d'information sur les prochains ateliers bientôt.</p>
+                    <p>N'hésitez pas à revenir.</p>
                 </div>
             </div>
         );
@@ -50,8 +51,8 @@ class Pages extends Component {
     getBookPage() {
         return (
             <div className={classes.Page}>
-                <p className={classes.PageTitle}>"Notre essentiel de santé"</p>
-                <p className={classes.PageSubtitle}>Françoise Desailly, Marie-Madeleine Sinou et François Veyrié</p>
+                <div className={classes.PageTitle}>"Notre essentiel de santé"</div>
+                <div className={classes.PageSubtitle}>Françoise Desailly, Marie-Madeleine Sinou et François Veyrié</div>
                 <div className={classes.PageBody}>
                     <p>Ce livre est un hymne à la santé, il est le fruit d'une trentaine d'années d'expérience de deux professionnelles de la santé, illustré des dessins d'un artiste pédagogue.</p>
                     <p>La santé est visitée ici dans toutes ses dimensions et ancrée dans l'essence ancestrale des médecines traditionnelles axées sur la prévention. Nous faisons notre les questions auxquelles elles répondaient :</p>
@@ -69,7 +70,7 @@ class Pages extends Component {
     getContactPage() {
         return (
             <div className={classes.Page}>
-                <p className={classes.PageTitle}>Contact</p>
+                <div className={classes.PageTitle}>Contact</div>
                 <div className={classes.PageBody}>
                     <p>Les entretiens individuels ont lieu à Lyon dans le 5° arrondissement ou dans la Drôme des collines.</p>
                     <p>Les ateliers ont lieu à Lyon, dans la Drôme des collines ou selon les groupes constitués.</p>
