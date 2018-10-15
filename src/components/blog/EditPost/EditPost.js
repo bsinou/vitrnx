@@ -34,21 +34,21 @@ const styles = theme => ({
 
 const gridStyle = {
     grid: {
-      padding: "10px 15px !important"
+        padding: "10px 15px !important"
     }
-  };
-  
-  function CustGridItem({ ...props }) {
+};
+
+function CustGridItem({ ...props }) {
     const { classes, children, ...rest } = props;
     return (
-      <Grid item {...rest} className={classes.grid}>
-        {children}
-      </Grid>
+        <Grid item {...rest} className={classes.grid}>
+            {children}
+        </Grid>
     );
-  }
-  
+}
+
 const GridItem = withStyles(gridStyle)(CustGridItem);
-  
+
 
 
 function TabContainer(props) {
@@ -97,109 +97,100 @@ class SimpleTabs extends React.Component {
                 {tabIndex === 0 && <TabContainer>
                     <div className={customCss.TabContent}>
                         {/* <div className={[customCss.TabInnerCol, customCss.Meta].join(' ')}> */}
-                            <Grid container > 
-                                <GridItem xs={12} sm={12} md={12}>
-                                    <TextField
-                                        className={customCss.MetaField}
-                                        id="title"
-                                        label="A title for your post"
-                                        // helperText="A title for your post"
-                                        value={post.title}
-                                        onChange={this.handleValueChange('title')}
-                                        fullWidth />
-                                </GridItem>
-                            </Grid>
-                            <Grid container >
-                                <GridItem xs={12} sm={12} md={6}>
-                                    <TextField
-                                        label="Slug (path-to-post)"
-                                        // label="a-path-to-your-post"
-                                        // helperText="a-nice-name-without-fantasy"
-                                        helperText=""
-                                        value={post.path}
-                                        onChange={this.handleValueChange('path')}
-                                        fullWidth />
-                                </GridItem>
-                                <GridItem xs={12} sm={12} md={6}>
-                                    <TextField
-                                        //label="Tags"
-                                        label="Tags: News, FAQ..."
-                                        // helperText="For instance: News or FAQ"
-                                        helperText=""
-                                        value={post.tags}
-                                        onChange={this.handleValueChange('tags')}
-                                        // onChange={() => onValueChanged('tags')}
-                                        // onChange={(event) => this.setState({ post: { ...this.state.post, tags: event.target.value } })}
-                                        fullWidth />
-                                </GridItem>
-                            </Grid>
-                            <Grid container >
-                                <GridItem xs={12} sm={12} md={6}>
-                                    <TextField
-                                        // fullWidth
-                                         label="Thumbnail image (320x240px)"
-                                        // label="Path of a 320x240px thumbnail image"
-                                        // helperText="Path of a  thumbnail image"
-                                        value={post.thumb}
-                                        onChange={this.handleValueChange('thumb')}
-                                        fullWidth />
-                                </GridItem>
-                                <GridItem xs={12} sm={12} md={6}>
-                                    <TextField
-                                         label="Hero image (800x200px)"
-                                        // label="Path to a 800x200px hero image"
-                                        // helperText="Path to a 800x200px hero image"
-                                        value={post.hero}
-                                        onChange={this.handleValueChange('hero')}
-                                        fullWidth />
-                                </GridItem>
-                            </Grid>
-                            <Grid container>
-                                <GridItem xs={12} sm={12} md={12}>
-                                    <InputLabel style={{ color: "#888888", margin:'1em 0em 0em 0em' }}>
-                                        Description
+                        <Grid container >
+                            <GridItem xs={12} sm={12} md={12}>
+                                <TextField
+                                    className={customCss.MetaField}
+                                    id="title"
+                                    label="A title for your post"
+                                    // helperText="A title for your post"
+                                    value={post.title}
+                                    onChange={this.handleValueChange('title')}
+                                    fullWidth />
+                            </GridItem>
+                            <GridItem xs={12} sm={12} md={6}>
+                                <TextField
+                                    label="Slug (path-to-post)"
+                                    // label="a-path-to-your-post"
+                                    // helperText="a-nice-name-without-fantasy"
+                                    helperText=""
+                                    value={post.path}
+                                    onChange={this.handleValueChange('path')}
+                                    fullWidth />
+                            </GridItem>
+                            <GridItem xs={12} sm={12} md={6}>
+                                <TextField
+                                    //label="Tags"
+                                    label="Tags: News, FAQ..."
+                                    // helperText="For instance: News or FAQ"
+                                    helperText=""
+                                    value={post.tags}
+                                    onChange={this.handleValueChange('tags')}
+                                    // onChange={() => onValueChanged('tags')}
+                                    // onChange={(event) => this.setState({ post: { ...this.state.post, tags: event.target.value } })}
+                                    fullWidth />
+                            </GridItem>
+                            <GridItem xs={12} sm={12} md={6}>
+                                <TextField
+                                    // fullWidth
+                                    label="Thumbnail image (320x240px)"
+                                    // label="Path of a 320x240px thumbnail image"
+                                    // helperText="Path of a  thumbnail image"
+                                    value={post.thumb}
+                                    onChange={this.handleValueChange('thumb')}
+                                    fullWidth />
+                            </GridItem>
+                            <GridItem xs={12} sm={12} md={6}>
+                                <TextField
+                                    label="Hero image (800x200px)"
+                                    // label="Path to a 800x200px hero image"
+                                    // helperText="Path to a 800x200px hero image"
+                                    value={post.hero}
+                                    onChange={this.handleValueChange('hero')}
+                                    fullWidth />
+                            </GridItem>
+                            <GridItem xs={12} sm={12} md={12}>
+                                <InputLabel style={{ color: "#888888", margin: '1em 0em 0em 0em' }}>
+                                    Description
                                     </InputLabel>
-                                </GridItem>
-                                <Grid xs={12} sm={12} md={12} >
-                                    <Input
-                                        style={{ width: '100%' }}
-                                        // autoFocus
-                                        multiline
-                                        // fullwidth
-                                        label="A short desc of your post"
-                                        value={post.desc}
-                                        onChange={this.handleValueChange('desc')}
-                                        margin="normal"
-                                        border="block"
-                                    />
-                                </Grid>
+                            </GridItem>
+                            <Grid xs={12} sm={12} md={12} >
+                                <Input
+                                    style={{ width: '100%' }}
+                                    // autoFocus
+                                    multiline
+                                    // fullwidth
+                                    label="A short desc of your post"
+                                    value={post.desc}
+                                    onChange={this.handleValueChange('desc')}
+                                    margin="normal"
+                                    border="block"
+                                />
                             </Grid>
+                        </Grid>
 
-                        </div>
-                        {/* <div
-                            className={customCss.TabInnerCol}>
-                            TODO: Show Pictures
-                        </div> */}
-
+                    </div>
                     {/* </div> */}
                 </TabContainer>}
 
                 {tabIndex === 1 && <TabContainer>
                     <div className={customCss.TabContent}>
-                        <div className={customCss.TabInnerCol}>
-                            <Textarea
-                                rows={10}
-                                value={post.body}
-                                onChange={this.handleMdChange('body')}
-                            />
-                        </div>
-
-                        <div className={[customCss.Preview, customCss.TabInnerCol].join(' ')}>
-                            <Markdown
-                                className={customCss.Result}
-                                source={post.body}
-                            />
-                        </div>
+                        <Grid container >
+                            <GridItem xs={12} sm={12} md={12}>
+                                <Textarea
+                                    style={{ minHeigth: '400px' }}
+                                    rows={10}
+                                    value={post.body}
+                                    onChange={this.handleMdChange('body')}
+                                />
+                            </GridItem>
+                            <GridItem xs={12} sm={12} md={12}>
+                                <Markdown
+                                    className={customCss.Result}
+                                    source={post.body}
+                                />
+                            </GridItem>
+                        </Grid >
                     </div>
                 </TabContainer>}
             </div>
