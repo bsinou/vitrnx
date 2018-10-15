@@ -96,8 +96,8 @@ class SimpleTabs extends React.Component {
                 </AppBar>
                 {tabIndex === 0 && <TabContainer>
                     <div className={customCss.TabContent}>
-                        <div className={[customCss.TabInnerCol, customCss.Meta].join(' ')}>
-                            <Grid container >
+                        {/* <div className={[customCss.TabInnerCol, customCss.Meta].join(' ')}> */}
+                            <Grid container > 
                                 <GridItem xs={12} sm={12} md={12}>
                                     <TextField
                                         className={customCss.MetaField}
@@ -155,7 +155,6 @@ class SimpleTabs extends React.Component {
                                 </GridItem>
                             </Grid>
                             <Grid container>
-                                
                                 <GridItem xs={12} sm={12} md={12}>
                                     <InputLabel style={{ color: "#888888", margin:'1em 0em 0em 0em' }}>
                                         Description
@@ -182,7 +181,7 @@ class SimpleTabs extends React.Component {
                             TODO: Show Pictures
                         </div> */}
 
-                    </div>
+                    {/* </div> */}
                 </TabContainer>}
 
                 {tabIndex === 1 && <TabContainer>

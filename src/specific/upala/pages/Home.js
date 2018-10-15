@@ -17,7 +17,7 @@ class Home extends Component {
             <Aux>
                 <div className={classes.Posts}>
                     <div className={classes.Intro}>
-                        <p className={classes.IntroTitle}>{titleStr}</p>
+                        <div className={classes.IntroTitle}>{titleStr}</div>
                         <div className={classes.IntroBody}>
                             <p>Médecin généraliste et homéopathe, Maître Praticienne en PNL j'ai exercé en cabinet libéral pendant 30 ans.</p>
                             <p>La santé est un bien précieux...</p>
@@ -31,6 +31,8 @@ class Home extends Component {
                             <p>Des propositions sont faites ici pour accompagner chacun au fil des jours, pas à pas.</p>
                         </div>
                     </div>
+                    <br/>
+                    <br/>
                 {/* </div>
                 <div className={classes.Posts}> */}
                     <div className={classes.Post}>

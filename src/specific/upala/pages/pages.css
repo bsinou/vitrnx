@@ -9,7 +9,6 @@
 }
 
 .Page {
-  width: 600px;
   display: flex;
   flex-flow: column;
   justify-content: center;
@@ -41,6 +40,8 @@
   display: flex;
   flex-flow: column;
   justify-content: center;  
+  padding-top: 2em;
+  padding-bottom: 2em;
 }
 
 .IntroBody {
@@ -61,8 +62,7 @@
 }
 
 .Post {
-  width: 600px;
-  padding: 4px 8px 8px 20px;
+  padding: 0.5em 1em 1em 2em;
   border: 1px solid  #d87e79;
   box-shadow: 0 2px 3px #a94c40;
   margin: 10px;
@@ -74,4 +74,25 @@
 .PostTitle, .IntroTitle {
   color: #a94c40;
   font-size: 1.5em; 
+}
+
+
+@media (max-width: 991px) {
+  body, html {
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  #bodyClick {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    opacity: 0;
+    top: 0;
+    left: auto;
+    right: 260px;
+    content: "";
+    z-index: 9999;
+    overflow-x: hidden;
+  }
 }

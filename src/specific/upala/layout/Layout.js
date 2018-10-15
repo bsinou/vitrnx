@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import AuxWrapper from '../../../hoc/AuxWrapper/AuxWrapper'
 import Toolbar from '../../../components/navigation/Toolbar/Toolbar'
-import PrivateToolbar from '../../../components/navigation/Toolbar/PrivateToolbar'
 import SideDrawer from '../../../components/navigation/SideDrawer/SideDrawer'
 import Header from './Header'
 import Footer from './Footer'
@@ -62,12 +61,12 @@ class Layout extends Component {
     }
 
     getPrivItems() {
-        
-        let items = [ 
-            { url: '/login', label: 'S\'identifier'},
+
+        let items = [
+            { url: '/login', label: 'S\'identifier' },
         ]
 
-        if (this.props.isAuth){
+        if (this.props.isAuth) {
             items = [];
 
             if (this.props.userRoles && this.props.userRoles.includes("ADMIN")) {
@@ -76,11 +75,11 @@ class Layout extends Component {
                     { url: '/u', label: 'Utilisateurs' },
                 ]
             }
-    
-            items = [ ...items,
-                { url: '/logout', label: 'Se déconnecter'},
+
+            items = [...items,
+            { url: '/logout', label: 'Se déconnecter' },
             ]
-        } 
+        }
 
         return items;
     }
@@ -89,13 +88,11 @@ class Layout extends Component {
         const { isAuth, userRoles } = this.props
         return (
             <AuxWrapper>
-                <PrivateToolbar
+                <Header className={classes.Header}
                     isAuth={isAuth}
                     userRoles={userRoles}
-                    navItems={this.getPrivItems()}
-                />
+                    navItems={this.getPrivItems()} />
                 <div className={classes.Container}>
-                    <Header className={classes.Header} />
                     <Toolbar
                         className={classes.Toolbar}
                         isAuth={isAuth}

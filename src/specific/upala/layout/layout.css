@@ -5,6 +5,9 @@
   flex-direction: column;
   min-height: 100vh;
   overflow-x: visible;
+  background-color: var(--background-light);
+  width: 80%;
+  margin: auto;
 }
 
 .Content {
@@ -15,16 +18,20 @@
 
 .Header {
   background: linear-gradient(to top right, #d1d8f4, #d9cfd0, #d6b8a5, #d87e79, #a94c40);
+  position: relative;
   height: 140px;
-  padding-top: 10px;
-  padding-left: 30px;
+  padding-top: 1.2em;
+  padding-bottom: 1.2em;
+  padding-left: 2em;
+  width: 80%;
+  margin: auto;
   text-align: left;
 }
 
 .HeaderTitle {
   margin-top: 16px;
   padding: 2px;
-  color: #a94c40;
+  color: var(--highlight-color);
   font-weight: bolder;
   font-size: 2em;
 }
