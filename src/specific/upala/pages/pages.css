@@ -1,11 +1,13 @@
 .PageContainer {
-  margin-top: 20px;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  width: 80%;
-  padding: 0.4em;
+
+  width: 100%;
+  margin-top: 1em;
   margin: auto;
+
+  padding: 0.4em 1em;
 }
 
 .Page {
@@ -13,6 +15,8 @@
   flex-flow: column;
   justify-content: center;
   margin-top: 2em;
+  padding: 0.4em 1em 0em 0em;
+
 }
 
 .PageTitle {
@@ -57,7 +61,7 @@
   flex-flow: row wrap;
   justify-content: center;
   width: 80%;
-  padding: 1em;
+  padding: 1em ;
   margin: auto;
 }
 

@@ -5,6 +5,8 @@ import axios from '../../../apiServer';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 
 import EditButtons from '../../ui/EditButtons/EditButtons';
+import AuxWrapper from '../../../hoc/AuxWrapper/AuxWrapper';
+
 import Markdown from 'react-markdown';
 import Textarea from 'react-expanding-textarea';
 
@@ -297,6 +299,7 @@ class EditPost extends React.Component {
     render() {
         return (!this.props.token || !this.state.post) ? null : (
             <div className={customCss.EditPost}>
+            {/* <AuxWrapper> */}
                 <EditButtons
                     onSave={this.postDataHandler}
                     onCancel={this.cancelHandler}
@@ -305,6 +308,7 @@ class EditPost extends React.Component {
                     post={this.state.post}
                     onValueChanged={this.onValueChange}
                     onMarkdownChanged={this.handleMarkdownChange} />
+            {/* </AuxWrapper> */}
             </div>
         );
     }

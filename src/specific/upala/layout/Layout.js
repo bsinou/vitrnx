@@ -88,11 +88,12 @@ class Layout extends Component {
         const { isAuth, userRoles } = this.props
         return (
             <AuxWrapper>
-                <Header className={classes.Header}
-                    isAuth={isAuth}
-                    userRoles={userRoles}
-                    navItems={this.getPrivItems()} />
                 <div className={classes.Container}>
+                    <Header className={classes.Header}
+                        isAuth={isAuth}
+                        userRoles={userRoles}
+                        navItems={this.getPrivItems()} />
+
                     <Toolbar
                         className={classes.Toolbar}
                         isAuth={isAuth}

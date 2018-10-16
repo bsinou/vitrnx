@@ -1,16 +1,16 @@
 
 .SideButtons {
-	position: fixed;
+	position: absolute;
     display: flex;
     flex-direction: column;
-	top: 240px;
-    right: 0;
+	top: 14em;
+    right: -3em;
     list-style: none;
     z-index: 99;
 }
 
 .AllBtnBox{
-    margin-left: 1em;
+    margin-left: 0em;
     font-size: 0.4em;
 }
 

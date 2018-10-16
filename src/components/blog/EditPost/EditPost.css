@@ -32,24 +32,32 @@
     /* border: 2px solid yellowgreen; */
 }
 
+.EditPost {
+    position: relative;
+    width: 100%;
+    padding: 1em 0em;
+}
+
+
 .EditPost input,
 .EditPost textarea,
 .EditPost select,
 .EditPost TextField {
     /* border: 2px solid blueviolet; */
     /* display: block; */
-    width: 95%;
     /* box-sizing: border-box;
     outline: none; */
-    font: inherit;
+  
+    /* position: relative;
+    font: inherit; */
 }
 
 .EditPost input {
-    border-bottom: 2px solid #cedede;
+    /* border-bottom: 2px solid #cedede;
     width: 100%;
     box-sizing: border-box;
     outline: none;
-    font: inherit;
+    font: inherit; */
 }
 
 
@@ -75,7 +83,6 @@
 }
 
 .CodeMirror {
-    position: absolute;
     top: 0;
     left: 0;
     right: 0;
@@ -89,11 +96,11 @@
 /* SIDE BUTTONS */
 
 .SideButtons {
-	position: fixed;
+	position: absolute;
     display: flex;
     flex-direction: column;
-	top: 240px;
-    right: 0;
+	top: 40px;
+    right: -30px;
     list-style: none;
     z-index: 99;
 }

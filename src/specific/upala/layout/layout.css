@@ -11,7 +11,9 @@
 }
 
 .Content {
+  position: relative;
   flex: 1;
+  padding: 0em 1em;
 }
 
 /* HEADER */
@@ -19,25 +21,25 @@
 .Header {
   background: linear-gradient(to top right, #d1d8f4, #d9cfd0, #d6b8a5, #d87e79, #a94c40);
   position: relative;
-  height: 140px;
-  padding-top: 1.2em;
-  padding-bottom: 1.2em;
-  padding-left: 2em;
-  width: 80%;
+  /* height: 140px; */
+  width: 100%;
   margin: auto;
+  margin-bottom: 0.6em;
+  padding: 2em 0em;
   text-align: left;
+  box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2)
 }
 
 .HeaderTitle {
   margin-top: 16px;
-  padding: 2px;
+  padding: 0em 1em;
   color: var(--highlight-color);
   font-weight: bolder;
   font-size: 2em;
 }
 
 .HeaderSubtitle {
-  padding: 2px;
+  padding: 0em 2em;
   margin-top: 0.4em;
   font-size: 1em;
 }
@@ -47,17 +49,32 @@
 .Footer {
   background: linear-gradient(to bottom right, /*#7f8a68, */
   #bbc3bb, #d1beb0, #d6b8a5);
-  margin-top: 32px;
-  height: 26px;
-  padding: 13px 40px 10px 16px;
+  margin-top: 2em;
+  /* height: 1.4em; */
+  padding: 0.8em 2em 0.8em 2em;
   text-align: right;
   display: flex;
   flex-flow: row wrap;
   justify-content: right;
-  color: #573c56;
+  /* color: #573c56; */
   font-size: 0.8em;
+  box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2)
 }
 
 .Footer a {
-  color: #573c56;
+  padding-right: 1em;
+  /* color: #573c56; */
+}
+
+
+@media (max-width: 1400px) {
+  .Container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .Container {
+    width: 100%;
+  }
 }

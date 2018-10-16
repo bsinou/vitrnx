@@ -2,9 +2,9 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-    width: 95%;
-    margin: auto;
-    padding: 1em 1em 1em 1em;
+    /* width: 95%; */
+    /* margin: auto; */
+    padding: 1em;
 }
 
 .PostCard {
@@ -15,11 +15,11 @@
 
 /* Side Buttons */
 .SideButtons {
-	position: fixed;
+	position: absolute;
     display: flex;
     flex-direction: column;
-	top: 240px;
-    right: 0;
+	top: 40px;
+    right: -30px;
     list-style: none;
     z-index: 99;
 }
@@ -36,7 +36,7 @@
 
 
 @media (min-width: 1700px) {
-    .Posts {
+    /* .Posts {
         width: 1650px;
-    }
+    } */
 }

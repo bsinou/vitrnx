@@ -57,7 +57,7 @@ h2 {
 
 .SideButtons li a:hover img {background: rgba(0, 0, 0, 0);}
 
-@media (min-width: 889px) {
+@media (min-width: 850px) {
     .SubCard {
         width: 800px;
         margin: auto;
