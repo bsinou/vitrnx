@@ -22,7 +22,7 @@ function Post(props) {
     return (
         <ListItem onClick={postSelected}>
             <ListItemAvatar>
-                <Avatar className={classes.avatar} src={"../imgRepo/" + post.thumb} />
+                <Avatar className={classes.avatar} src={"../files/images/" + post.thumb} />
             </ListItemAvatar>
             <ListItemText
                 style={{ textAlign: 'left' }}

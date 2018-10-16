@@ -49,7 +49,7 @@ function MediaControlCard(props) {
       <Card className={classes.card}>
         <CardMedia
           className={classes.cover}
-          image="/imgRepo/prog-hero.jpg"
+          image="/files/images/prog-hero.jpg"
           title="Radio Alma, la radio où le son ne s'arrête jamais."
         />
 

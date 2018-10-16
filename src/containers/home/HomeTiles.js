@@ -38,7 +38,7 @@ function HomePageGridList(props) {
             </GridListTile>
             :
             <GridListTile key={post.path} onClick={() => postSelected(post)}>
-              <img src={'../imgRepo/' + post.thumb} alt={post.title} />
+              <img src={'../files/images/' + post.thumb} alt={post.title} />
               <GridListTileBar
                 title={post.title}
                 subtitle={<span>by: {post.author}</span>}

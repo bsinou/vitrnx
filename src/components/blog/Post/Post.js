@@ -36,7 +36,7 @@ class Layout extends React.Component {
                 <Card>
                     <CardMedia
                         className={classes.media}
-                        image={"/imgRepo/" + post.hero}
+                        image={"/files/images/" + post.hero}
                     // overlay={<CardTitle>{post.title}</CardTitle>}
                     />
                     {/* <CardTitle>{post.title}</CardTitle>  */}

@@ -60,7 +60,7 @@ const PostCard = (props) => {
       <Card className={classes.card} onClick={props.clicked}>
         <CardMedia
           className={classes.media}
-          image={"../imgRepo/" + props.thumb}
+          image={"../files/images/" + props.thumb}
         // overlay does not work?? overlay={ <CardTitle title={props.title}/>}
         />
         <CardContent style={{ textAlign: 'left' }}>

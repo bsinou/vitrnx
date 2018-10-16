@@ -39,7 +39,7 @@ function MediaCard(props) {
             <Card className={classes.card} onClick={() => onSelect(media)}>
                 <CardMedia
                     className={classes.cover}                    
-                    image={"../imgRepo/" + media.thumb}
+                    image={"../files/images/" + media.thumb}
                     title={media.title}
                 />
                 <div className={classes.details}>
