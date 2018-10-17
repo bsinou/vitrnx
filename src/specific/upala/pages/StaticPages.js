@@ -57,8 +57,8 @@ class Pages extends Component {
                     <p>
                         <img src="../files/images/livre-recto.jpg" alt="Notre essentiel de santé, 1ere de couv." style={{ float: 'left', width: '300px', height: '410px', marginRight: '30px', verticalAlign: 'bottom' }} />
                         <p>&nbsp;</p>
-                        <p>Ce livre est un hymne à la santé, il est le fruit d'une trentaine d'années d'expérience de deux professionnelles de la santé, illustré des dessins d'un artiste pédagogue.</p>
-                        <p>La santé est visitée ici dans toutes ses dimensions et ancrée dans l'essence ancestrale des médecines traditionnelles axées sur la prévention. Nous faisons notre les questions auxquelles elles répondaient :</p>
+                        <p>Ce livre est un hymne à la santé, il est le fruit d'une trentaine d'années d'expérience de deux professionnelles de la santé. Il est illustré de fiches pédagogiques crées par un artiste.</p>
+                        <p>La santé est visitée ici dans toutes ses dimensions et ancrée dans l'essence ancestrale des médecines traditionnelles axées sur la prévention. Nous proposons quelques réponses à ces questions :</p>
                         <p style={{ marginLeft: '1em', paddingLeft: '1em', }}>
                             &nbsp;&nbsp;- Comment maintenir la santé ? <br />
                             &nbsp;&nbsp;- Comment garder l'indépendance&nbsp;?<br />

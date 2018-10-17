@@ -15,27 +15,30 @@ class Home extends Component {
 
         return (
             <Aux>
-                <div className={classes.Posts}>
-                    <div className={classes.Intro}>
-                        <div className={classes.IntroTitle}>{titleStr}</div>
-                        <div className={classes.IntroBody}>
-                            <p>Médecin généraliste et homéopathe, Maître Praticienne en PNL j'ai exercé en cabinet libéral pendant 30 ans.</p>
-                            <p>La santé est un bien précieux...</p>
-                            <ul>
-                                <li>Comment l'entretenir ?</li>
-                                <li>Comment la préserver ?</li>
-                                <li>Comment y tendre à nouveau quand survient la maladie ?</li>
-                            </ul>
+                <div className={classes.Page}>
+                    <p>
+                        <img className={classes.IntroImage} src="../files/images/bench.jpg" alt="La santé... autrement."/>
+                        <div className={classes.Intro}>
+                            <div className={classes.IntroTitle}>{titleStr}</div>
+                            <div className={classes.IntroBody}>
+                                <p>Médecin généraliste et homéopathe, Maître Praticienne en PNL,<br />j'ai exercé en cabinet libéral pendant 30 ans.</p>
+                                <p>La santé est un bien précieux...</p>
+                                <ul>
+                                    <li>Comment faire pour l'entretenir ?</li>
+                                    <li>Comment faire pour la préserver ?</li>
+                                    <li>Comment y tendre à nouveau quand survient la maladie ?</li>
+                                </ul>
 
-                            <p>Accompagnements individuels, ateliers, réflexions, livres, films...</p>
-                            <p>Des propositions sont faites ici pour accompagner chacun au fil des jours, pas à pas.</p>
+                                <p>Accompagnements individuels, ateliers, réflexions, livres, films...</p>
+                                <p>Des propositions sont faites ici avancer au fil des jours, pas à pas.</p>
+                            </div>
                         </div>
-                    </div>
-                    <br/>
-                    <br/>
-                {/* </div>
+                    </p>
+                    {/* <br/>
+                    <br/> */}
+                    {/* </div>
                 <div className={classes.Posts}> */}
-                    <div className={classes.Post}>
+                    {/* <div className={classes.Post}>
                         <p className={classes.PostTitle}>Vivement le printemps...</p>
                         <div className={classes.PostBody}>
                             <p>Nous avons profité de ces longs mois d'hiver pour nous repencher sur notre fenêtre sur le monde (virtuel),
@@ -43,7 +46,7 @@ class Home extends Component {
                             <p>Cette page est la première étape de cette transformation et nous vous demandons un peu de patience;</p>
                             <p>Un pas après l'autre...</p>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </Aux>
         );
