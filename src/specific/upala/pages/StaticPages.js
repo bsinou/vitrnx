@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {Route} from 'react-router-dom'
+import { Route } from 'react-router-dom'
 
 import classes from './pages.css'
 
@@ -12,7 +12,7 @@ class Pages extends Component {
         return (
             <div className={classes.Page}>
                 <div className={classes.PageTitle}>Entretien individuel</div>
-                <div className={classes.PageSubtitle}>Prendre le temps et se poser. Ecouter... <br/>L'histoire d'une maladie, d'une angoisse, de soucis familiaux ou professionnels.</div>
+                <div className={classes.PageSubtitle}>Prendre le temps et se poser. Ecouter... <br />L'histoire d'une maladie, d'une angoisse, de soucis familiaux ou professionnels.</div>
                 <div className={classes.PageBody}>
                     <p>Entendre la parole dite, les questions posées et celles qui affleurent.</p>
                     <p>Avec bienveillance et respect, ensemble chercher à comprendre, à renouer les liens, à donner un sens à ce qui est dit et à ce qui a été vécu.</p>
@@ -54,14 +54,22 @@ class Pages extends Component {
                 <div className={classes.PageTitle}>"Notre essentiel de santé"</div>
                 <div className={classes.PageSubtitle}>Françoise Desailly, Marie-Madeleine Sinou et François Veyrié</div>
                 <div className={classes.PageBody}>
-                    <p>Ce livre est un hymne à la santé, il est le fruit d'une trentaine d'années d'expérience de deux professionnelles de la santé, illustré des dessins d'un artiste pédagogue.</p>
-                    <p>La santé est visitée ici dans toutes ses dimensions et ancrée dans l'essence ancestrale des médecines traditionnelles axées sur la prévention. Nous faisons notre les questions auxquelles elles répondaient :</p>
-                    <ul>
-                        <li> Comment maintenir la santé ?</li>
-                        <li>Comment garder l'indépendance&nbsp;?</li>
-                    </ul>
-                    <p>Prix : 30 € frais d'envoi en sus</p>
-                    <p>Version électronique : 9,90 € avec achat en ligne</p>
+                    <p>
+                        <img src="../files/images/livre-recto.jpg" alt="Notre essentiel de santé, 1ere de couv." style={{ float: 'left', width: '300px', height: '410px', marginRight: '30px', verticalAlign: 'bottom' }} />
+                        <p>&nbsp;</p>
+                        <p>Ce livre est un hymne à la santé, il est le fruit d'une trentaine d'années d'expérience de deux professionnelles de la santé, illustré des dessins d'un artiste pédagogue.</p>
+                        <p>La santé est visitée ici dans toutes ses dimensions et ancrée dans l'essence ancestrale des médecines traditionnelles axées sur la prévention. Nous faisons notre les questions auxquelles elles répondaient :</p>
+                        <p style={{ marginLeft: '1em', paddingLeft: '1em', }}>
+                            &nbsp;&nbsp;- Comment maintenir la santé ? <br />
+                            &nbsp;&nbsp;- Comment garder l'indépendance&nbsp;?<br />
+                            {/* <ul>
+                                <li>Comment maintenir la santé ?</li>
+                                <li>Comment garder l'indépendance&nbsp;?</li>
+                            </ul> */}
+                        </p>
+                        <p>Prix : 30 €, <a href="../files/docs/BonDeCommande.pdf" target="_blank" >Télécharger le bon de commande</a> (frais d'envoi en sus)</p>
+                        <p>Version électronique : 9,90 €, <a href="https://www.grafficus.com/catalogue-des-ouvrages-de-grafficus/product/1-notre-essentiel-de-sante" target="_blank" >par achat en ligne chez nos amis de grafficus</a></p>
+                    </p>
                 </div>
             </div>
         );
@@ -87,7 +95,7 @@ class Pages extends Component {
             <div className={classes.PageContainer}>
                 {/* <Route path="/s/about" exact render={this.getContactPage()} /> */}
                 <Route path="/s/the-book" exact render={this.getBookPage} />
-                <Route path="/s/interview" exact render={this.getItwPage} /> 
+                <Route path="/s/interview" exact render={this.getItwPage} />
                 <Route path="/s/workshops" exact render={this.getWorkshopPage} />
                 <Route path="/s/contact" exact render={this.getContactPage} />
             </div>

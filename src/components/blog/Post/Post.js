@@ -37,20 +37,19 @@ class Layout extends React.Component {
                     <CardMedia
                         className={classes.media}
                         image={"/files/images/" + post.hero}
-                    // overlay={<CardTitle>{post.title}</CardTitle>}
                     />
                     {/* <CardTitle>{post.title}</CardTitle>  */}
                 </Card>
                 <div className={customCss.SubCard}>
                     <h1>{post.title}</h1>
-                    <PostInfo tags={post.tags} date={post.date} author={post.author} />
+                    {/* <PostInfo tags={post.tags} date={post.date} author={post.author} /> */}
                     <div className={customCss.Desc}>{post.desc}</div>
                     <Markdown className={customCss.Body} escapeHtml={true} source={post.body} />
                 </div>
-                <Divider />
+                {/* <Divider />
                 <div className={customCss.SubCard}>
                     <Comments postId={post.path} />
-                </div>
+                </div> */}
             </div>
         );
     }

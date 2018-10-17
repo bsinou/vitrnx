@@ -15,8 +15,7 @@
   flex-flow: column;
   justify-content: center;
   margin-top: 2em;
-  padding: 0.4em 1em 0em 0em;
-
+  padding: 1em 2em;
 }
 
 .PageTitle {
@@ -66,7 +65,7 @@
 }
 
 .Post {
-  padding: 0.5em 1em 1em 2em;
+  padding: 2em 0em ;
   border: 1px solid  #d87e79;
   box-shadow: 0 2px 3px #a94c40;
   margin: 10px;
@@ -87,16 +86,8 @@
     overflow-x: hidden;
   }
 
-  #bodyClick {
-    height: 100%;
+  .Posts {
     width: 100%;
-    position: fixed;
-    opacity: 0;
-    top: 0;
-    left: auto;
-    right: 260px;
-    content: "";
-    z-index: 9999;
-    overflow-x: hidden;
   }
+  
 }

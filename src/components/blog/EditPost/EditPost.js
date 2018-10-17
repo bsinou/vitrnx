@@ -180,7 +180,7 @@ class SimpleTabs extends React.Component {
                         <Grid container >
                             <GridItem xs={12} sm={12} md={12}>
                                 <Textarea
-                                    style={{ minHeigth: '400px' }}
+                                    style={{ minHeigth: '400px', width:'100%' }}
                                     rows={10}
                                     value={post.body}
                                     onChange={this.handleMdChange('body')}

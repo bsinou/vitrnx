@@ -13,7 +13,7 @@
 .Content {
   position: relative;
   flex: 1;
-  padding: 0em 1em;
+  padding: 1em 0em;
 }
 
 /* HEADER */

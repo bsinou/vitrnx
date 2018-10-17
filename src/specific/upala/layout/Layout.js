@@ -93,7 +93,6 @@ class Layout extends Component {
                         isAuth={isAuth}
                         userRoles={userRoles}
                         navItems={this.getPrivItems()} />
-
                     <Toolbar
                         className={classes.Toolbar}
                         isAuth={isAuth}

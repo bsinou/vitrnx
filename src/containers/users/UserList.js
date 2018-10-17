@@ -21,16 +21,16 @@ const styles = {
 function User(props) {
     const { classes, user, roleStr, userSelected } = props
     let coming = user.meta.presence && user.meta.presence.isComing;
-    const p =  user.meta.presence;
+    const p = user.meta.presence;
     let cdesc = "Does not come."
     if (coming) {
-        if (p.adultNb > 1){
+        if (p.adultNb > 1) {
             cdesc = "Comes with " + (p.adultNb - 1) + " adults and " + p.childNb + " gnomes";
-        } else if ( p.adultNb === 1){
+        } else if (p.adultNb === 1) {
             if (p.childNb > 0) cdesc = "Comes with " + p.childNb + " gnomes";
             else cdesc = "Comes alone";
-        } else if (p.childNb > 1){
-            cdesc = "Comes with " + (p.childNb -1) + " fellow dwarves";
+        } else if (p.childNb > 1) {
+            cdesc = "Comes with " + (p.childNb - 1) + " fellow dwarves";
         } else {
             cdesc = "Comes alone";
         }
@@ -47,14 +47,15 @@ function User(props) {
     return (
         <ListItem key={user.userId} onClick={userSelected}>
             <ListItemAvatar>
-                <Avatar className={coming ? classes.avatarGreen : classes.avatarRed}>
+                {/* <Avatar className={coming ? classes.avatarGreen : classes.avatarRed}> */}
+                <Avatar className={classes.avatarGreen}>
                     <Icon className={classes.icon}>person</Icon>
                 </Avatar>
             </ListItemAvatar>
             <ListItemText
                 style={{ textAlign: 'left' }}
                 primary={user.name + ', ' + user.email + ', ' + roleStr}
-                secondary={cdesc}
+            // secondary={cdesc}
             />
         </ListItem>);
 }

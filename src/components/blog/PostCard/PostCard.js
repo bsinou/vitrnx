@@ -15,6 +15,9 @@ const styles = {
     height: 0,
     paddingTop: '56.25%', // 16:9
   },
+  headline: {
+    color: '#ff0000'
+  }
 };
 
 
@@ -67,7 +70,7 @@ const PostCard = (props) => {
           <Typography gutterBottom variant="headline" >
             {props.title}
           </Typography>
-          {subTitle(props)}
+          {/* {subTitle(props)} */}
           <Typography component="span">
             {props.desc}
           </Typography>
