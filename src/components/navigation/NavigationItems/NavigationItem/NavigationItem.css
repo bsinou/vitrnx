@@ -1,8 +1,8 @@
 .NavigationItem {
-    margin: 10px 0;
+    margin: 2px 0;
     box-sizing: border-box;
-    display: block;
     width: 100%;
+    display: flex;
 }
 
 .NavigationItem a {
@@ -14,31 +14,30 @@
 
 .NavigationItem a:hover,
 .NavigationItem a.active {
-    color: #a94c40;
+    color: var(--highlight-color);
 }
 
 @media (min-width: 500px){
+    
     .NavigationItem {
-        margin: 0;
-        display: flex;
-        height: 100%;
+        margin: 0px 0;
         width: auto;
-        align-items: center ; 
+        /* display: flex; */
     }
     
     .NavigationItem a, 
     .NavigationItem a:link,
     .NavigationItem a.visited
     {
-        height: 100%;
-        padding: 8px 10px;
+        /* height: 100%;*/
+        padding: 0.3em 0.5em; 
     }
     
     .NavigationItem a:hover,
     .NavigationItem a:active,
     .NavigationItem a:focus
      {
-        border-bottom: 1px solid #a94c40;
+        border-bottom: 1px solid var(--highlight-color);;
     }
 
 } 

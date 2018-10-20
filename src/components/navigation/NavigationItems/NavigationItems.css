@@ -3,19 +3,14 @@
     padding: 0;
     list-style: none;
     display: flex;
-    flex-flow: column; 
+    flex-flow: row; 
     align-items: left;
     height: 100%; 
 }
 
-/* @media (min-width: 500px){
-    .NavigationItems {
-        flex-flow: row wrap; 
-    }
-} */
 
-@media (min-width: 850px){
+@media (max-width: 849px){
     .NavigationItems {
-        flex-flow: row; 
+        flex-flow: column; 
     }
 }

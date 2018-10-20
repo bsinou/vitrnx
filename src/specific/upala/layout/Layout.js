@@ -92,7 +92,9 @@ class Layout extends Component {
                     <Header className={classes.Header}
                         isAuth={isAuth}
                         userRoles={userRoles}
-                        navItems={this.getPrivItems()} />
+                        navItems={this.getPrivItems()} 
+                        drawerToggleClicked={this.sideDrawerToggleHandler}
+                        />
                     <Toolbar
                         className={classes.Toolbar}
                         isAuth={isAuth}

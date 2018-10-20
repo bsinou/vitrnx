@@ -85,7 +85,7 @@
 .Post {
   padding: 2em 0em ;
   border: 1px solid  #d87e79;
-  box-shadow: 0 2px 3px #a94c40;
+  box-shadow: 0 2px 3px var(--highlight-color);
   margin: 10px;
   box-sizing: border-box;
   cursor: pointer;
@@ -93,7 +93,7 @@
 } 
 
 .PostTitle, .IntroTitle {
-  color: #a94c40;
+  color: var(--highlight-color);
   font-size: 1.5em; 
 }
 
@@ -107,5 +107,8 @@
   .Posts {
     width: 100%;
   }
-  
+
+  .IntroImage {
+    display: none;
+  }
 }

@@ -5,7 +5,6 @@ import axios from '../../../apiServer';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 
 import EditButtons from '../../ui/EditButtons/EditButtons';
-import AuxWrapper from '../../../hoc/AuxWrapper/AuxWrapper';
 
 import Markdown from 'react-markdown';
 import Textarea from 'react-expanding-textarea';
@@ -291,7 +290,6 @@ class EditPost extends React.Component {
         );
     };
 
-
     handleMarkdownChange = (evt) => {
         this.setState({ post: { ...this.state.post, body: evt.target.value } })
     }
@@ -303,11 +301,14 @@ class EditPost extends React.Component {
                 <EditButtons
                     onSave={this.postDataHandler}
                     onCancel={this.cancelHandler}
-                    onDelete={this.deletePostHandler} canDelete={this.canDelete} />
+                    onDelete={this.deletePostHandler} 
+                    canDelete={this.canDelete} 
+                />
                 <EditorTabs
                     post={this.state.post}
                     onValueChanged={this.onValueChange}
-                    onMarkdownChanged={this.handleMarkdownChange} />
+                    onMarkdownChanged={this.handleMarkdownChange}
+                />
             {/* </AuxWrapper> */}
             </div>
         );

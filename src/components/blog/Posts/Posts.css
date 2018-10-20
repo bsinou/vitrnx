@@ -18,8 +18,8 @@
 	position: absolute;
     display: flex;
     flex-direction: column;
-	top: 40px;
-    right: -1em;
+	top: 60px;
+    right: 0px;
     list-style: none;
     z-index: 99;
 }

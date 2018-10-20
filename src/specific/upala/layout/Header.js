@@ -10,6 +10,7 @@ const header = (props) => (
             isAuth={props.isAuth}
             userRoles={props.userRoles}
             navItems={props.navItems}
+            drawerToggleClicked={props.drawerToggleClicked}
         />
         <div className={classes.HeaderTitle}>Un pas après l'autre</div>
         <div className={classes.HeaderSubtitle}>Coaching en santé<br />Marie-Madeleine SINOU</div>

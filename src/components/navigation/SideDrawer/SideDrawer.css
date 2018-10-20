@@ -1,5 +1,6 @@
 .SideDrawer {
     position: fixed;
+    display: none;
     widows: 280px;
     max-width: 70%;
     height: 100%;
@@ -10,12 +11,6 @@
     padding: 32px 16px;
     box-sizing: border-box;
     transition: transform 0.3s ease-out;
-}
-
-@media (min-width: 850px){
-    .SideDrawer{
-        display: none;
-    }
 }
 
 .Open {
@@ -31,3 +26,8 @@
     margin-bottom: 16px;
 }
 
+@media (max-width: 849px){
+    .SideDrawer{
+        display: inline;
+    }
+}
