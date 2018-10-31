@@ -45,6 +45,10 @@
         display: none;
     }
 
+    .Toolbar{
+        height: 0em;
+    }
+
     .PrivMenuBox {
         right: 20px;
         top: 1em;

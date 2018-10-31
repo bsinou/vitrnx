@@ -10,15 +10,23 @@
   padding: 0.4em 1em;
 }
 
-.Page {
+.Page, .Intro {
   display: flex;
   flex-flow: column;
   justify-content: center;
+}
+
+.Page {
   margin-top: 2em;
   padding: 1em 2em;
 }
 
-.PageTitle {
+.Intro {
+  margin-top: 0.5em;
+  padding: 1em 1em;
+}
+
+.PageTitle, .IntroTitle {
   color: var(--highlight-color);
   font-family: "Helvetica", "Arial", sans-serif;
   font-size: 1.6em;
@@ -26,39 +34,22 @@
   margin-bottom: 0.8em;
 }
 
-.PageSubtitle {
+.IntroTitle {
+  margin-top: 2em;
+}
+
+.PageSubtitle, .IntroSubtitle {
   font-size: 1em;
   font-style: italic;
   margin-bottom: 0.4em;
 }
 
-.PageBody {
+.IntroBody, .PageBody {
   text-align: left;
   /* margin: auto; */
 }
 
 /* Home */ 
-
-.Intro {
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-}
-
-.IntroTitle {
-  color: var(--highlight-color);
-  font-family: "Helvetica", "Arial", sans-serif;
-  font-size: 1.6em;
-  line-height: 1.6em;
-  margin-top: 2em;
-  margin-bottom: 0.8em;
-}
-
-
-.IntroBody, .IntroTitle {
-  text-align: left;  
-  margin: auto;
-}
 
 .IntroImage {
   float: right;
@@ -98,14 +89,60 @@
 }
 
 
-@media (max-width: 991px) {
+@media (max-width: 849px) {
   body, html {
     position: relative;
     overflow-x: hidden;
   }
 
+  .PageContainer {
+    width: 95%;
+    margin-top: 1em;
+    padding: 0.4em 0.3em;
+  }
+  
+  .Page {
+    margin-top: 0.1em;
+    padding: 0.4em;
+  }
+
+  .Intro {
+    margin-top: 0;
+    padding: 0.1em 0.5em;
+  }
+
+  .PageTitle {
+    font-size: 1.2em;
+    line-height: 1.2em;
+    margin-bottom: 0.4em;
+  }
+  
+  .PageSubtitle, .IntroSubtitle {
+    font-size: 0.8em;
+    font-style: italic;
+    margin-bottom: 0.2em;
+  }
+  
+  .PageBody {
+    text-align: left;
+    padding-right: 0.3em;
+  }
+
   .Posts {
-    width: 100%;
+    width: 90%;
+    margin-top: 0.2em;
+    padding: 0.5em ;
+  }
+
+  .Post {
+    padding: 1em 0em;
+  }
+  
+  .IntroTitle {
+    margin-top: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 1.3em;
+    line-height: 1.3em;
   }
 
   .IntroImage {

@@ -42,7 +42,7 @@ class Layout extends React.Component {
                 </Card>
                 <div className={customCss.SubCard}>
                     <h1>{post.title}</h1>
-                    {/* <PostInfo tags={post.tags} date={post.date} author={post.author} /> */}
+                    <PostInfo tags={post.tags} date={post.date} author={post.author} />
                     <div className={customCss.Desc}>{post.desc}</div>
                     <Markdown className={customCss.Body} escapeHtml={true} source={post.body} />
                 </div>

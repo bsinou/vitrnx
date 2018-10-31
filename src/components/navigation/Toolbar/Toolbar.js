@@ -27,7 +27,8 @@ function ToggleButton(props) {
             aria-label="toggle"
             // className={[customCss.DrawerToggle].join(' ')}
             onClick={clicked}
-        >menu</Icon>
+        // Must have no child so that it is not shown... very dirty, see below.
+         />
     );
 }
 
@@ -35,7 +36,9 @@ function ToggleButton(props) {
 
 const toolbar = (props) => (
     <header className={customCss.Toolbar}>
-        {/* <ToggleButton clicked={props.drawerToggleClicked} /> */}
+        {/* very dirty: we leave an empty button to keep the left align behaviour...*/}
+        
+        <ToggleButton clicked={props.drawerToggleClicked} />
         {/* <StyledBtn clicked={props.drawerToggleClicked} /> */}
         <nav className={customCss.DesktopOnly}>
             <NavigationItems isAuth={props.isAuth} userRoles={props.userRoles} navItems={props.navItems} />

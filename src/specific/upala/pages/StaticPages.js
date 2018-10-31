@@ -52,16 +52,16 @@ class Pages extends Component {
         return (
             <div className={classes.Page}>
                 <div className={classes.PageTitle}>"Notre essentiel de santé"</div>
-                <div className={classes.PageSubtitle}>Françoise Desailly, Marie-Madeleine Sinou et François Veyrié</div>
+                <div className={classes.PageSubtitle}>Un livre écrit par Françoise Desailly et Marie-Madeleine Sinou.<br/> Illustré par François Veyrié</div>
                 <div className={classes.PageBody}>
                     <p>
                         <img src="../files/images/livre-recto.jpg" alt="Notre essentiel de santé, 1ere de couv." style={{ float: 'left', width: '300px', height: '410px', marginRight: '30px', verticalAlign: 'bottom' }} />
                         <p>&nbsp;</p>
                         <p>Ce livre est un hymne à la santé, il est le fruit d'une trentaine d'années d'expérience de deux professionnelles de la santé. Il est illustré de fiches pédagogiques crées par un artiste.</p>
                         <p>La santé est visitée ici dans toutes ses dimensions et ancrée dans l'essence ancestrale des médecines traditionnelles axées sur la prévention. Nous proposons quelques réponses à ces questions :</p>
-                        <p style={{ marginLeft: '1em', paddingLeft: '1em', }}>
-                            &nbsp;&nbsp;- Comment maintenir la santé ? <br />
-                            &nbsp;&nbsp;- Comment garder l'indépendance&nbsp;?<br />
+                        <p style={{ marginLeft: '0.2em', paddingLeft: '0.2em', }}>
+                            &nbsp;- Comment maintenir la santé&nbsp;? <br />
+                            &nbsp;- Comment garder l'indépendance&nbsp;?<br />
                             {/* <ul>
                                 <li>Comment maintenir la santé ?</li>
                                 <li>Comment garder l'indépendance&nbsp;?</li>
@@ -94,9 +94,9 @@ class Pages extends Component {
         return (
             <div className={classes.PageContainer}>
                 {/* <Route path="/s/about" exact render={this.getContactPage()} /> */}
-                <Route path="/s/the-book" exact render={this.getBookPage} />
-                <Route path="/s/interview" exact render={this.getItwPage} />
-                <Route path="/s/workshops" exact render={this.getWorkshopPage} />
+                <Route path="/s/le-livre" exact render={this.getBookPage} />
+                <Route path="/s/entretien" exact render={this.getItwPage} />
+                <Route path="/s/atelier" exact render={this.getWorkshopPage} />
                 <Route path="/s/contact" exact render={this.getContactPage} />
             </div>
         );

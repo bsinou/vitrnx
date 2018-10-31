@@ -89,6 +89,11 @@ a:link, a:visited, a:hover, a:active, a:focus {
   text-decoration: underline;
 } */
 
+p {
+  margin-top: 0.2em;
+  margin-bottom: 1em;
+}
+
 h1 {
   font-size: 1.4em;
   line-height: 1.4em;
@@ -97,6 +102,7 @@ h1 {
 h2 {
   font-size: 1.3em;
   line-height: 1.3em;
+  margin-bottom: 0.2em;
 }
 
 h3 {

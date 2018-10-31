@@ -112,7 +112,7 @@ export const fbAuth = (email, password) => {
 export const refreshFbToken = (refreshToken) => {
     return dispatch => {
         if (!refreshToken || refreshToken.length < 5)
-            return; // INvalid refresh token, do nothing
+            return; // Invalid refresh token, do nothing
         const authData = {
         };
         var options = {};

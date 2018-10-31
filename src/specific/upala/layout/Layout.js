@@ -27,11 +27,11 @@ class Layout extends Component {
     getMenuItems() {
         let items = [
             { url: '/', label: 'Accueil' },
-            { url: '/q/thoughts', label: 'Réflexions' },
-            { url: '/q/news', label: 'Actualités' },
-            { url: '/s/interview', label: 'Entretien individuel' },
-            { url: '/s/workshops', label: 'Travail en atelier' },
-            { url: '/s/the-book', label: 'Le livre' },
+            { url: '/q/reflexions', label: 'Réflexions' },
+            { url: '/q/actualites', label: 'Actualités' },
+            { url: '/s/entretien', label: 'Entretien individuel' },
+            { url: '/s/atelier', label: 'Travail en atelier' },
+            { url: '/s/le-livre', label: 'Le livre' },
             { url: '/s/contact', label: 'Contact' },
         ]
 
