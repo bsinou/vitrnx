@@ -3,7 +3,7 @@ import apiServer, {publicServer} from '../../../apiServer';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import { Redirect} from 'react-router-dom';
 
-// Own component
+// Own components
 import PostInfo from '../PostInfo/PostInfo';
 import Comments from '../../comment/Comments';
 import AuxWrapper from '../../../hoc/AuxWrapper/AuxWrapper';
